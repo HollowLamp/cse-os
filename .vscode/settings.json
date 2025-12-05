@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "types.h": "c",
+        "console.h": "c",
+        "hash.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "enabled"
+}
