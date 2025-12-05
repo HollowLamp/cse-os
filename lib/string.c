@@ -2,7 +2,8 @@
 
 #include <string.h>
 
-int strlen(const char *s) {
+int strlen(const char *s)
+{
 	int n;
 
 	for (n = 0; *s != '\0'; s++)
@@ -10,7 +11,8 @@ int strlen(const char *s) {
 	return n;
 }
 
-int strnlen(const char *s, size_t size) {
+int strnlen(const char *s, size_t size)
+{
 	int n;
 
 	for (n = 0; size > 0 && *s != '\0'; s++, size--)
@@ -18,7 +20,8 @@ int strnlen(const char *s, size_t size) {
 	return n;
 }
 
-char *strcpy(char *dst, const char *src) {
+char *strcpy(char *dst, const char *src)
+{
 	char *ret;
 
 	ret = dst;
@@ -27,18 +30,21 @@ char *strcpy(char *dst, const char *src) {
 	return ret;
 }
 
-char *strcat(char *dst, const char *src) {
+char *strcat(char *dst, const char *src)
+{
 	int len = strlen(dst);
 	strcpy(dst + len, src);
 	return dst;
 }
 
-char *strncpy(char *dst, const char *src, size_t size) {
+char *strncpy(char *dst, const char *src, size_t size)
+{
 	size_t i;
 	char *ret;
 
 	ret = dst;
-	for (i = 0; i < size; i++) {
+	for (i = 0; i < size; i++)
+	{
 		*dst++ = *src;
 		// If strlen(src) < size, null-pad 'dst' out to 'size' chars
 		if (*src != '\0')
@@ -47,11 +53,13 @@ char *strncpy(char *dst, const char *src, size_t size) {
 	return ret;
 }
 
-size_t strlcpy(char *dst, const char *src, size_t size) {
+size_t strlcpy(char *dst, const char *src, size_t size)
+{
 	char *dst_in;
 
 	dst_in = dst;
-	if (size > 0) {
+	if (size > 0)
+	{
 		while (--size > 0 && *src != '\0')
 			*dst++ = *src++;
 		*dst = '\0';
@@ -59,40 +67,45 @@ size_t strlcpy(char *dst, const char *src, size_t size) {
 	return dst - dst_in;
 }
 
-int strcmp(const char *p, const char *q) {
+int strcmp(const char *p, const char *q)
+{
 	while (*p && *p == *q)
 		p++, q++;
-	return (int) ((unsigned char) *p - (unsigned char) *q);
+	return (int)((unsigned char)*p - (unsigned char)*q);
 }
 
-int strncmp(const char *p, const char *q, size_t n) {
+int strncmp(const char *p, const char *q, size_t n)
+{
 	while (n > 0 && *p && *p == *q)
 		n--, p++, q++;
 	if (n == 0)
 		return 0;
 	else
-		return (int) ((unsigned char) *p - (unsigned char) *q);
+		return (int)((unsigned char)*p - (unsigned char)*q);
 }
 
 // Return a pointer to the first occurrence of 'c' in 's',
 // or a null pointer if the string has no 'c'.
-char *strchr(const char *s, int c) {
+char *strchr(const char *s, int c)
+{
 	for (; *s; s++)
 		if (*s == c)
-			return (char *) s;
+			return (char *)s;
 	return 0;
 }
 
 // Return a pointer to the first occurrence of 'c' in 's',
 // or a pointer to the string-ending null character if the string has no 'c'.
-char *strfind(const char *s, char c) {
+char *strfind(const char *s, char c)
+{
 	for (; *s; s++)
 		if (*s == c)
 			break;
-	return (char *) s;
+	return (char *)s;
 }
 
-void *memset(void *v, int c, size_t n) {
+void *memset(void *v, int c, size_t n)
+{
 	char *p;
 	int m;
 
@@ -104,47 +117,55 @@ void *memset(void *v, int c, size_t n) {
 	return v;
 }
 
-void *memmove(void *dst, const void *src, size_t n) {
+void *memmove(void *dst, const void *src, size_t n)
+{
 	const char *s;
 	char *d;
 
 	s = src;
 	d = dst;
-	if (s < d && s + n > d) {
+	if (s < d && s + n > d)
+	{
 		s += n;
 		d += n;
 		while (n-- > 0)
 			*--d = *--s;
-	} else
+	}
+	else
 		while (n-- > 0)
 			*d++ = *s++;
 
 	return dst;
 }
 
-void *memcpy(void *dst, const void *src, size_t n) {
+void *memcpy(void *dst, const void *src, size_t n)
+{
 	return memmove(dst, src, n);
 }
 
-int memcmp(const void *v1, const void *v2, size_t n) {
-	const uint8_t *s1 = (const uint8_t *) v1;
-	const uint8_t *s2 = (const uint8_t *) v2;
+int memcmp(const void *v1, const void *v2, size_t n)
+{
+	const uint8_t *s1 = (const uint8_t *)v1;
+	const uint8_t *s2 = (const uint8_t *)v2;
 
-	while (n-- > 0) {
+	while (n-- > 0)
+	{
 		if (*s1 != *s2)
-			return (int) *s1 - (int) *s2;
+			return (int)*s1 - (int)*s2;
 		s1++, s2++;
 	}
 
 	return 0;
 }
 
-void *memfind(const void *s, int c, size_t n) {
-	const void *ends = (const char *) s + n;
-	for (; s < ends; s++)
-		if (*(const unsigned char *) s == (unsigned char) c)
+void *memfind(const void *s, int c, size_t n)
+{
+	const void *ends = (const char *)s + n;
+	const unsigned char *p = (const unsigned char *)s; // 转为字节指针
+	for (; p < ends; p++)
+		if (*(const unsigned char *)p == (unsigned char)c)
 			break;
-	return (void *) s;
+	return (void *)p;
 }
 
 // Convert string to long integer
@@ -172,7 +193,8 @@ long strtol(const char *s, char **endptr, int base)
 		base = 10;
 
 	// digits
-	while (1) {
+	while (1)
+	{
 		int dig;
 
 		if (*s >= '0' && *s <= '9')
@@ -190,6 +212,6 @@ long strtol(const char *s, char **endptr, int base)
 	}
 
 	if (endptr)
-		*endptr = (char *) s;
+		*endptr = (char *)s;
 	return (neg ? -val : val);
 }
