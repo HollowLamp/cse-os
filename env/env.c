@@ -27,7 +27,7 @@ extern void lcontext(uint32_t contxt, int n);
 extern void set_asid(uint32_t id);
 extern int get_asid();
 extern void set_epc(uint32_t epc);
-/* 
+/*
 申请一个envid
  */
 u_int mkenvid(struct Env *e)
@@ -35,10 +35,10 @@ u_int mkenvid(struct Env *e)
 	static u_int next_env_id = 0;
 
 	/*Hint: lower bits of envid hold e's position in the envs array. */
-	
+
 
 	/*Hint:  high bits of envid hold an increasing number. */
-	
+
 
 }
 
@@ -61,13 +61,13 @@ int envid2env(u_int envid, struct Env **penv, int checkperm)
 	/*Step 1: Assign value to e using envid. */
 	if (envid == 0)
 	{
-		
+
 
 	}
-	e = envs + GET_ENV_ASID(envid); 
+	e = envs + GET_ENV_ASID(envid);
 	if (e->env_status == ENV_FREE || e->env_id != envid) //todo 为什么检查free，这个函数啥时候调用
 	{
-	
+
 	}
 	/* Hint:
  *      *  Check that the calling environment has legitimate permissions
@@ -78,7 +78,7 @@ int envid2env(u_int envid, struct Env **penv, int checkperm)
 	/*Step 2: Make a check according to checkperm. */
 	if (checkperm)
 	{
-		
+
 	}
 	*penv = e;
 	return 0;
@@ -91,7 +91,7 @@ void env_init(void)
 	for (i = NENV - 1; i >= 0; i--)
 	{
 
-		
+
 	}
 }
 
@@ -107,16 +107,16 @@ env_setup_vm(struct Env *e)
 	/*Step 1: Allocate a page for the page directory using a function you completed in the lab2.
        * and add its reference.
        *pgdir is the page directory of Env e, assign value for it. */
-	
+
 
 	/*Step 2: Zero pgdir's field before UTOP. */
-	
+
 
 
 	/*VPT and UVPT map the env's own page table, with
  *      *different permissions. */
 
-	e->env_pgdir[PDX(VPT)] =                            ; 
+	e->env_pgdir[PDX(VPT)] =                            ;
 	e->env_pgdir[PDX(UVPT)] =                           ;
 	return 0;
 }
@@ -147,25 +147,25 @@ int env_alloc(struct Env **new, u_int parent_id)
 	struct Env *e;
 
 	/*Step 1: Get a new Env from env_free_list*/
-	
+
 
 
 	/*Step 2: Call certain function(has been implemented) to init kernel memory layout for this new Env.
      *The function mainly maps the kernel address to this new Env address. */
-	
+
 
 
 	/*Step 3: Initialize every field of new Env with appropriate values*/
-	
 
 
-	/*Step 4: focus on initializing env_tf structure, located at this new Env. 
+
+	/*Step 4: focus on initializing env_tf structure, located at this new Env.
      * especially the sp register,CPU status. */
-	
+
 
 
 	/*Step 5: Remove the new Env from Env free list*/
-	
+
 
 }
 
@@ -175,21 +175,21 @@ int env_alloc_arg(struct Env **new, u_int parent_id, char *arg)
 	struct Env *e;
 
 	/*Step 1: Get a new Env from env_free_list*/
-	
+
 
 
 	/*Step 2: Call certain function(has been implemented) to init kernel memory layout for this new Env.
      *The function mainly maps the kernel address to this new Env address. */
-	
+
 
 
 	/*Step 3: Initialize every field of new Env with appropriate values*/
-	
 
 
-	/*Step 4: focus on initializing env_tf structure, located at this new Env. 
+
+	/*Step 4: focus on initializing env_tf structure, located at this new Env.
      * especially the sp register,CPU status. */
-	
+
 
 
 
@@ -256,7 +256,7 @@ uint32_t load_elf_mapper(char *elf_name, struct Env *e)
 			printf("Loading %d KB to memory address \r", fsize / 1024);
 		}
 		fr = (                ); // Read a chunk of source file
-		
+
 
 
 	} while (!(fr || br == 0));
@@ -275,7 +275,7 @@ uint32_t load_elf_mapper(char *elf_name, struct Env *e)
 	if (                        )
 		printf("elf read failed with code %d \n\r", br);
 
-	
+
 	uint32_t entry_point = get_entry(boot_file_buf, fil.fsize);
 	lcontext(                      );
 	set_asid(                      );    // 这里和上面是一对的
@@ -298,7 +298,7 @@ uint32_t load_elf_mapper(char *elf_name, struct Env *e)
  *  is given by the elf loader. And this function maps one page for the
  *  program's initial stack at virtual address USTACKTOP - BY2PG.
  *
- * Hints: 
+ * Hints:
  *  All mappings are read/write including those of the text segment.
  *  You may use these :
  *      page_alloc, page_insert, page2kva , e->env_pgdir and load_elf.
@@ -317,7 +317,7 @@ load_icode(struct Env *e, char *elf_name)
 	u_long r;
 	u_long perm;
 	/*Step 1: alloc a page. */
-	
+
 
 
 
@@ -325,7 +325,7 @@ load_icode(struct Env *e, char *elf_name)
 
 	/*Step 2: Use appropriate perm to set initial stack for new Env. */
 	/*Hint: The user-stack should be writable? */
-	
+
 
 
 
@@ -344,7 +344,7 @@ load_icode(struct Env *e, char *elf_name)
  *  it with load_icode and then set its priority value. This function is
  *  ONLY called during kernel initialization, before running the first
  *  user_mode environment.
- *      
+ *
  * Hints:
  *  this function wrap the env_alloc and load_icode function.
  */
@@ -354,14 +354,14 @@ void env_create_priority(char *binary, int priority)
 	int r;
 	extern void debug();
 	/*Step 1: Use env_alloc to alloc a new env. */
-	
+
 
 
 
 
 
 	/*Step 2: assign priority to the new env. */
-	
+
 
 	/*Step 3: Use load_icode() to load the named elf binary. */
 	printf("load_icode:%s\n", binary);
@@ -378,7 +378,7 @@ void env_create_priority(char *binary, int priority)
 	while (tmp != env_runnable_tail)
 	{
 		printf(" 0x%x ", tmp->env_id);
-		
+
 
 
 
@@ -399,7 +399,7 @@ void env_create_priority_arg(char *binary, int priority, char *arg)
 		return;
 	}
 	/*Step 2: assign priority to the new env. */
-	
+
 
 	/*Step 3: Use load_icode() to load the named elf binary. */
 	printf("load_icode:%s\n", binary);
@@ -415,7 +415,7 @@ void env_create_priority_arg(char *binary, int priority, char *arg)
 	printf("list ID: 0x%x \n", env_runnable_head->env_id);
 	while (tmp != env_runnable_tail)
 	{
-		
+
 
 	}
 	printf("\ntail ID: 0x%x \n", env_runnable_tail->env_id);
@@ -423,7 +423,7 @@ void env_create_priority_arg(char *binary, int priority, char *arg)
 
 /* Overview:
  * Allocates a new env with default priority value.
- * 
+ *
  * Hints:
  *  this function warp the env_create_priority function/
  */
@@ -446,7 +446,7 @@ void env_create_share(char *binary, int num, int priority)
 		return;
 	}
 	/*Step 2: assign priority to the new env. */
-	
+
 	/*Step 3: Use load_icode() to load the named elf binary. */
 	printf("load_icode:%s\n", binary);
 	if(      )
@@ -535,7 +535,7 @@ void copy_curenv(struct Env *e, struct Env *env_src, void *func, int arg)
 	for (pdeno = 0; pdeno < PDX(UTOP); pdeno++)
 	{
 		/* Hint: only look at mapped page tables. */
-		  
+
 
 
 		/* Hint: find the pa and va of the page table. */
@@ -551,7 +551,7 @@ void copy_curenv(struct Env *e, struct Env *env_src, void *func, int arg)
 		{
 			if (  )
 			{
-				 
+
 
 			}
 		}
@@ -567,9 +567,9 @@ void copy_curenv(struct Env *e, struct Env *env_src, void *func, int arg)
 		pt =            ;				//源二级页表虚拟地址
 		                ;				//减少二级页表物理引用
 
-		for (pteno = 0; pteno <= PTX(~0); pteno++) 
+		for (pteno = 0; pteno <= PTX(~0); pteno++)
 		{
-			
+
 
 
 
@@ -578,7 +578,7 @@ void copy_curenv(struct Env *e, struct Env *env_src, void *func, int arg)
 	}
 
 	e->env_cr3 = PADDR(pgdir);
-	e->env_pgdir[PDX(VPT)] = e->env_cr3; 
+	e->env_pgdir[PDX(VPT)] = e->env_cr3;
 	e->env_pgdir[PDX(UVPT)] = e->env_cr3 | PTE_V | PTE_R;
 	printf("### e->CONTEXT: 0x%x \n", e->env_pgdir);
 
@@ -602,7 +602,7 @@ int env_free(struct Env *e)
 	for (pdeno = 0; pdeno < PDX(UTOP); pdeno++)
 	{
 		/* Hint: only look at mapped page tables. */
-		
+
 
 
 
@@ -621,7 +621,7 @@ int env_free(struct Env *e)
 		}
 
 		/* Hint: free the page table itself. */
-		
+
 
 
 	}
@@ -704,7 +704,7 @@ void env_run(struct Env *e)
      * the   environment.
      */
 	/* Hint: You should use GET_ENV_ASID there.Think why? */
-	
+
 
 }
 

@@ -52,20 +52,33 @@ OF SUCH DAMAGE.
 	.set	noreorder           // Don't allow the assembler to reorder instructions.
 	.set	noat                // Don't allow the assembler to use r1(at) for synthetic instr.
 /**************************************************************************************
+* init_cp0 - 初始化 CP0 协处理器寄存器
+*
+* CP0 (Coprocessor 0) 是 MIPS 架构的系统控制协处理器
+* 功能：MMU、异常处理、中断控制、计数器等
+*
+* 初始化策略：大部分寄存器置零，Status 寄存器设置特定值
 **************************************************************************************/
 LEAF(init_cp0)
 
-    // Initialize Status
-	li	v1, 0x00400404		// (M_StatusERL | M_StatusIPL1 | M_StatusBEV)
-	mtc0	v1, C0_STATUS		// write C0_Status
+    // Initialize Status - 初始化 Status 寄存器
+    // Status 寄存器控制中断、异常级别、处理器模式等
+	li		v1, 0x00400404		// (M_StatusERL | M_StatusIPL1 | M_StatusBEV)
+	                            // ERL=1: 错误级别，BEV=1: 使用启动异常向量
+	mtc0	v1, C0_STATUS		// write C0_Status - 写入 Status 寄存器
 
-	// Initialize Watch registers if implemented.
-	mfc0	v0, C0_CONFIG1		// read C0_Config1
-	ext	v1, v0, 3, 1		// extract bit 3 WR (Watch registers implemented)
-	beq 	v1, zero, done_wr
+	// Initialize Watch registers if implemented. - 初始化 Watch 寄存器（如果实现了）
+	// Watch 寄存器用于硬件断点和数据监视
+	mfc0	v0, C0_CONFIG1		// read C0_Config1 - 读取 Config1 寄存器
+	ext		v1, v0, 3, 1		// extract bit 3 WR (Watch registers implemented)
+	                            // 提取 WR 位，判断是否实现了 Watch 寄存器
+	beq 	v1, zero, done_wr   // 如果未实现 Watch，跳过初始化
 	li    	v1, 0x7				// (M_WatchHiI | M_WatchHiR | M_WatchHiW)
+	                            // 设置所有 Watch 条件位
 
 	// Clear all possible Watch Status bits and disable watch exceptions
+	// 清除所有可能的 Watch 状态位并禁用 Watch 异常
+	// MIPS 最多支持 8 组 Watch 寄存器（WatchHi/Lo 0-7）
 	mtc0	v1, C0_WATCHHI		// write C0_WatchHi0
 	mtc0	zero, C0_WATCHLO	// write C0_WatchLo0
 
@@ -93,10 +106,13 @@ LEAF(init_cp0)
 done_wr:
 
 	// Clear WP bit to avoid watch exception upon user code entry, IV, and software interrupts.
+	// 清除 WP 位，避免在进入用户代码、中断向量和软件中断时触发 Watch 异常
 	mtc0	zero, C0_CAUSE		// write C0_Cause: Init AFTER init of CP0 WatchHi/Lo registers.
+	                            // 写入 Cause 寄存器：必须在 Watch 寄存器初始化后执行
 
 	// Clear timer interrupt. (Count was cleared at the reset vector to allow timing boot.)
-	mtc0	zero, C0_COMPARE	// write C0_Compare
+	// 清除定时器中断（Count 在复位向量处已清零，用于测量启动时间）
+	mtc0	zero, C0_COMPARE	// write C0_Compare - 写入 Compare 寄存器
 
         jr      ra
 	nop

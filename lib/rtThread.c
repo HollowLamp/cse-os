@@ -63,7 +63,7 @@ bool rt_require_device(u32 device_id, u32 request_num)
     for (u32 n = 0; n < NUMBER_OF_RESOURCES; n++)
     {
         printf("available before:%d    ", available[n]);
-        
+
 
 
 
@@ -76,7 +76,7 @@ bool rt_require_device(u32 device_id, u32 request_num)
     {
         for (u32 d = 0; d < NUMBER_OF_RESOURCES; d++)
         {
-            
+
 
         }
         printf("\n");
@@ -89,7 +89,7 @@ bool rt_require_device(u32 device_id, u32 request_num)
 
     for (u32 n = 0; n < NUMBER_OF_RESOURCES; n++)
     {
-        
+
 
     }
     if (sum)
@@ -113,31 +113,31 @@ bool rt_require_device(u32 device_id, u32 request_num)
         u32 mark = 1;
         while (status_tmp[ptr] > 0)
         {
-            
+
 
         }
         for (u32 n = 0; n < NUMBER_OF_RESOURCES; n++)
         {
             printf("%d available after assign:%d, tmp:%d \n", n, available_after_assign[n], tmp[ptr][n]);
-            
+
 
 
         }
         if (mark)
         {
-            
+
 
 
         }
         else
         {
-            
+
 
 
         }
         if (fail >= NUMBER_OF_CUSTOMERS)
         {
-            
+
 
 
         }
@@ -149,7 +149,7 @@ assign:
     allocation[customer_num][device_id] += request_num;
     available[device_id] -= request_num;
 
-    
+
 //分配后不安全，则跳过资源分配部分，直接释放信号量
 exit:
 
@@ -228,7 +228,7 @@ bool rt_claim_device(u32 *require)
 {
     int index = getAsidIndex();
     printf("%d", index);
-    
+
 
 
 
