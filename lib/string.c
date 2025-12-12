@@ -1,7 +1,7 @@
 // Basic string routines. Not hardware optimized, but not shabby.
 
 #include <string.h>
-
+#include <stdint.h>
 int strlen(const char *s)
 {
 	int n;
