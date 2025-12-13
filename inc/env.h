@@ -48,7 +48,12 @@ struct Env {
 	u_int env_nop;                  // align to avoid mul instruction
 	u_int heap_pc;
 	uint32_t va;
+
+	/* ASIDÖ§³Ö*/
+	u_int env_asid;                 /* Address Space ID (0-255) */
 };
+
+
 struct EnvNode{
 	struct Env *data;
 	struct Env *next;

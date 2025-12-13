@@ -1,5 +1,4 @@
 #include <tlbop.h>
-#include <mips/cpu.h>
 #include <env.h>
 #include <mmu.h>
 #include <types.h>
@@ -102,44 +101,67 @@ page2kva(struct Page *pp)
  * 
  * 注意：此函数用于内核态查询虚拟地址的物理映射
  */
-u_long
-va2pa(Pde *pgdir, u_long va)
+u_long va2pa(Pde* pgdir, u_long va)
 {
-    Pte *p;
-    Pde *pd_entry;  // 创建临时变量，不修改原始pgdir参数
+    Pte* p;
+    Pde* pd_entry;
 
-    pd_entry = &pgdir[PDX(va)];  // 获取一级页表项
-    if (!(*pd_entry & PTE_V))    // 检查一级页表项是否有效
-    {
-        return ~0;            // 无效则返回全1
+    /* Step 1: 获取一级页表项 */
+    pd_entry = &pgdir[PDX(va)];
+
+    /* Step 2: 检查一级页表项是否有效 */
+    if (!(*pd_entry & PTE_V)) {
+        return ~0; // 无效则返回全1
     }
-    p = KADDR(PTE_ADDR(*pd_entry));  // 获取二级页表的虚拟地址
-    if (!(p[PTX(va)] & PTE_V))    // 检查二级页表项是否有效
-    {
-        return ~0;            // 无效则返回全1
-    }
-    return PTE_ADDR(p[PTX(va)]);  // 返回物理地址
-}
 
-//缺页异常时用来输出的
-unsigned long
-va2pa_print(Pde *pgdir, unsigned long va)//查页表，有则返回，无则返回全1
-{
-    Pte *p;
-    printf("\n@@@ tlb-va2pa: 0x%x   epc：0x%x\n",va,get_epc());
+    /* Step 3: 获取二级页表的虚拟地址 */
+    // 必须先提取物理地址，再转换
+    u_long pgtable_pa = PTE_ADDR(*pd_entry);
+    p = (Pte*)KADDR(pgtable_pa);
 
-    pgdir = &pgdir[PDX(va)];
-    if (!(*pgdir & PTE_V))   //一级页表没找到
-    {
+    /* Step 4: 检查二级页表项是否有效 */
+    if (!(p[PTX(va)] & PTE_V)) {
         return ~0;
     }
-    p = KADDR(PTE_ADDR(*pgdir));//二级页表虚拟地址
-    if (!(p[PTX(va)] & PTE_V))
-    {
-        return ~0;
-    }
-    printf("tlb_va_found!\n", va);
+
+    /* Step 5: 返回物理地址 */
     return PTE_ADDR(p[PTX(va)]);
+}
+/**
+ * 调试用的虚拟地址到物理地址转换（带打印）
+ * @param pgdir 页目录指针
+ * @param va 虚拟地址
+ * @return 物理地址，如果映射不存在则返回全1
+ *
+ * 注意：此函数仅用于调试，不应在生产代码中使用
+ */
+u_long va2pa_print(Pde* pgdir, u_long va)
+{
+    Pte* p;
+    Pde* pd_entry;
+
+    printf("\n@@@ tlb-va2pa: 0x%08x   epc：0x%08x\n", va, get_epc());
+
+    pd_entry = &pgdir[PDX(va)];
+
+    if (!(*pd_entry & PTE_V)) {
+        printf("  [一级页表无效] PDX=%d, pde=0x%08x\n", PDX(va), *pd_entry);
+        return ~0;
+    }
+
+    /* 修复：先提取物理地址，再转换 */
+    u_long pgtable_pa = PTE_ADDR(*pd_entry);
+    p = (Pte*)KADDR(pgtable_pa);
+
+    if (!(p[PTX(va)] & PTE_V)) {
+        printf("  [二级页表无效] PTX=%d, pte=0x%08x\n", PTX(va), p[PTX(va)]);
+        return ~0;
+    }
+
+    u_long pa = PTE_ADDR(p[PTX(va)]);
+    printf("  [找到映射] va=0x%08x -> pa=0x%08x\n", va, pa);
+
+    return pa;
 }
 
 void print_illegal(int num)
@@ -263,39 +285,42 @@ static void *alloc(u_int n, u_int align, int clear)
  * 4. 获取va在二级页表中对应的页表项
  * 5. 返回页表项的指针
  */
-static Pte *boot_pgdir_walk(Pde *pgdir, u_long va, int create)
+static Pte* boot_pgdir_walk(Pde* pgdir, u_long va, int create)
 {
-    Pde *pgdir_entryp;  // 一级页表项指针
-    Pte *pgtable;       // 二级页表的虚拟地址
-    Pte *pgtable_entry; // 页表项指针
+    Pde* pgdir_entryp;
+    Pte* pgtable;
+    Pte* pgtable_entry;
 
-    // Step 1: 获取va对应的一级页表项
-    pgdir_entryp = &pgdir[PDX(va)];                  // 通过PDX宏获取一级页表索引
-    pgtable = KADDR(PTE_ADDR(*pgdir_entryp));        // 获取二级页表的虚拟地址
-    
-    // Step 2: 检查一级页表项是否有效（PTE_V位是否设置）
-    if ((*pgdir_entryp & PTE_V) == 0x0)     // 一级页表项无效
-    {
-        if (create)                          // 如果允许创建
-        {
-            // 分配一个新的二级页表（BY2PG是页大小，通常为4KB）
-            pgtable = alloc(BY2PG, BY2PG, 1); // 不是通过page_alloc分配，因为此时虚拟内存系统尚未完全建立
-            
-            // 设置一级页表项指向新分配的二级页表
-            // PADDR宏将虚拟地址转换为物理地址
-            // PTE_V设置页表项的有效位
+    /* Step 1: 获取va对应的一级页表项 */
+    pgdir_entryp = &pgdir[PDX(va)];
+
+    /* Step 2: 检查一级页表项是否有效 */
+    if ((*pgdir_entryp & PTE_V) == 0x0) {
+        /* 一级页表项无效 */
+        if (create) {
+            // 分配一个新的二级页表
+            pgtable = alloc(BY2PG, BY2PG, 1);
+
+            // 设置一级页表项
             *pgdir_entryp = PADDR(pgtable) | PTE_V;
+
+            // 注意：此时pgtable已经是虚拟地址，不需要KADDR转换
         }
-        else
-        {
+        else {
             return 0; // 不允许创建则返回NULL
         }
     }
-    
-    // Step 3: 获取va对应的页表项
-    pgtable_entry = &pgtable[PTX(va)];  // 通过PTX宏获取二级页表索引
-    
-    return pgtable_entry;                // 返回页表项的指针
+    else {
+        /* 一级页表项有效，获取二级页表的虚拟地址 */
+        // 这里需要先用PTE_ADDR提取物理地址，再用KADDR转换
+        u_long pgtable_pa = PTE_ADDR(*pgdir_entryp);
+        pgtable = (Pte*)KADDR(pgtable_pa);
+    }
+
+    /* Step 3: 获取va对应的页表项 */
+    pgtable_entry = &pgtable[PTX(va)];
+
+    return pgtable_entry;
 }
 
 /**
@@ -787,30 +812,52 @@ int pgdir_walk(Pde *pgdir, u_long va, int create, Pte **ppte)
  *      If there is already a page mapped at `va`, call page_remove() to release this mapping.
  *      The `pp_ref` should be incremented if the insertion succeeds.
  */
-int page_insert(Pde *pgdir, struct Page *pp, u_long va, u_int perm)
+int page_insert(Pde* pgdir, struct Page* pp, u_long va, u_int perm)
 {
-    Pte *pte;
+    Pte* pte;
     int r;
 
     /* Step 1: Get the page table entry for virtual address `va`. */
     if ((r = pgdir_walk(pgdir, va, 1, &pte)) < 0) {
+        printf("page_insert: pgdir_walk failed for va=0x%08x\n", va);
         return r;
     }
 
-    /* Step 2: If the page table entry exists(valid), decrease the reference count of the old page. */
+    /* Step 2: If the page table entry exists(valid), remove the old mapping. */
     if (*pte & PTE_V) {
+        /* 检查是否是映射到同一个物理页 */
+        if (PTE_ADDR(*pte) == page2pa(pp)) {
+            /* 同一个页面，只需更新权限 */
+            *pte = page2pa(pp) | perm | PTE_V;
+
+            /* 如果权限变化，需要使TLB失效 */
+            if ((*pte & (PTE_R | PTE_W | PTE_U)) != (perm & (PTE_R | PTE_W | PTE_U))) {
+                tlb_invalidate(pgdir, va);
+            }
+
+            return 0;
+        }
+
+        /* 映射到不同页面，先移除旧的 */
+        printf("page_insert: removing old mapping for va=0x%08x\n", va);
         page_remove(pgdir, va);
     }
 
     /* Step 3: Set the page table entry to point to physical page `pp`. */
     *pte = page2pa(pp) | perm | PTE_V;
 
-    /* Step 4: Increase the reference count of page `pp` and return. */
+    /* Step 4: Increase the reference count of page `pp`. */
     pp->pp_ref++;
+
+    printf("page_insert: va=0x%08x -> pa=0x%08x, perm=0x%x, ref=%d\n",
+        va, page2pa(pp), perm, pp->pp_ref);
+
+    /* Step 5: 使旧TLB条目失效 */
     tlb_invalidate(pgdir, va);
 
     return 0;
 }
+
 
 /**
  * 找到虚拟地址 va 所在的页
@@ -895,65 +942,234 @@ void page_remove(Pde *pgdir, u_long va)
     tlb_invalidate(pgdir, va);
     return;
 }
+#include <m32c0.h>  // 确保包含CP0寄存器定义头文件
 
 /**
- * 从tlb中删去e的va目标项
- * Overview:
- *      Update TLB.
+ * 使指定虚拟地址的TLB条目失效
+ * @param pgdir 页目录指针（用于验证）
+ * @param va 虚拟地址
+ *
+ * MIPS TLB失效原理：
+ * 1. 设置EntryHi寄存器（VPN2 + ASID）
+ * 2. 执行tlbp指令，探测TLB中是否有匹配的条目
+ * 3. 如果找到，使用tlbwi指令写入无效条目使其失效
+ *
+ * EntryHi寄存器格式：
+ *   [31:13] VPN2（虚拟页号/2）
+ *   [12:8]  保留
+ *   [7:0]   ASID（地址空间标识符）
  */
-/**
- * tlb_invalidate 函数用来使TLB中的条目失效
- * Overview:
- *     Invalidate the TLB entry for virtual address `va` in the given page directory `pgdir`.  
- *     If `pgdir` is the current page directory, invalidate the TLB entry.
- * Post-Condition:
- *     No return value.
- */
-void tlb_invalidate(Pde *pgdir, u_long va)
+void tlb_invalidate(Pde* pgdir, u_long va)
 {
-    /* Step 1: Invalidate the TLB entry for virtual address `va`. */
-    /* 在MIPS中，我们需要设置EntryHi寄存器并调用tlb_out指令 */
-    u_int entryhi = va & ~0xfff;
-    /* ASID需要从当前运行环境获取 */
-    if (curenv) {
-        entryhi |= curenv->env_asid << 6;
-    } else {
-        /* 如果没有当前环境，使用0作为ASID */
-        entryhi |= 0 << 6;
+    u_int entryhi;
+    u_int asid = 0;
+
+    /* Step 1: 参数验证 */
+    if (!pgdir) {
+        printf("tlb_invalidate: NULL pgdir\n");
+        return;
     }
+
+    if (va >= ULIM && !(va >= KERNBASE && va < (KERNBASE + 0x20000000))) {
+        printf("tlb_invalidate: invalid va 0x%08x\n", va);
+        return;
+    }
+
+    /* Step 2: 获取当前ASID */
+    if (curenv && curenv->env_asid) {
+        asid = curenv->env_asid & 0xFF;  // ASID是8位
+    }
+    else {
+        // 内核模式或没有当前环境，使用ASID 0
+        asid = 0;
+    }
+
+    /* Step 3: 构造EntryHi值
+     * VPN2 = va[31:13] （MIPS TLB使用VPN/2，因为每个TLB条目对应两个页面）
+     * ASID = asid[7:0]
+     */
+    entryhi = (va & 0xFFFFE000);  // 保留VPN2位，清除低13位
+
+    /* 如果va是奇数页（VPN2的最低有效位为1），需要调整 */
+    if (va & 0x1000) {
+        // 对于奇数页，VPN2需要减1（因为TLB条目总是成对映射）
+        entryhi -= 0x2000;
+    }
+
+    // 清除原有的ASID位（低8位）
+    entryhi &= ~0xFF;
+    // 设置新的ASID
+    entryhi |= asid;
+
+    printf("tlb_invalidate: va=0x%08x, entryhi=0x%08x, asid=%d\n",
+        va, entryhi, asid);
+
+    /* Step 4: 调用汇编函数使TLB条目失效 */
+    /* tlb_out函数应该：
+       1. 将entryhi写入CP0_EntryHi
+       2. 执行tlbp指令寻找匹配的TLB条目
+       3. 如果找到（Index寄存器>=0），执行tlbwi写入无效条目
+     */
     tlb_out(entryhi);
 
-    return;
-}
+    /* Step 5: 可选 - 验证TLB条目确实已失效 */
+#ifdef DEBUG_TLB
+    {
+        u_int index;
+        // 再次探测，确认TLB条目已失效
+        asm volatile(
+            "mtc0 %1, $10\n\t"   // 写入EntryHi
+            "tlbp\n\t"           // 探测TLB
+            "mfc0 %0, $0\n\t"    // 读取Index
+            : "=r"(index)
+            : "r"(entryhi)
+            );
 
+        if ((index & 0x80000000) == 0) {
+            printf("  [警告] TLB条目可能未完全失效，index=%d\n", index & 0x3F);
+        }
+    }
+#endif
+}
 
 extern int get_asid();
 
-
-uint32_t pageout(uint32_t va, uint32_t context)
+/**
+ * 处理缺页异常（原pageout函数）
+ * @param va 触发异常的虚拟地址
+ * @param context 上下文（页目录物理地址）
+ * @return 物理地址，如果失败返回0
+ *
+ * 功能：处理TLB缺失异常，分配物理页并建立映射
+ */
+u_long handle_page_fault(u_long va, u_long context)
 {
-    u_long r;
-    struct Page *p = NULL;
+    Pde* pgdir;
+    struct Page* pp = NULL;
+    Pte* pte;
+    int r;
+    u_int perm = 0;
 
-    if (context < 0x80000000) //todo 
-    {
-        panic("tlb refill and alloc error!");
+    printf("\n=== 缺页异常处理开始 ===\n");
+    printf("  va=0x%08x, context=0x%08x\n", va, context);
+    printf("  epc=0x%08x, badvaddr=0x%08x\n", get_epc(), get_badvaddr());
+
+    /* Step 1: 参数验证 */
+    if (context < KERNBASE) {
+        printf("  [错误] 无效的context: 0x%08x\n", context);
+        panic("handle_page_fault: invalid context");
     }
 
-    if ((va > 0x7f400000) && (va < 0x7f800000)) //todo 虚拟内存里这块是ENVS，只有内核可以访问，为什么要单独判断这个
-    {
-        panic(">>>>>>>>>>>>>>>>>>>>>>it's env's zone");
-    }
-    
-    if ((r = page_alloc(&p)) < 0)
-    {
-        panic("page alloc error!");
+    pgdir = (Pde*)KADDR(context);  // 将物理地址转换为内核虚拟地址
+
+    /* Step 2: 检查虚拟地址范围 */
+    if (va >= UTOP && va < ULIM) {
+        // 这是内核预留区域（envs, pages等），用户不能直接访问
+        if (va < ULIM && !(va >= KERNBASE)) {
+            printf("  [错误] 用户访问内核预留区域: 0x%08x\n", va);
+            return 0;
+        }
     }
 
-    page_insert((Pde *)context, p, VA2PFN(va), PTE_R);
-    printf("pageout: @ 0x%x @  ->pa 0x%x\n", va,page2pa(p));
-    printf("CP0HI: 0x%x status:0x%x \n",get_asid(),get_status());
+    /* Step 3: 确定访问类型和权限 */
+    // 检查异常原因
+    u_int cause = get_cause();
+    u_int excode = (cause >> 2) & 0x1F;
 
-    return va2pa((Pde *)context, va); 
+    int is_write = 0;
+    int is_user = (va < ULIM);  // 用户地址空间
+
+    switch (excode) {
+    case 2:  /* TLBL - TLB加载异常 */
+        printf("  [TLB加载异常]\n");
+        perm = PTE_V | PTE_R;
+        break;
+    case 3:  /* TLBS - TLB存储异常 */
+        printf("  [TLB存储异常]\n");
+        perm = PTE_V | PTE_R | PTE_W;
+        is_write = 1;
+        break;
+    case 1:  /* Mod - TLB修改异常 */
+        printf("  [TLB修改异常]\n");
+        // 需要检查页面是否可写
+        perm = PTE_V | PTE_R | PTE_W;
+        is_write = 1;
+        break;
+    default:
+        printf("  [未知异常] excode=%d\n", excode);
+        return 0;
+    }
+
+    /* Step 4: 检查是否已存在映射（可能只是TLB缺失） */
+    struct Page* existing = page_lookup(pgdir, va, &pte);
+
+    if (existing) {
+        printf("  [找到现有页面] pp=0x%08x, pa=0x%08x\n",
+            existing, page2pa(existing));
+
+        // 检查权限
+        if (pte && *pte) {
+            if (is_write && !(*pte & PTE_W)) {
+                printf("  [错误] 写保护异常\n");
+                return 0;
+            }
+
+            if (is_user && !(*pte & PTE_U)) {
+                printf("  [错误] 用户模式访问内核页\n");
+                return 0;
+            }
+
+            // 如果是修改异常，需要设置脏位
+            if (is_write && excode == 1) {
+                *pte |= PTE_D;
+                printf("  [设置脏位]\n");
+            }
+
+            // 页面已存在，只需返回物理地址（TLB会重新加载）
+            return page2pa(existing);
+        }
+    }
+
+    /* Step 5: 分配新页面 */
+    printf("  [分配新页面]\n");
+    if ((r = page_alloc(&pp)) < 0) {
+        printf("  [错误] 页面分配失败: %d\n", r);
+        panic("handle_page_fault: page allocation failed");
+    }
+
+    /* Step 6: 设置完整的权限 */
+    if (is_user) {
+        perm |= PTE_U;  // 用户可访问
+    }
+
+    // 如果是写操作，设置脏位
+    if (is_write) {
+        perm |= PTE_D;
+    }
+
+    /* Step 7: 建立映射 */
+    printf("  [建立映射] va=0x%08x -> pp=0x%08x, perm=0x%x\n",
+        va, pp, perm);
+
+    if ((r = page_insert(pgdir, pp, va, perm)) < 0) {
+        printf("  [错误] 页面插入失败: %d\n", r);
+        page_free(pp);
+        panic("handle_page_fault: page insertion failed");
+    }
+
+    /* Step 8: 记录日志 */
+    u_long pa = page2pa(pp);
+    printf("  [映射成功] va=0x%08x -> pa=0x%08x\n", va, pa);
+    printf("  [页面信息] pp_ref=%d\n", pp->pp_ref);
+
+    printf("=== 缺页异常处理结束 ===\n\n");
+
+    return pa;
 }
 
+/* 为了向后兼容，保留pageout作为包装函数 */
+u_long pageout(u_long va, u_long context)
+{
+    printf("警告: pageout()已废弃，请使用handle_page_fault()\n");
+    return handle_page_fault(va, context);
+}

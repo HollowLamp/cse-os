@@ -17,8 +17,7 @@ void myoutput(void *arg, char *s, int l);
 
 void printf(char *fmt, ...);
 
-void _panic(const char *, int, const char *, ...) 
-	__attribute__((noreturn));
+void _panic(const char* file, int line, const char* fmt, ...);
 
 #define panic(...) _panic(__FILE__, __LINE__, __VA_ARGS__)
 
