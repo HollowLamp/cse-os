@@ -42,14 +42,14 @@ void *sys_get_shm(int sysno, int key, int size)
 	u_long rr;
 	u_long perm;
 	size_t sizeMax = ROUND(size, BY2PG);
-	p =                              ;
+	p = create_share_vm(key, size);
 	if (p == NULL)
 	{
 		printf("alloc shared page failed\n");
 		return NULL;
 	}
 	printf("alloc shared page success\n");
-	void *result =                       ;
+	void *result = insert_share_vm(curenv, p);
 	printf("insert shared page success\n");
 	return result;
 }
@@ -119,8 +119,6 @@ int sys_set_pgfault_handler(int sysno, u_int envid, u_int func, u_int xstacktop)
 	}
 	// Your code here.
 
-
-
 	return 0;
 }
 
@@ -148,30 +146,33 @@ int sys_mem_alloc(int sysno, u_int envid, u_int va, u_int perm)
 	int ret;
 	ret = 0;
 	// check whether permission is legal
-	
-
+	if (!(perm & PTE_V) || (perm & PTE_COW))
+	{
+		return -E_INVAL;
+	}
 
 	// check whether va is legal
-	
-
-
+	if (va >= UTOP|| va < 0)
+	{
+		return -E_INVAL;
+	}
 
 	// try to alloc a page
-	ret =        ;
+	ret = page_alloc(&ppage);
 	if (ret < 0)
 	{
 		printf("sys_mem_alloc:failed to alloc a page\n");
 		return -E_NO_MEM;
 	}
 	//try to check and get the env_id;
-	ret =        ;
+	ret = envid2env(envid, &env, 1);
 	if (ret < 0)
 	{
 		printf("sys_mem_alloc:failed to get the target env\n");
 		return -E_BAD_ENV;
 	}
 	//now insert
-	ret =         ;
+	ret = page_insert(env->env_pgdir, ppage, va, perm);
 	if (ret < 0)
 	{
 		printf("sys_mem_alloc:page_insert failed");
@@ -194,6 +195,7 @@ int sys_mem_alloc(int sysno, u_int envid, u_int va, u_int perm)
  * Note:
  * 	Cannot access pages above UTOP.
  */
+// 将 srcid 进程空间内 srcva 虚拟地址 所对应的物理页，映射到 dstid 进程空间内的 dstva 虚拟地址
 int sys_mem_map(int sysno, u_int srcid, u_int srcva, u_int dstid, u_int dstva,
 				u_int perm)
 {
@@ -210,38 +212,38 @@ int sys_mem_map(int sysno, u_int srcid, u_int srcva, u_int dstid, u_int dstva,
 	round_dstva = ROUNDDOWN(dstva, BY2PG);
 
 	// get corresponding env
-	if (                    )
+	if (envid2env(srcid, &srcenv, 1) < 0  )//id找不到srcenv
 	{ //=============================
 		printf("sys_mem_map:srcenv doesn't exist\n");
 		return         ;
 	}
-	if (                       )
+	if ( envid2env(dstid, &dstenv, 1) < 0  )//id找不到dstenv
 	{ //==============================
 		printf("sys_mem_map:dstenv doesn't exist\n");
 		return  ;
 	} 
 
 	//va<UTOP?
-	if (                               )
+	if ( srcva >= UTOP || dstva >= UTOP || srcva < 0 || dstva < 0)
 	{
 		printf("sys_mem_map:va is invalid\n");
 		return               ;
 	}
 	// perm is valid?
-	if (                    )
+	if (  (!(perm & PTE_V)) || (perm & PTE_COW) )
 	{
 		printf("sys_mem_map:permission denied\n");
 		return                ;
 	}
 	//try to get the page
-	ppage = page_lookup(            );
+	ppage = page_lookup( srcenv->env_pgdir, round_srcva, &ppte  );
 	if (ppage == NULL)
 	{
 		printf("sys_mem_map:page of srcva is invalid\n");
 		return    ;
 	}
 	//try to insert the page
-	ret = page_insert(              );
+	ret = page_insert( dstenv->env_pgdir, ppage, round_dstva, perm);
 	if (ret < 0)
 	{
 		printf("sys_mem_map:page_insert denied\n");
@@ -259,22 +261,23 @@ int sys_mem_map(int sysno, u_int srcid, u_int srcva, u_int dstid, u_int dstva,
  *
  * Cannot unmap pages above UTOP.
  */
+//取消映射
 int sys_mem_unmap(int sysno, u_int envid, u_int va)
 {
 	int ret = 0;
 	struct Env *env;
-	ret = (                       ); 
+	ret =   envid2env(envid, &env, 1) ; 
 	if (ret < 0)
 	{
 		printf("sys_mem_alloc:failed to get the target env\n");
 		return -E_BAD_ENV;
 	}
-	if (va >= UTOP)
+	if (va < 0 ||va >= UTOP)
 	{
 		printf("sys_mem_unmap:va is not valid\n");
 		return -E_NO_MEM;
 	}
-	page_remove(                      );
+	page_remove( env->env_pgdir, va);
 	return ret;
 }
 

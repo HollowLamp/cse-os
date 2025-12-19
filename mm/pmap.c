@@ -669,18 +669,16 @@ void* insert_share_vm(struct Env *e, struct Page *p)
     u_long r;
     perm = PTE_V | PTE_R | PTE_W | PTE_U;
     
-    // 在用户堆区域分配一个虚拟地址
-    u_long va = e->heap_pc;
-    e->heap_pc += BY2PG; // 假设每次只分配一页
+    // 在用户堆区域分配一个虚拟地址，向下移动两个页
+    u_long va = e->heap_pc - 2 * BY2PG;
     
     /*Step 2: Use appropriate perm to set initial stack for new Env. */
     /*Hint: The user-stack should be writable? */
-    r = page_insert(e->env_pgdir, p, va, perm);  //TODO VA下移两个页
+    r = page_insert(e->env_pgdir, p, va, perm);
     if (r < 0) {
         printf("error,load_icode:page_insert failed\n");
         return NULL;
     }
-    e->heap_pc = va + BY2PG;
     int *result = (int *)va;
     return result;
 }
