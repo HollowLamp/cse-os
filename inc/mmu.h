@@ -1,7 +1,6 @@
 #ifndef _MMU_H_
 #define _MMU_H_
 
-
 /*
  * This file contains:
  *
@@ -13,43 +12,42 @@
 /*
  * Part 1.  MIPS definitions.
  */
-#define BY2PG		4096		// bytes to a page
-#define PDMAP		(4*1024*1024)	// bytes mapped by a page directory entry
-#define PGSHIFT		12
-#define PDSHIFT		22		// log2(PDMAP)
-#define PDX(va)		((((u_long)(va))>>22) & 0x03FF)
-#define PTX(va)		((((u_long)(va))>>12) & 0x03FF)
-#define PTE_ADDR(pte)	((u_long)(pte)&~0xFFF)
-
+#define BY2PG 4096				// bytes to a page
+#define PDMAP (4 * 1024 * 1024) // bytes mapped by a page directory entry
+#define PGSHIFT 12
+#define PDSHIFT 22 // log2(PDMAP)
+#define PDX(va) ((((u_long)(va)) >> 22) & 0x03FF)
+#define PTX(va) ((((u_long)(va)) >> 12) & 0x03FF)
+#define PTE_ADDR(pte) ((u_long)(pte) & ~0xFFF)
 
 // page number field of address
-#define PPN(va)		(((u_long)(va))>>12)
-#define VPN(va)		PPN(va)
+#define PPN(va) (((u_long)(va)) >> 12)
+#define VPN(va) PPN(va)
 
-#define VA2PFN(va)		(((u_long)(va)) & 0xFFFFF000 ) // va 2 PFN for EntryLo0/1
-#define PTE2PT		1024
+#define VA2PFN(va) (((u_long)(va)) & 0xFFFFF000) // va 2 PFN for EntryLo0/1
+#define PTE2PT 1024
 //$#define VA2PDE(va)		(((u_long)(va)) & 0xFFC00000 ) // for context
 
 /* Page Table/Directory Entry flags
  *   these are defined by the hardware
  */
-#define PTE_G		0x0100	// Global bit
-#define PTE_V		0x0200	// Valid bit
-#define PTE_R		0x0400	// Dirty bit ,'0' means only read ,otherwise make interrupt
-#define PTE_D		0x0002	// fileSystem Cached is dirty
-#define PTE_COW		0x0001	// Copy On Write
-#define PTE_UC		0x0800	// unCached
-#define PTE_LIBRARY		0x0004	// share memmory
-#define PTE_W		0x0008	// Writable bit (根据MIPS标准)
-#define PTE_U		0x0010	// User accessible bit
+#define PTE_G 0x0100	   // Global bit
+#define PTE_V 0x0200	   // Valid bit
+#define PTE_R 0x0400	   // Dirty bit ,'0' means only read ,otherwise make interrupt
+#define PTE_D 0x0002	   // fileSystem Cached is dirty
+#define PTE_COW 0x0001	   // Copy On Write
+#define PTE_UC 0x0800	   // unCached
+#define PTE_LIBRARY 0x0004 // share memmory
+#define PTE_W 0x0008	   // Writable bit (根据MIPS标准)
+#define PTE_U 0x0010	   // User accessible bit
 
 /* 添加设备内存空间定义 */
-#define DEVSPACE	0x10000000  // Device memory space
+#define DEVSPACE 0x10000000 // Device memory space
 
 /* 常用权限组合 */
-#define PTE_RW		(PTE_R | PTE_W)      // Read-Write
-#define PTE_UR		(PTE_U | PTE_R)      // User Readable
-#define PTE_URW		(PTE_U | PTE_R | PTE_W) // User Read-Write
+#define PTE_RW (PTE_R | PTE_W)			// Read-Write
+#define PTE_UR (PTE_U | PTE_R)			// User Readable
+#define PTE_URW (PTE_U | PTE_R | PTE_W) // User Read-Write
 
 /*
  * Part 2.  Our conventions.
@@ -66,14 +64,14 @@
  o                      |      Invalid memory        |   /|\
  o                      +----------------------------+----|-------Physics Memory Max
  o                      |       ...                  |  kseg0
- o  VPT,KSTACKTOP-----> +----------------------------+----|-------0x8040 0000-------end 
+ o  VPT,KSTACKTOP-----> +----------------------------+----|-------0x8040 0000-------end
  o                      |       Kernel Stack         |    | KSTKSIZE            /|\
  o                      +----------------------------+----|------                |
  o                      |       Kernel Text          |    |                    PDMAP
- o      KERNBASE -----> +----------------------------+----|-------0x8001 0000    | 
+ o      KERNBASE -----> +----------------------------+----|-------0x8001 0000    |
  o                      |   Interrupts & Exception   |   \|/                    \|/
- o      ULIM     -----> +----------------------------+------------0x8000 0000-------   2G 
- o                      |         User VPT           |     PDMAP                /|\ 
+ o      ULIM     -----> +----------------------------+------------0x8000 0000-------   2G
+ o                      |         User VPT           |     PDMAP                /|\
  o      UVPT     -----> +----------------------------+------------0x7fc0 0000    |
  o                      |         HEAP               |     2*PDMAP               |
  o  UTOP/UXSTACKTOP---> +----------------------------+------------0x7f40 0000    |
@@ -94,46 +92,44 @@
  o
 */
 
-
 #define KERNBASE 0x80010000
 
-#define VPT (ULIM + PDMAP )
-#define KSTACKTOP (VPT-0x100)
-#define KSTKSIZE (8*BY2PG)
+#define VPT (ULIM + PDMAP)
+#define KSTACKTOP (VPT - 0x100)
+#define KSTKSIZE (8 * BY2PG)
 #define ULIM 0x80000000
 /* 用户空间特殊区域（从ULIM向下递减）*/
-#define UVPT       (ULIM - PDMAP)        /* 用户页表 - 0x7fc00000 */
-#define UPAGES     (UVPT - PDMAP)        /* 用户页结构 - 0x7f800000 */
-#define UENVS      (UPAGES - PDMAP)      /* 用户环境结构 - 0x7f400000 */
-#define UTOP       (UENVS - PDMAP)       /* 用户空间顶部 - 0x7f000000 */
+#define UVPT (ULIM - PDMAP)	   /* 用户页表 - 0x7fc00000 */
+#define UPAGES (UVPT - PDMAP)  /* 用户页结构 - 0x7f800000 */
+#define UENVS (UPAGES - PDMAP) /* 用户环境结构 - 0x7f400000 */
+#define UTOP (UENVS - PDMAP)   /* 用户空间顶部 - 0x7f000000 */
 
 /* 其他相关定义 */
-#define UXSTACKTOP UTOP                   /* 用户异常栈顶 */
-#define USTACKTOP  (UTOP - 2*BY2PG)       /* 用户栈顶 */
+#define UXSTACKTOP UTOP				 /* 用户异常栈顶 */
+#define USTACKTOP (UTOP - 2 * BY2PG) /* 用户栈顶 */
 
 #define UXSTACKTOP (UTOP)
 #define TIMESTACK 0x82000000
-#define USTACKTOP (UTOP - 2*BY2PG)
+#define USTACKTOP (UTOP - 2 * BY2PG)
 
 #define UTEXT 0x15000000
 
-
-#define E_UNSPECIFIED	1	// Unspecified or unknown problem
-#define E_BAD_ENV       2       // Environment doesn't exist or otherwise
-				// cannot be used in requested action
-#define E_INVAL		3	// Invalid parameter
-#define E_NO_MEM	4	// Request failed due to memory shortage
-#define E_NO_FREE_ENV   5       // Attempt to create a new environment beyond
-				// the maximum allowed
-#define E_IPC_NOT_RECV  6	// Attempt to send to env that is not recving.
+#define E_UNSPECIFIED 1 // Unspecified or unknown problem
+#define E_BAD_ENV 2		// Environment doesn't exist or otherwise
+// cannot be used in requested action
+#define E_INVAL 3		// Invalid parameter
+#define E_NO_MEM 4		// Request failed due to memory shortage
+#define E_NO_FREE_ENV 5 // Attempt to create a new environment beyond
+// the maximum allowed
+#define E_IPC_NOT_RECV 6 // Attempt to send to env that is not recving.
 
 // File system error codes -- only seen in user-level
-#define	E_NO_DISK	7	// No free space left on disk
-#define E_MAX_OPEN	8	// Too many files are open
-#define E_NOT_FOUND	9 	// File or block not found
-#define E_BAD_PATH	10	// Bad path
-#define E_FILE_EXISTS	11	// File already exists
-#define E_NOT_EXEC	12	// File not a valid executable
+#define E_NO_DISK 7		 // No free space left on disk
+#define E_MAX_OPEN 8	 // Too many files are open
+#define E_NOT_FOUND 9	 // File or block not found
+#define E_BAD_PATH 10	 // Bad path
+#define E_FILE_EXISTS 11 // File already exists
+#define E_NOT_EXEC 12	 // File not a valid executable
 
 #define MAXERROR 12
 
@@ -153,38 +149,46 @@ extern u_long npage;
 typedef u_long Pde;
 typedef u_long Pte;
 
-extern volatile Pte* vpt[];
-extern volatile Pde* vpd[];
+extern volatile Pte *vpt[];
+extern volatile Pde *vpd[];
 
-
-static inline u_long PADDR(void* kva) {
+static inline u_long PADDR(void *kva)
+{
 	u_long a = (u_long)kva;
-	if (a < ULIM) {
+	if (a < ULIM)
+	{
 		panic("PADDR called with invalid kva %08lx", a);
 	}
 	return a - ULIM;
 }
 
-
 // translates from physical address to kernel virtual address
-static inline void* KADDR(u_long pa) {
+static inline void *KADDR(u_long pa)
+{
 	u_long ppn = PPN(pa);
-	if (ppn >= npage) {
+	if (ppn >= npage)
+	{
 		panic("KADDR called with invalid pa %08lx", pa);
 	}
-	return (void*)(pa + ULIM);
+	return (void *)(pa + ULIM);
 }
 
-#define assert(x)	\
-	do {	if (!(x)) panic("assertion failed: %s", #x); } while (0)
-
-#define TRUP(_p)   						\
-({								\
-	register typeof((_p)) __m_p = (_p);			\
-	(u_int) __m_p > ULIM ? (typeof(_p)) ULIM : __m_p;	\
-})
-
-
+#define assert(x)                              \
+	do                                         \
+	{                                          \
+		if (!(x))                              \
+			panic("assertion failed: %s", #x); \
+	} while (0)
+#undef TRUP
+#if defined(_MSC_VER)
+#define TRUP(_p) ((void *)(((uintptr_t)(_p) > (uintptr_t)(ULIM)) ? (uintptr_t)(ULIM) : (uintptr_t)(_p)))
+#else // GNU C
+#define TRUP(_p)                                         \
+	({                                                   \
+		register typeof((_p)) __m_p = (_p);              \
+		(u_int) __m_p > ULIM ? (typeof(_p))ULIM : __m_p; \
+	})
+#endif
 
 extern void tlb_out(u_int entryhi);
 #endif //!__ASSEMBLER__

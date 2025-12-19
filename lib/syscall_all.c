@@ -20,16 +20,15 @@ extern struct Env *curenv;
 char myelf[BUFLEN] = {0};
 char myargv[BUFLEN] = {0};
 
-extern struct Page* create_share_vm(int key, size_t size);
-extern void* insert_share_vm(struct Env *e, struct Page *p);
+extern struct Page *create_share_vm(int key, size_t size);
+extern void *insert_share_vm(struct Env *e, struct Page *p);
 extern void env_create_priority_arg(char *binary, int priority, char *arg);
 extern void pthread_create(void *func, int arg);
 extern void readline(const char *prompt, char *ret, int getargv);
 
-
 /* Overview:
  * 	This function is used to print a character on screen.
- * 
+ *
  * Pre-Condition:
  * 	`c` is the character you want to print.
  */
@@ -83,13 +82,15 @@ int sys_env_create(int sysno, char *binary, int pt, char *arg)
 	{
 		int i = 0;
 		// 把 arg 读到 myargv 里
-		for (int i = 0; arg[i]; i++) {
+		for (int i = 0; arg[i]; i++)
+		{
 			myargv[i] = arg[i];
 		}
 		myargv[i] = 0;
 		printf("\n");
-		// 把 binary 读到 myelf 里		
-		for (int i = 0; binary[i]; i++) {
+		// 把 binary 读到 myelf 里
+		for (int i = 0; binary[i]; i++)
+		{
 			myelf[i] = binary[i];
 		}
 		printf("\n");
@@ -99,8 +100,9 @@ int sys_env_create(int sysno, char *binary, int pt, char *arg)
 	}
 	else
 	{
-		// 把 binary 读到 myelf 里		
-		for (int i = 0; binary[i]; i++) {
+		// 把 binary 读到 myelf 里
+		for (int i = 0; binary[i]; i++)
+		{
 			myelf[i] = binary[i];
 		}
 		printf("\n");
@@ -111,7 +113,7 @@ int sys_env_create(int sysno, char *binary, int pt, char *arg)
 
 /* Overview:
  * 	Set envid's pagefault handler entry point and exception stack.
- * 
+ *
  * Pre-Condition:
  * 	xstacktop points one byte past exception stack.
  *
@@ -122,7 +124,7 @@ int sys_env_create(int sysno, char *binary, int pt, char *arg)
  */
 // 根据 envid，设置该 env 的 1. pagefault handler（通过 entry point）2. exception stack（通过 stack top）
 int sys_set_pgfault_handler(int sysno, u_int envid, u_int func, u_int xstacktop)
-{	
+{
 	struct Env *env;
 	int ret;
 	ret = envid2env(envid, &env, 0); // 得到 envid 对应的 env
@@ -143,7 +145,7 @@ int sys_set_pgfault_handler(int sysno, u_int envid, u_int func, u_int xstacktop)
  *
  * 	If a page is already mapped at 'va', that page is unmapped as a
  * side-effect.
- * 
+ *
  * Pre-Condition:
  * perm -- PTE_V is required,
  *         PTE_COW is not allowed(return -E_INVAL),
@@ -163,14 +165,16 @@ int sys_mem_alloc(int sysno, u_int envid, u_int va, u_int perm)
 	ret = 0;
 
 	// check whether permission is legal
-	if ((!(perm & PTE_V)) || (perm & PTE_COW)) {
+	if ((!(perm & PTE_V)) || (perm & PTE_COW))
+	{
 		// 按照原注释的意思，判一下 PTE_V PTE_COW
 		printf("sys_mem_alloc:permission denined\n");
 		return -E_INVAL;
 	}
 
 	// check whether va is legal
-	else if (va >= UTOP || va < 0) {
+	else if (va >= UTOP || va < 0)
+	{
 		// va 必须在 0 和 user stack top 之间
 		printf("sys_mem_alloc:va is illegal\n)");
 		return -E_INVAL;
@@ -178,19 +182,21 @@ int sys_mem_alloc(int sysno, u_int envid, u_int va, u_int perm)
 
 	// try to alloc a page
 	ret = page_alloc(&ppage); // 从空闲链表中分配一页物理内存，见 pmap.c
-	if (ret < 0) {
+	if (ret < 0)
+	{
 		printf("sys_mem_alloc:failed to alloc a page\n");
 		return -E_NO_MEM;
 	}
 
 	// try to check and get the env_id;
 	ret = envid2env(envid, &env, 1); // 得到 envid 对应的 env
-	if (ret < 0) {
+	if (ret < 0)
+	{
 		printf("sys_mem_alloc:failed to get the target env\n");
 		return -E_BAD_ENV;
 	}
 	// now insert
-	ret = page_insert(env->env_pgdir, ppage, va, perm); 
+	ret = page_insert(env->env_pgdir, ppage, va, perm);
 	// 将 va 虚拟地址、和其要对应的物理页 pp 的映射关系，以 perm 的权限，加入页目录 pde
 	if (ret < 0)
 	{
@@ -232,26 +238,26 @@ int sys_mem_map(int sysno, u_int srcid, u_int srcva, u_int dstid, u_int dstva,
 
 	// get corresponding env
 	if (envid2env(srcid, &srcenv, 1) < 0) // 如果用 id 找不到 env
-	{ //=============================
+	{									  //=============================
 		printf("sys_mem_map:srcenv doesn't exist\n");
 		return -E_BAD_ENV;
 	}
 	if (envid2env(dstid, &dstenv, 1) < 0) // 如果用 id 找不到 env
-	{ //==============================
+	{									  //==============================
 		printf("sys_mem_map:dstenv doesn't exist\n");
 		return -E_BAD_ENV;
-	} 
+	}
 
 	// va < UTOP?
 	if (srcva >= UTOP || dstva >= UTOP || srcva < 0 || dstva < 0)
-	{	// 和上面一样，判一下虚拟地址合法性
+	{ // 和上面一样，判一下虚拟地址合法性
 		// va 必须在 0 和 user stack top 之间
 		printf("sys_mem_map:va is invalid\n");
 		return -E_NO_MEM;
 	}
 	// perm is valid?
 	if ((!(perm & PTE_V)) || (perm & PTE_COW))
-	{	// 和上面一样，判一下 perm 合法性
+	{ // 和上面一样，判一下 perm 合法性
 		printf("sys_mem_map:permission denied\n");
 		return -E_NO_MEM;
 	}
@@ -265,7 +271,7 @@ int sys_mem_map(int sysno, u_int srcid, u_int srcva, u_int dstid, u_int dstva,
 	}
 
 	// try to insert the page
-	ret = page_insert(dstenv->env_pgdir, ppage, round_dstva, perm); 
+	ret = page_insert(dstenv->env_pgdir, ppage, round_dstva, perm);
 	// 将 va 虚拟地址、和其要对应的物理页 pp 的映射关系，以 perm 的权限，加入页目录 pde
 	if (ret < 0)
 	{
@@ -285,17 +291,19 @@ int sys_mem_map(int sysno, u_int srcid, u_int srcva, u_int dstid, u_int dstva,
  *
  * Cannot unmap pages above UTOP.
  */
-// 将 envid 进程空间 va 虚拟地址对应的物理页 unmapp 
+// 将 envid 进程空间 va 虚拟地址对应的物理页 unmapp
 int sys_mem_unmap(int sysno, u_int envid, u_int va)
 {
 	int ret = 0;
 	struct Env *env;
 	ret = envid2env(envid, &env, 1); // 照常根据 id 找 env
-	if (ret < 0) {
+	if (ret < 0)
+	{
 		printf("sys_mem_alloc:failed to get the target env\n");
 		return -E_BAD_ENV;
 	}
-	if (va < 0 || va >= UTOP) { // 照常判 va
+	if (va < 0 || va >= UTOP)
+	{ // 照常判 va
 		printf("sys_mem_unmap:va is not valid\n");
 		return -E_NO_MEM;
 	}
@@ -316,7 +324,7 @@ int sys_pthread_create(int sysno, int *func, int *arg)
  * Pre-Condition:
  * 	status should be one of `ENV_RUNNABLE`, `ENV_NOT_RUNNABLE` and
  * `ENV_FREE`. Otherwise return -E_INVAL.
- * 
+ *
  * Post-Condition:
  * 	Returns 0 on success, < 0 on error.
  * 	Return -E_INVAL if status is not a valid status for an environment.
@@ -336,14 +344,14 @@ int sys_set_env_status(int sysno, u_int envid, u_int status)
 	// #define dying				4
 
 	// 判合法性
-	if (status != ENV_RUNNABLE && status != ENV_NOT_RUNNABLE 
-			&& status != ENV_FREE && status != ENV_SUSPEND && status != dying)
-	{	// 判一下 status 合法性
+	if (status != ENV_RUNNABLE && status != ENV_NOT_RUNNABLE && status != ENV_FREE && status != ENV_SUSPEND && status != dying)
+	{ // 判一下 status 合法性
 		printf("set_env_status:wrong status");
 		return -E_INVAL;
 	}
 	r = envid2env(envid, &env, 0); // 照常找 env
-	if (r < 0) {
+	if (r < 0)
+	{
 		printf("set_status:env is invalid\n");
 		return -E_BAD_ENV;
 	}
@@ -351,24 +359,30 @@ int sys_set_env_status(int sysno, u_int envid, u_int status)
 	// 根据 status 的变化，对 env 做相应的操作
 	env->env_status = status;
 
-	if (status == ENV_FREE && env->env_status != status) {
+	if (status == ENV_FREE && env->env_status != status)
+	{
 
 		// 1. 从 env_runnable 里删去 env
 		bool Efound = true;
 		struct Env *tempE = env_runnable_head;
 		struct Env *tempE_pre = env_runnable_tail;
-		while (tempE != env) {
+		while (tempE != env)
+		{
 			tempE_pre = tempE;
 			tempE = tempE->env_link;
-			if (tempE == env_runnable_head) { // 回到起点
+			if (tempE == env_runnable_head)
+			{					// 回到起点
 				Efound = false; // 没找到
 			}
 		}
-		if(Efound) { // 现在我们找到了 env，tempE 指向 env，tempE_pre 是 env 前一个
-			if (tempE == env_runnable_tail){
+		if (Efound)
+		{ // 现在我们找到了 env，tempE 指向 env，tempE_pre 是 env 前一个
+			if (tempE == env_runnable_tail)
+			{
 				env_runnable_tail = tempE_pre;
 			}
-			if (env_runnable_head == env){
+			if (env_runnable_head == env)
+			{
 				env_runnable_head = env_runnable_head->env_link;
 			}
 			tempE_pre->env_link = tempE->env_link; // 从 env_runnable 里删去 env
@@ -377,33 +391,41 @@ int sys_set_env_status(int sysno, u_int envid, u_int status)
 		// 2. 把 env 加入 env_free_list
 		Efound = false;
 		tempE = env_free_list;
-		while(tempE != NULL) {
-			if(tempE == env) { // env 已经在 free_list 了
-				Efound = true; break;
+		while (tempE != NULL)
+		{
+			if (tempE == env)
+			{ // env 已经在 free_list 了
+				Efound = true;
+				break;
 			}
 			tempE = tempE->env_link;
 		}
-		if (!Efound) { // 把 env 加入 env_free_list
+		if (!Efound)
+		{								   // 把 env 加入 env_free_list
 			env->env_link = env_free_list; // env 指向 env_free_list 链表头
-			env_free_list = env; // 把新的链表头赋为 env
+			env_free_list = env;		   // 把新的链表头赋为 env
 		}
 	}
-	
-	else if (status == ENV_RUNNABLE && env->env_status != status) {
+
+	else if (status == ENV_RUNNABLE && env->env_status != status)
+	{
 
 		// 1. 把 env 加入 env_runnable
 		bool Efound = true;
 		struct Env *tempE = env_runnable_head;
 		struct Env *tempE_pre = env_runnable_tail;
-		while (tempE != env) {
+		while (tempE != env)
+		{
 			tempE = tempE->env_link;
-			if (tempE == env_runnable_head) { // 回到起点
+			if (tempE == env_runnable_head)
+			{					// 回到起点
 				Efound = false; // 没找到
 			}
 		}
-		if (!Efound) { // 把 env 加入 env_runnable
+		if (!Efound)
+		{									   // 把 env 加入 env_runnable
 			env->env_link = env_runnable_head; // env 指向 env_runnable_list 链表头
-			env_runnable_head = env; // 把新的链表头赋为 env
+			env_runnable_head = env;		   // 把新的链表头赋为 env
 			env_runnable_tail->env_link = env;
 		}
 
@@ -411,36 +433,46 @@ int sys_set_env_status(int sysno, u_int envid, u_int status)
 		Efound = false;
 		tempE = env_free_list;
 		tempE_pre = NULL;
-		while(tempE != NULL) {
-			if(tempE == env) { // env 已经在 free_list 了
-				Efound = true; break;
+		while (tempE != NULL)
+		{
+			if (tempE == env)
+			{ // env 已经在 free_list 了
+				Efound = true;
+				break;
 			}
 			tempE_pre = tempE;
 			tempE = tempE->env_link;
 		}
-		if (Efound) { // 从 env_free_list 里删去 env (tempE)
+		if (Efound)
+		{ // 从 env_free_list 里删去 env (tempE)
 			tempE_pre->env_link = tempE->env_link;
 		}
 	}
 
-	else if (status == ENV_NOT_RUNNABLE && env->env_status != status) {
+	else if (status == ENV_NOT_RUNNABLE && env->env_status != status)
+	{
 
 		// 1. 从 env_runnable 里删去 env
 		bool Efound = true;
 		struct Env *tempE = env_runnable_head;
 		struct Env *tempE_pre = env_runnable_tail;
-		while (tempE != env) {
+		while (tempE != env)
+		{
 			tempE_pre = tempE;
 			tempE = tempE->env_link;
-			if (tempE == env_runnable_head) { // 回到起点
+			if (tempE == env_runnable_head)
+			{					// 回到起点
 				Efound = false; // 没找到
 			}
 		}
-		if(Efound) { // 现在我们找到了 env，tempE 指向 env，tempE_pre 是 env 前一个
-			if (tempE == env_runnable_tail){
+		if (Efound)
+		{ // 现在我们找到了 env，tempE 指向 env，tempE_pre 是 env 前一个
+			if (tempE == env_runnable_tail)
+			{
 				env_runnable_tail = tempE_pre;
 			}
-			if (env_runnable_head == env){
+			if (env_runnable_head == env)
+			{
 				env_runnable_head = env_runnable_head->env_link;
 			}
 			tempE_pre->env_link = tempE->env_link; // 从 env_runnable 里删去e
@@ -450,19 +482,22 @@ int sys_set_env_status(int sysno, u_int envid, u_int status)
 		Efound = false;
 		tempE = env_free_list;
 		tempE_pre = NULL;
-		while(tempE != NULL) {
-			if(tempE == env) { // env 已经在 free_list 了
-				Efound = true; break;
+		while (tempE != NULL)
+		{
+			if (tempE == env)
+			{ // env 已经在 free_list 了
+				Efound = true;
+				break;
 			}
 			tempE_pre = tempE;
 			tempE = tempE->env_link;
 		}
-		if (Efound) { // 从 env_free_list 里删去 env (tempE)
+		if (Efound)
+		{ // 从 env_free_list 里删去 env (tempE)
 			tempE_pre->env_link = tempE->env_link;
 		}
-		
 	}
-	
+
 	return 0;
 }
 
@@ -484,7 +519,8 @@ int sys_set_trapframe(int sysno, u_int envid, struct Trapframe *tf)
 	int ret;
 	struct Env *e;
 	ret = envid2env(envid, &e, 1); // 继续找 env
-	if (ret < 0) {
+	if (ret < 0)
+	{
 		printf("set_trapframe:env is invalid\n");
 		return -E_BAD_ENV;
 	}
@@ -493,7 +529,7 @@ int sys_set_trapframe(int sysno, u_int envid, struct Trapframe *tf)
 }
 
 /* Overview:
- * 	Kernel panic with message `msg`. 
+ * 	Kernel panic with message `msg`.
  *
  * Pre-Condition:
  * 	msg can't be NULL
@@ -512,8 +548,8 @@ void sys_panic(int sysno, char *msg)
 /*
 - ipc: Interprocess communication
 - inc/env.h 中的定义：
-	u_int env_ipc_value;		// data value sent to us 
-	u_int env_ipc_from;			// envid of the sender  
+	u_int env_ipc_value;		// data value sent to us
+	u_int env_ipc_from;			// envid of the sender
 	u_int env_ipc_recving;		// env is blocked receiving
 	u_int env_ipc_dstva;		// va at which to map received page
 	u_int env_ipc_perm;			// perm of page mapping received
@@ -541,7 +577,7 @@ void sys_panic(int sysno, char *msg)
  *
  * Hint: the only function you need to call is envid2env.
  */
-// 进程间通信：由 curenv 调用，把 srcva 对应的物理页，映射到 env 的 va（env->env_ipc_dstva） 
+// 进程间通信：由 curenv 调用，把 srcva 对应的物理页，映射到 env 的 va（env->env_ipc_dstva）
 int sys_ipc_can_send(int sysno, u_int envid, u_int value, u_int srcva,
 					 u_int perm)
 {
@@ -550,7 +586,7 @@ int sys_ipc_can_send(int sysno, u_int envid, u_int value, u_int srcva,
 	struct Page *p;
 	Pte *ppte;
 	extern int cur_sched;
-	
+
 	// try to get the destination env
 	r = envid2env(envid, &e, 0); // 找到 target env
 	if (r < 0)
@@ -560,13 +596,13 @@ int sys_ipc_can_send(int sysno, u_int envid, u_int value, u_int srcva,
 	}
 	// check whether target env is requesting ipc
 	if (e->env_status != ENV_NOT_RUNNABLE || !e->env_ipc_recving)
-	{	// 判一下 target env 的状态，是否是等待收到信息
+	{ // 判一下 target env 的状态，是否是等待收到信息
 		printf("ipc_send:target env id not requesting recving\n");
 		return -E_IPC_NOT_RECV;
 	}
 	// check whether source & target virtual address is valid
 	if (srcva >= UTOP || srcva < 0)
-	{	// 判一下虚拟地址 va 合法性
+	{ // 判一下虚拟地址 va 合法性
 		printf("ipc_send:virtual address greater than UTOP\n");
 		return -E_NO_MEM;
 	}
@@ -575,7 +611,7 @@ int sys_ipc_can_send(int sysno, u_int envid, u_int value, u_int srcva,
 	{
 		p = page_lookup(curenv->env_pgdir, srcva, &ppte);
 		if (p == NULL)
-		{	// 找到要收信息的那个物理页
+		{ // 找到要收信息的那个物理页
 			printf("ipc_send:destinated page not exist");
 			return -E_NO_MEM;
 		}
@@ -593,20 +629,24 @@ int sys_ipc_can_send(int sysno, u_int envid, u_int value, u_int srcva,
 	e->env_ipc_perm = perm;
 	e->env_ipc_recving = 0;
 	e->env_status = ENV_RUNNABLE;
-	if(true) {
+	if (true)
+	{
 		// 1. 把 e 加入 env_runnable
 		bool Efound = true;
 		struct Env *tempE = env_runnable_head;
 		struct Env *tempE_pre = env_runnable_tail;
-		while (tempE != e) {
+		while (tempE != e)
+		{
 			tempE = tempE->env_link;
-			if (tempE == env_runnable_head) { // 回到起点
+			if (tempE == env_runnable_head)
+			{					// 回到起点
 				Efound = false; // 没找到
 			}
 		}
-		if (!Efound) { // 把 e 加入 env_runnable
+		if (!Efound)
+		{									 // 把 e 加入 env_runnable
 			e->env_link = env_runnable_head; // e 指向 env_runnable_list 链表头
-			env_runnable_head = e; // 把新的链表头赋为 e
+			env_runnable_head = e;			 // 把新的链表头赋为 e
 			env_runnable_tail->env_link = e;
 		}
 
@@ -614,14 +654,18 @@ int sys_ipc_can_send(int sysno, u_int envid, u_int value, u_int srcva,
 		Efound = false;
 		tempE = env_free_list;
 		tempE_pre = NULL;
-		while(tempE != NULL) {
-			if(tempE == e) { // e 已经在 free_list 了
-				Efound = true; break;
+		while (tempE != NULL)
+		{
+			if (tempE == e)
+			{ // e 已经在 free_list 了
+				Efound = true;
+				break;
 			}
 			tempE_pre = tempE;
 			tempE = tempE->env_link;
 		}
-		if (Efound) { // 从 env_free_list 里删去 e (tempE)
+		if (Efound)
+		{ // 从 env_free_list 里删去 e (tempE)
 			tempE_pre->env_link = tempE->env_link;
 		}
 	}
@@ -629,45 +673,51 @@ int sys_ipc_can_send(int sysno, u_int envid, u_int value, u_int srcva,
 }
 
 /* Overview:
- * 	This function enables caller to receive message from 
- * other process. To be more specific, it will flag 
- * the current process so that other process could send 
+ * 	This function enables caller to receive message from
+ * other process. To be more specific, it will flag
+ * the current process so that other process could send
  * message to it.
  *
  * Pre-Condition:
  * 	`dstva` is valid (Note: NULL is also a valid value for `dstva`).
- * 
+ *
  * Post-Condition:
- * 	This syscall will set the current process's status to 
- * ENV_NOT_RUNNABLE, giving up cpu. 
+ * 	This syscall will set the current process's status to
+ * ENV_NOT_RUNNABLE, giving up cpu.
  */
 // 由 curenv 调用，表示自己希望接收别的进程的通信
 void sys_ipc_recv(int sysno, u_int dstva)
 {
 	extern int remaining_time;
 	if (dstva >= UTOP || dstva < 0)
-	{	// 判虚拟地址是否合法
+	{ // 判虚拟地址是否合法
 		printf("ipc_recv:dstva is greater than UTOP");
 		return;
 	}
 	curenv->env_status = ENV_NOT_RUNNABLE;
-	if(true) {
+	if (true)
+	{
 		// 1. 从 env_runnable 里删去 curenv
 		bool Efound = true;
 		struct Env *tempE = env_runnable_head;
 		struct Env *tempE_pre = env_runnable_tail;
-		while (tempE != curenv) {
+		while (tempE != curenv)
+		{
 			tempE_pre = tempE;
 			tempE = tempE->env_link;
-			if (tempE == env_runnable_head) { // 回到起点
+			if (tempE == env_runnable_head)
+			{					// 回到起点
 				Efound = false; // 没找到
 			}
 		}
-		if(Efound) { // 现在我们找到了 env，tempE 指向 env，tempE_pre 是 curenv 前一个
-			if (tempE == env_runnable_tail){
+		if (Efound)
+		{ // 现在我们找到了 env，tempE 指向 env，tempE_pre 是 curenv 前一个
+			if (tempE == env_runnable_tail)
+			{
 				env_runnable_tail = tempE_pre;
 			}
-			if (env_runnable_head == curenv){
+			if (env_runnable_head == curenv)
+			{
 				env_runnable_head = env_runnable_head->env_link;
 			}
 			tempE_pre->env_link = tempE->env_link; // 从 env_runnable 里删去e
@@ -677,14 +727,18 @@ void sys_ipc_recv(int sysno, u_int dstva)
 		Efound = false;
 		tempE = env_free_list;
 		tempE_pre = NULL;
-		while(tempE != NULL) {
-			if(tempE == curenv) { // curenv 已经在 free_list 了
-				Efound = true; break;
+		while (tempE != NULL)
+		{
+			if (tempE == curenv)
+			{ // curenv 已经在 free_list 了
+				Efound = true;
+				break;
 			}
 			tempE_pre = tempE;
 			tempE = tempE->env_link;
 		}
-		if (Efound) { // 从 env_free_list 里删去 curenv (tempE)
+		if (Efound)
+		{ // 从 env_free_list 里删去 curenv (tempE)
 			tempE_pre->env_link = tempE->env_link;
 		}
 	}
@@ -696,7 +750,7 @@ void sys_ipc_recv(int sysno, u_int dstva)
 	void *dst = TIMESTACK - sizeof(struct Trapframe);
 	bcopy(src, dst, sizeof(struct Trapframe)); // bit copy
 	sched_yield();
-	//sched_yield_voluntarily_giveup();
+	// sched_yield_voluntarily_giveup();
 }
 
 // 释放自己, 目前直接调用 env_free(), 由于 tlb_invalidate 接口问题只能接受 curenv
@@ -709,17 +763,17 @@ void sys_free_myself()
  * 	This function is used to write data to device, which is
  * 	represented by its mapped physical address.
  *	Remember to check the validity of device address (see Hint below);
- * 
+ *
  * Pre-Condition:
  *      'va' is the startting address of source data, 'len' is the
  *      length of data (in bytes), 'dev' is the physical address of
  *      the device
- * 	
+ *
  * Post-Condition:
  *      copy data from 'va' to 'dev' with length 'len'
  *      Return 0 on success.
  *	Return -E_INVAL on address error.
- *      
+ *
  * Hint: Use ummapped segment in kernel address space to perform MMIO.
  *	 Physical device address:
  *	* ---------------------------------*
@@ -739,12 +793,12 @@ int sys_write_dev(int sysno, u_int va, u_int dev, u_int len)
 	if (!((dev >= 0x10000000 && endaddr <= 0x10000000 + 0x20) ||
 		  (dev >= 0x13000000 && endaddr <= 0x13000000 + 0x4200) ||
 		  (dev >= 0x15000000 && endaddr <= 0x15000000 + 0x200)))
-	{	// 判 dev 地址合法性
+	{ // 判 dev 地址合法性
 		printf("sys_write_dev:invalid dev\n");
 		return -E_INVAL;
 	}
-	startaddr += 0xa0000000; // 直接虚拟地址 -> 物理地址
-	bcopy((void *) va, (void *) startaddr, len); // copy 过去
+	startaddr += 0xa0000000;				   // 直接虚拟地址 -> 物理地址
+	bcopy((void *)va, (void *)startaddr, len); // copy 过去
 	return 0;
 }
 
@@ -752,16 +806,16 @@ int sys_write_dev(int sysno, u_int va, u_int dev, u_int len)
  * 	This function is used to read data from device, which is
  * 	represented by its mapped physical address.
  *	Remember to check the validity of device address (same as sys_read_dev)
- * 
+ *
  * Pre-Condition:
  *      'va' is the startting address of data buffer, 'len' is the
  *      length of data (in bytes), 'dev' is the physical address of
  *      the device
- * 
+ *
  * Post-Condition:
  *      copy data from 'dev' to 'va' with length 'len'
  *      Return 0 on success, < 0 on error
- *      
+ *
  * Hint: Use ummapped segment in kernel address space to perform MMIO.
  */
 // 读 dev 的设备数据，并将其写到 起始地址 va 长度为 len 的内存上
@@ -773,15 +827,14 @@ int sys_read_dev(int sysno, u_int va, u_int dev, u_int len)
 	if (!((dev >= 0x10000000 && endaddr <= 0x10000000 + 0x20) ||
 		  (dev >= 0x13000000 && endaddr <= 0x13000000 + 0x4200) ||
 		  (dev >= 0x15000000 && endaddr <= 0x15000000 + 0x200)))
-	{	// 判 dev 地址合法性
+	{ // 判 dev 地址合法性
 		printf("sys_read_dev:invalid dev\n");
 		return -E_INVAL;
 	}
-	startaddr += 0xa0000000; // 直接虚拟地址 -> 物理地址
-	bcopy((void *) startaddr, (void *) va, len); // copy 回来
+	startaddr += 0xa0000000;				   // 直接虚拟地址 -> 物理地址
+	bcopy((void *)startaddr, (void *)va, len); // copy 回来
 	return 0;
 }
-
 
 void sys_printf(int sysno, char *fmt, va_list *ap)
 {
@@ -789,8 +842,8 @@ void sys_printf(int sysno, char *fmt, va_list *ap)
 	va_end(*ap);
 }
 /**
- * This function is used to set leds by val 
- * 
+ * This function is used to set leds by val
+ *
  */
 void sys_set_leds(int sysno, u32 val)
 {
