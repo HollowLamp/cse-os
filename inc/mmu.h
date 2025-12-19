@@ -38,6 +38,17 @@
 #define PTE_COW 0x0001	   // Copy On Write
 #define PTE_UC 0x0800	   // unCached
 #define PTE_LIBRARY 0x0004 // share memmory
+#define PTE_W 0x0008	   // Writable bit (根据MIPS标准)
+#define PTE_U 0x0010	   // User accessible bit
+
+/* 添加设备内存空间定义 */
+#define DEVSPACE 0x10000000 // Device memory space
+
+/* 常用权限组合 */
+#define PTE_RW (PTE_R | PTE_W)			// Read-Write
+#define PTE_UR (PTE_U | PTE_R)			// User Readable
+#define PTE_URW (PTE_U | PTE_R | PTE_W) // User Read-Write
+
 /*
  * Part 2.  Our conventions.
  */
@@ -87,10 +98,16 @@
 #define KSTACKTOP (VPT - 0x100)
 #define KSTKSIZE (8 * BY2PG)
 #define ULIM 0x80000000
+/* 用户空间特殊区域（从ULIM向下递减）*/
+#define UVPT (ULIM - PDMAP)	   /* 用户页表 - 0x7fc00000 */
+#define UPAGES (UVPT - PDMAP)  /* 用户页结构 - 0x7f800000 */
+#define UENVS (UPAGES - PDMAP) /* 用户环境结构 - 0x7f400000 */
+#define UTOP (UENVS - PDMAP)   /* 用户空间顶部 - 0x7f000000 */
 
-#define UVPT (ULIM - PDMAP)
+/* 其他相关定义 */
+#define UXSTACKTOP UTOP				 /* 用户异常栈顶 */
+#define USTACKTOP (UTOP - 2 * BY2PG) /* 用户栈顶 */
 
-#define UTOP UVPT - 2 * PDMAP
 #define UXSTACKTOP (UTOP)
 #define TIMESTACK 0x82000000
 #define USTACKTOP (UTOP - 2 * BY2PG)
@@ -135,22 +152,26 @@ typedef u_long Pte;
 extern volatile Pte *vpt[];
 extern volatile Pde *vpd[];
 
-#define PADDR(kva)                                           \
-	({                                                       \
-		u_long a = (u_long)(kva);                            \
-		if (a < ULIM)                                        \
-			panic("PADDR called with invalid kva %08lx", a); \
-		a - ULIM;                                            \
-	}) // 宏返回最后一个表达式
+static inline u_long PADDR(void *kva)
+{
+	u_long a = (u_long)kva;
+	if (a < ULIM)
+	{
+		panic("PADDR called with invalid kva %08lx", a);
+	}
+	return a - ULIM;
+}
 
 // translates from physical address to kernel virtual address
-#define KADDR(pa)                                                    \
-	({                                                               \
-		u_long ppn = PPN(pa);                                        \
-		if (ppn >= npage)                                            \
-			panic("KADDR called with invalid pa %08lx", (u_long)pa); \
-		(pa) + ULIM;                                                 \
-	})
+static inline void *KADDR(u_long pa)
+{
+	u_long ppn = PPN(pa);
+	if (ppn >= npage)
+	{
+		panic("KADDR called with invalid pa %08lx", pa);
+	}
+	return (void *)(pa + ULIM);
+}
 
 #define assert(x)                              \
 	do                                         \
