@@ -13,11 +13,19 @@
 #define _printf_h_
 
 #include <stdarg.h>
+
 void myoutput(void *arg, char *s, int l);
 
 void printf(char *fmt, ...);
 
-void _panic(const char* file, int line, const char* fmt, ...);
+// 直接使用条件编译来处理 noreturn 属性
+#ifdef _MSC_VER
+// Microsoft Visual C++
+__declspec(noreturn) void _panic(const char *file, int line, const char *fmt, ...);
+#else
+// GCC, Clang, etc.
+__attribute__((noreturn)) void _panic(const char *file, int line, const char *fmt, ...);
+#endif
 
 #define panic(...) _panic(__FILE__, __LINE__, __VA_ARGS__)
 

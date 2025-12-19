@@ -1,7 +1,8 @@
-#include <mips/regdef.h>
-#include <mips/m32c0.h>
-#include <mips/asm.h>
-#include <inc/trap.h>
+#include <asm/regdef.h>
+#include <asm/cp0regdef.h>
+#include <asm/asm.h>
+#include <m32c0.h>
+#include <trap.h>
 			.data
 			.globl	KERNEL_SP 
 KERNEL_SP:
@@ -12,22 +13,35 @@ KERNEL_SP:
 	.text
 	.set noat
 	
+# 从栈中恢复上下文数据，写回各个寄存器
 LEAF(env_pop_tf)
 	.set noreorder
 
-	move	k0, a0			# k0 = &(curenv->env_tf)
+	# 有些版本会改 sp 和 ra（stack pointer, return addr）
+	# sp：先 addi sp,sp,-32   在最末尾又 addi sp,sp,32
+	# ra：先 sw ra,28(sp)     在最末尾又 lw ra,28(sp)       然后 jr ra
 
+	# ## RE: 是否需要那样写与caller还是callee清理堆栈有关，可以参考函数调用规范(Calling convention) 。
+	# C语言默认的cdecl是caller清理堆栈。不过这里只有一个参数，直接寄存器传参就行了
+
+
+	# 首先得到 要恢复进程的上下文地址 &env_tf 的基址
+	move	k0, a0			# k0 = &(curenv->env_tf), k0 - k7 是 kernel registers
+
+	# 从该基址加载 CP0 的状态寄存器
+	# TF_CAUSE、TF_LO、TF_HI等宏保存的是相对于k0的偏移
 	lw 		k1, TF_CAUSE(k0)
 	mtc0	k1, C0_CAUSE
 	lw		v1,	TF_LO(k0)
-	mtlo	v1	
+	mtlo	v1	# 恢复累加器低位
 	lw		v0,	TF_HI(k0)
-	mthi	v0	
+	mthi	v0	# 恢复累加器高位
 	lw 		v1, TF_EPC(k0)
-	# li		v1,0x15001f90
+	# li		v1, 0x15001f90 # 这是什么魔数？
 	mtc0	v1,	C0_EPC
 	ehb
 
+	# 从该基址加载各个通用寄存器
 	lw		$31,TF_REG31(k0)
 	lw		$30,TF_REG30(k0)
 	lw		$29,TF_REG29(k0)															
@@ -59,16 +73,24 @@ LEAF(env_pop_tf)
 	lw		$1,TF_REG1(k0)
 	
 
-	# todo  开启中断，设为用户模式
-	
-
-
-
-
-
+	# 开启中断，设为用户模式
+	mfc0	k0, CP0_STATUS		# 读到 status
+	li		k1, 0x11			# 设为 USER MODE, 并开启中断
+	# TODO: 这里可以用ext和ins增加可读性
+	# status 第 0 位是 IE 中断使能，1 为可以中断（IE = 1，EXL = 0，ERL = 0，才可以中断）
+	# status 第 4 位是 UM 用户模式，0 表示 kernal mode，1 表示 user mode
+	or		k0, k1				# or 一下，置几个 1
+	li		k1, 0xEFDFFFFF
+	# status 第 28 位（那个 E 置零的位）是 CU0，表示是否允许控制 CP0，允许则 CU0 = 1
+	# user mode 大概是不允许的
+	# status 第 21 位（那个 D 置零的位）是 TS，表示 TLB 是否被关闭，发生 TLB 严重错误时 TS = 1
+	and		k0, k1				# and 一下，置几个 0
+	mtc0	k0, CP0_STATUS		# 把 status 写回去
 
 	ehb
-	eret # 回epc
+	eret						# 回 epc
+								# eret 明明是回 ErrorEPC，不过代码都这样给了，应该可以跑通吧
+								# RE eret的行为与ERL位有关。如果ERL为1，返回的是ErrorEPC，否则是EPC（RTFM p.156）
 	nop
 
 
@@ -108,7 +130,7 @@ END(set_epc)
 
 
 LEAF(get_status)
-	mfc0 	v0, C0_STATUS
+	mfc0 	v0, CP0_STATUS
 	jr	ra
 	nop
 END(get_status)
@@ -122,6 +144,9 @@ END(get_badaddr)
 
 LEAF(get_asid)
 	mfc0 	v0, C0_ENTRYHI
+	# asid：Adress Space ID
+	# 当前进程的 asid 放在 CP0 寄存器 EntryHI 里
+	# 参考：https://www.cnblogs.com/Melles/p/10714224.html
 	jr	ra
 	nop
 END(get_asid)
@@ -139,13 +164,13 @@ LEAF(get_nested_epc)
 	nop
 END(get_nested_epc)
 
+# 实际上是CP0_STATUS的EXL位 置0（0表示user mode）
 LEAF(set_exl)
-	mfc0 	v0, C0_STATUS
+	mfc0 	v0, CP0_STATUS
 	li k0,0xFFFFFFFD
 	and v0, k0
-	mtc0 v0,C0_STATUS
+	mtc0 v0,CP0_STATUS
 	ehb
 	jr	ra
 	nop
 END(set_exl)
-
