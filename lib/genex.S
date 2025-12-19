@@ -17,7 +17,12 @@ NESTED(handle_tlb, TF_SIZE, sp)
 	nop
 	SAVE_ALL # 把32个寄存器以及cp0以及几个特殊寄存器的内容按指定顺序存到栈中
 	
+    # 获取引发中断的虚拟地址
+    mfc0    a0, CP0_BADVADDR     # CP0_BADVADDR 保存了引发异常的虚拟地址
+    mfc0    a1, CP0_CONTEXT      # CP0_CONTEXT 保存了与虚拟地址相关的上下文信息
 
+    # 调用 va2pa 函数，查找虚拟地址对应的物理地址
+    jal     va2pa                # va2pa(a0, a1)
 	                         # k0寄存器=0x1800，第11位和12位为1
                              # MANUALP143 ，表示页大小为4K
 
@@ -27,20 +32,48 @@ NESTED(handle_tlb, TF_SIZE, sp)
 							 # 这个函数会查页表，看有没有虚拟地址对应的物理页
 	nop
 
+    # 检查 va2pa 的返回值
+    move    v0, v0               # va2pa 的返回值存储在 v0 中
+    li      t0, 0xFFFFFFFF       # 全1表示没有找到对应的物理地址
+    beq     v0, t0, page_fault   # 如果没有找到物理地址，跳转到 page_fault
+    nop
+
 	                         # V0是va2pa返回值，全1代表没有这个页，否则代表物理地址，相等表示需要新建页
 	nop	
+	# TLB 重填逻辑
+    # 如果找到物理地址，填充 TLB 表项
+    move    k1, v0               # v0 是物理地址
+    srl     k1, k1, 12           # 逻辑右移12位，提取页号
+    sll     k1, k1, 6            # 逻辑左移6位，清除低6位
+    ori     k1, k1, 0x6          # 设置 D 位和 V 位为 1（可写、有效）
+    mtc0    k1, CP0_ENTRYLO0     # 将物理地址写入 CP0_ENTRYLO0
+    mtc0    zero, CP0_ENTRYLO1   # 清空 CP0_ENTRYLO1
+    ehb                          # 确保前面的操作完成
+    # 更新 TLB
+    tlbwi                       # 写入 TLB 表项
+    j       tlb_refill_done     # 跳转到完成处理
 	                         # 不用新建页，只需要把映射关系填到tlb里
 	nop
 
 page_fault:  	# page fault occur，新建页
-	
+	jal     pageout
 	               # 引发中断的虚拟地址
 	               # 传参
 
 	               # 创建页
 	nop
 	# 这里pageout()返回了物理地址在v0，直接过就行
+    # pageout 返回物理地址在 v0 中
+    move    k1, v0              # v0 是分配的新物理地址
+    srl     k1, k1, 12          # 逻辑右移12位，提取页号
+    sll     k1, k1, 6           # 逻辑左移6位，清除低6位
+    ori     k1, k1, 0x6         # 设置 D 位和 V 位为 1（可写、有效）
+    mtc0    k1, CP0_ENTRYLO0    # 将物理地址写入 CP0_ENTRYLO0
+    mtc0    zero, CP0_ENTRYLO1  # 清空 CP0_ENTRYLO1
+    ehb                         # 确保前面的操作完成
 
+    # 更新 TLB
+    tlbwi                       # 写入 TLB 表项
 	
 b1:   
 	                # v0 is pa
@@ -57,7 +90,7 @@ SET_ENTRYLO0:
 	mtc0 	k1, CP0_ENTRYLO0  
 	mtc0    zero,CP0_ENTRYLO1
 	ehb
-	                         # 把12位变1，作为后面参数
+	and		a1, 0xFFFFEFFF 
 	lw		a0, mCONTEXT 
 
 	jal 	va2pa_print   
@@ -66,10 +99,10 @@ SET_ENTRYLO0:
 
 	beq		v0, t0, tlb_refill_done
 	nop
-	                    # v0 is pa
-	                    # 逻辑右移12
-	                    # 辑左移6，最后6位清零，最前面6位清零
-	                    # D位和V位置为1
+	move 	k1, v0		   # v0 is pa
+	srl		k1, 12         # 逻辑右移12
+	sll 	k1, 6          # 逻辑左移6，最后6位清零，最前面6位清零
+	or		k1, 0x6        # D位和V位置为1
 	mtc0    k1,CP0_ENTRYLO1
 	j		tlb_refill_done
 	nop	
@@ -94,8 +127,8 @@ SET_ENTRYLO1:
 
 tlb_refill_done:
 	# todo TLB重填
-
-
+	RESTORE_ALL
+	eret
 	nop
 	mtc0    v0, CP0_INDEX
 
@@ -138,13 +171,14 @@ FEXPORT(ret_from_exception)
 	nop
 	# 判断是否嵌套
 	
-
-
-
-
-
-
+    mfc0    t0, CP0_STATUS        # 读取 CP0_STATUS 寄存器
+    andi    t0, t0, 0x2           # 检查 EXL 位（位 1）
+    bnez    t0, core_ret  # 如果 EXL 位为 1，跳转到嵌套异常处理
+    nop                           # 延迟槽
+	
+	eret
 	nop
+
 nor_ret:             
 	# STI
 	eret
@@ -154,7 +188,9 @@ core_ret:
 	nop
 	# 若是用户态 --> 内核态，则 k0 = sp, sp = *kernelsp - PT_SIZE，store k0, PT_R29(sp)，保存其它寄存器
 	# 若是内核态 --> 内核态，直接 k0 = sp, sp = sp - PT_SIZE，store k0, PT_R29(sp)，然后保存其它寄存器
-								 
+
+END(ret_from_exception)	
+
 FEXPORT(simple_return)#没有restoreall
 	.set noreorder
 
@@ -169,6 +205,8 @@ FEXPORT(simple_return)#没有restoreall
 	# STI
 	eret
 	nop
+END(simple_return)
+
 core_ret_1:
 	j t1
 	nop
@@ -179,12 +217,10 @@ NESTED(handle_addr, TF_SIZE, sp)
 	li		sp,0x80400000#切到内核SP  
 	# CLI
 	.set at # 开启at寄存器警告
-	                       # 取出上一次exception的cause
-	                       # 取出Processor status
-
-
-
-	                      # t0和立即数0X400相与，取出t0第10位，结果存t1，
+	mfc0 t0, CP0_CAUSE     # 取出上一次exception的cause
+	mfc0 t2, CP0_STATUS    # 取出Processor status
+	and t0, t2 
+	andi t1, t0, STATUSF_IP0 # t0和立即数0X400相与，取出t0第10位，结果存t1，
 	j print_addr_error
 	
 	nop

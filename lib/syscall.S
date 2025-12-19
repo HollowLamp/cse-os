@@ -9,10 +9,20 @@ NESTED(handle_sys,TF_SIZE, sp)
     # save cpu s registers
     SAVE_ALL
     # close interrput
-    # CLI
+    CLI
     nop
     .set at
 
+    # 获取系统调用号
+    lw      t1, PT_R2(sp)         # 系统调用号存储在 v0 (R2) 中，加载到 t1
+
+    # 检查系统调用号是否合法
+    li      t0, __NR_SYSCALLS     # 加载系统调用总数
+    blt     t1, t0, valid_syscall # 如果 t1 < __NR_SYSCALLS，跳转到 valid_syscall
+    nop
+    j       illegal_syscall       # 否则跳转到非法系统调用处理
+    nop
+    
 
                                      # v0 = v0 - __SYSCALL_BASE，得到相对偏移
                                      # _if(v0 < __NR_SYSCALLS+1) t0=1 else t0=0  __NR_SYSCALLS是系统调用总个数
@@ -20,7 +30,19 @@ NESTED(handle_sys,TF_SIZE, sp)
     #  set epc as epc plus 4
     #  Where is the next being exectued cpu instruction when return from exception?
     
+valid_syscall:
+    # 设置 EPC 为下一条指令
+    mfc0    t0, CP0_EPC           # 获取 EPC
+    addiu   t0, t0, 4             # EPC + 4，跳过当前指令
+    mtc0    t0, CP0_EPC           # 更新 EPC
 
+    # 计算系统调用函数地址
+    la      t0, sys_call_table    # 加载系统调用表基地址
+    sll     t1, t1, 2             # 系统调用号左移 2 位（乘以 4），得到偏移量
+    addu    t0, t0, t1            # t0 = sys_call_table + 偏移量
+    lw      t2, 0(t0)             # 加载系统调用函数地址到 t2
+    beqz    t2, illegal_syscall   # 如果 t2 为 0，跳转到非法系统调用处理
+    nop
 
                           # 系统调用结束后得进行下一条指令
 
