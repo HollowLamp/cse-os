@@ -42,14 +42,14 @@ void *sys_get_shm(int sysno, int key, int size)
 	u_long rr;
 	u_long perm;
 	size_t sizeMax = ROUND(size, BY2PG);
-	p =                              ;
+	p = create_share_vm(key, sizeMax);
 	if (p == NULL)
 	{
 		printf("alloc shared page failed\n");
 		return NULL;
 	}
 	printf("alloc shared page success\n");
-	void *result =                       ;
+	void *result = insert_share_vm(curenv, p);
 	printf("insert shared page success\n");
 	return result;
 }
@@ -96,15 +96,15 @@ int sys_env_create(int sysno, char *binary, int pt, char *arg)
 }
 
 /* Overview:
- * 	Set envid's pagefault handler entry point and exception stack.
+ *  Set envid's pagefault handler entry point and exception stack.
  * 
  * Pre-Condition:
- * 	xstacktop points one byte past exception stack.
+ *  xstacktop points one byte past exception stack.
  *
  * Post-Condition:
- * 	The envid's pagefault handler will be set to `func` and its
- * 	exception stack will be set to `xstacktop`.
- * 	Returns 0 on success, < 0 on error.
+ *  The envid's pagefault handler will be set to `func` and its
+ *  exception stack will be set to `xstacktop`.
+ *  Returns 0 on success, < 0 on error.
  */
 int sys_set_pgfault_handler(int sysno, u_int envid, u_int func, u_int xstacktop)
 {
@@ -125,10 +125,10 @@ int sys_set_pgfault_handler(int sysno, u_int envid, u_int func, u_int xstacktop)
 }
 
 /* Overview:
- * 	Allocate a page of memory and map it at 'va' with permission
+ *  Allocate a page of memory and map it at 'va' with permission
  * 'perm' in the address space of 'envid'.
  *
- * 	If a page is already mapped at 'va', that page is unmapped as a
+ *  If a page is already mapped at 'va', that page is unmapped as a
  * side-effect.
  * 
  * Pre-Condition:
@@ -138,8 +138,8 @@ int sys_set_pgfault_handler(int sysno, u_int envid, u_int func, u_int xstacktop)
  *
  * Post-Condition:
  * Return 0 on success, < 0 on error
- *	- va must be < UTOP
- *	- env may modify its own address space or the address space of its children
+ *  - va must be < UTOP
+ *  - env may modify its own address space or the address space of its children
  */
 int sys_mem_alloc(int sysno, u_int envid, u_int va, u_int perm)
 {
@@ -148,30 +148,31 @@ int sys_mem_alloc(int sysno, u_int envid, u_int va, u_int perm)
 	int ret;
 	ret = 0;
 	// check whether permission is legal
-	
-
+	if (!(perm & PTE_V) || (perm & PTE_COW)) {
+		return -E_INVAL;
+	}
 
 	// check whether va is legal
-	
-
-
+	if (va >= UTOP) {
+		return -E_INVAL;
+	}
 
 	// try to alloc a page
-	ret =        ;
+	ret = page_alloc(&ppage);
 	if (ret < 0)
 	{
 		printf("sys_mem_alloc:failed to alloc a page\n");
 		return -E_NO_MEM;
 	}
 	//try to check and get the env_id;
-	ret =        ;
+	ret = envid2env(envid, &env, 0);
 	if (ret < 0)
 	{
 		printf("sys_mem_alloc:failed to get the target env\n");
 		return -E_BAD_ENV;
 	}
 	//now insert
-	ret =         ;
+	ret = page_insert(env->env_pgdir, ppage, va, perm);
 	if (ret < 0)
 	{
 		printf("sys_mem_alloc:page_insert failed");
@@ -182,20 +183,19 @@ int sys_mem_alloc(int sysno, u_int envid, u_int va, u_int perm)
 }
 
 /* Overview:
- * 	Map the page of memory at 'srcva' in srcid's address space
+ *  Map the page of memory at 'srcva' in srcid's address space
  * at 'dstva' in dstid's address space with permission 'perm'.
  * Perm has the same restrictions as in sys_mem_alloc.
  * (Probably we should add a restriction that you can't go from
  * non-writable to writable?)
  *
  * Post-Condition:
- * 	Return 0 on success, < 0 on error.
+ *  Return 0 on success, < 0 on error.
  *
  * Note:
- * 	Cannot access pages above UTOP.
+ *  Cannot access pages above UTOP.
  */
-int sys_mem_map(int sysno, u_int srcid, u_int srcva, u_int dstid, u_int dstva,
-				u_int perm)
+int sys_mem_map(int sysno, u_int srcid, u_int srcva, u_int dstid, u_int dstva, u_int perm)
 {
 	int ret;
 	u_int round_srcva, round_dstva;
@@ -210,38 +210,38 @@ int sys_mem_map(int sysno, u_int srcid, u_int srcva, u_int dstid, u_int dstva,
 	round_dstva = ROUNDDOWN(dstva, BY2PG);
 
 	// get corresponding env
-	if (                    )
-	{ //=============================
+	if ((ret = envid2env(srcid, &srcenv, 0)) < 0)
+	{
 		printf("sys_mem_map:srcenv doesn't exist\n");
-		return         ;
+		return ret;
 	}
-	if (                       )
-	{ //==============================
+	if ((ret = envid2env(dstid, &dstenv, 0)) < 0)
+	{
 		printf("sys_mem_map:dstenv doesn't exist\n");
-		return  ;
-	} 
+		return ret;
+	}
 
 	//va<UTOP?
-	if (                               )
+	if (round_srcva >= UTOP || round_dstva >= UTOP)
 	{
 		printf("sys_mem_map:va is invalid\n");
-		return               ;
+		return -E_INVAL;
 	}
 	// perm is valid?
-	if (                    )
+	if (!(perm & PTE_V) || (perm & PTE_COW))
 	{
 		printf("sys_mem_map:permission denied\n");
-		return                ;
+		return -E_INVAL;
 	}
 	//try to get the page
-	ppage = page_lookup(            );
+	ppage = page_lookup(srcenv->env_pgdir, round_srcva, &ppte);
 	if (ppage == NULL)
 	{
 		printf("sys_mem_map:page of srcva is invalid\n");
-		return    ;
+		return -E_INVAL;
 	}
 	//try to insert the page
-	ret = page_insert(              );
+	ret = page_insert(dstenv->env_pgdir, ppage, round_dstva, perm);
 	if (ret < 0)
 	{
 		printf("sys_mem_map:page_insert denied\n");
@@ -251,11 +251,11 @@ int sys_mem_map(int sysno, u_int srcid, u_int srcva, u_int dstid, u_int dstva,
 }
 
 /* Overview:
- * 	Unmap the page of memory at 'va' in the address space of 'envid'
+ *  Unmap the page of memory at 'va' in the address space of 'envid'
  * (if no page is mapped, the function silently succeeds)
  *
  * Post-Condition:
- * 	Return 0 on success, < 0 on error.
+ *  Return 0 on success, < 0 on error.
  *
  * Cannot unmap pages above UTOP.
  */
@@ -263,7 +263,7 @@ int sys_mem_unmap(int sysno, u_int envid, u_int va)
 {
 	int ret = 0;
 	struct Env *env;
-	ret = (                       ); 
+	ret = envid2env(envid, &env, 0); 
 	if (ret < 0)
 	{
 		printf("sys_mem_alloc:failed to get the target env\n");
@@ -274,8 +274,8 @@ int sys_mem_unmap(int sysno, u_int envid, u_int va)
 		printf("sys_mem_unmap:va is not valid\n");
 		return -E_NO_MEM;
 	}
-	page_remove(                      );
-	return ret;
+	page_remove(env->env_pgdir, va);
+	return 0;
 }
 
 // 创建线程
@@ -727,3 +727,4 @@ bool sys_rt_exit(int sysno)
 {
 	rt_task_exit();
 }
+
