@@ -215,12 +215,13 @@ LEAF(_start)
 
 
 	/* jump to main - 跳转到 C 语言 main 函数 */
-	jal	main                    # 调用 main 函数（在 init/main.c 中定义）
-	nop                         # 延迟槽
 
 	# UM=0; CP0=0; IE=0, 内核态，开中断
-	# 注意：如果 main 返回，系统将进入死循环
-	# 通常 main 函数不应该返回
+	mfc0	t0, CP0_STATUS
+	ori	t0, t0, 0x00000001
+	mtc0	t0, CP0_STATUS
+
+	jal	main
 
 	nop                         # 占位
 
