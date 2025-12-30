@@ -82,14 +82,14 @@ int sys_env_create(int sysno, char *binary, int pt, char *arg)
 	{
 		int i = 0;
 		// 把 arg 读到 myargv 里
-		for (int i = 0; arg[i]; i++)
+		for (i = 0; arg[i]; i++)
 		{
 			myargv[i] = arg[i];
 		}
 		myargv[i] = 0;
 		printf("\n");
 		// 把 binary 读到 myelf 里
-		for (int i = 0; binary[i]; i++)
+		for (i = 0; binary[i]; i++)
 		{
 			myelf[i] = binary[i];
 		}
@@ -100,8 +100,9 @@ int sys_env_create(int sysno, char *binary, int pt, char *arg)
 	}
 	else
 	{
+		int i;
 		// 把 binary 读到 myelf 里
-		for (int i = 0; binary[i]; i++)
+		for (i = 0; binary[i]; i++)
 		{
 			myelf[i] = binary[i];
 		}
@@ -314,7 +315,7 @@ int sys_mem_unmap(int sysno, u_int envid, u_int va)
 // 创建线程
 int sys_pthread_create(int sysno, int *func, int *arg)
 {
-	pthread_create(func, arg);
+	pthread_create(func, *arg);
 	return 1;
 }
 

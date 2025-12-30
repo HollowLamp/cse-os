@@ -56,7 +56,7 @@ extern int remaining_time;
 extern void env_pop_tf(struct Trapframe *tf);
 extern void lcontext(uint32_t contxt, int n);
 extern void set_asid(uint32_t id);
-extern int get_asid();
+extern u32 get_asid(void);
 extern void set_epc(uint32_t epc);
 extern struct Page *create_share_vm(int key, size_t size);
 extern void *insert_share_vm(struct Env *e, struct Page *p);
@@ -100,8 +100,6 @@ int envid2env(u_int envid, struct Env **penv, int checkperm)
 	{
 		*penv = curenv;
 		return 0;
-		*penv = curenv;
-		return 0;
 	}
 	e = envs + GET_ENV_ASID(envid);
 	if (e->env_status == ENV_FREE || e->env_id != envid) // ENV_FREE表示进程列表的这个位置是空的
@@ -139,7 +137,7 @@ int envid2env(u_int envid, struct Env **penv, int checkperm)
 
 // 初始化所有 env，链到 env_free_list 上
 /*
-始化环境管理系统。
+初始化环境管理系统。
 遍历整个 envs 数组（共 NENV 个）。
 将每个 Env 结构体的 env_id 初始化为无效值 0xFFFFFFFF。
 将 env_status 设置为 ENV_FREE，表示初始时所有环境都是空闲的。
@@ -174,8 +172,7 @@ void env_init(void)
 VPT: 映射到环境自己的页目录物理地址，通常用于内核访问该进程的页表结构。
 UVPT: 映射到环境自己的页目录物理地址，但带有 PTE_V (有效) 和 PTE_R (可读) 属性，允许用户态程序只读地访问自己的页表结构。
 */
-static int
-env_setup_vm(struct Env *e)
+static int env_setup_vm(struct Env *e)
 {
 
 	int i, r;
@@ -525,7 +522,6 @@ void env_create_priority(char *binary, int priority)
 
 	/*Step 2: assign priority to the new env. */
 	e->env_pri = priority;
-	e->env_pri = priority;
 
 	/*Step 3: Use load_icode() to load the named elf binary. */
 	printf("load_icode:%s\n", binary);
@@ -568,7 +564,6 @@ void env_create_priority_arg(char *binary, int priority, char *arg)
 	}
 	/*Step 2: assign priority to the new env. */
 	e->env_pri = priority;
-	e->env_pri = priority;
 
 	/*Step 3: Use load_icode() to load the named elf binary. */
 	printf("load_icode:%s\n", binary);
@@ -591,8 +586,6 @@ void env_create_priority_arg(char *binary, int priority, char *arg)
 	printf("list ID: 0x%x \n", env_runnable_head->env_id);
 	while (tmp != env_runnable_tail)
 	{
-		printf(" 0x%x ", tmp->env_id);
-		tmp = tmp->env_link;
 		printf(" 0x%x ", tmp->env_id);
 		tmp = tmp->env_link;
 	}
@@ -618,14 +611,12 @@ void env_create_share(char *binary, int num, int priority)
 	extern void debug();
 	/*Step 1: Use env_alloc to alloc a new env. */
 	r = env_alloc(&e, 0);
-	r = env_alloc(&e, 0);
 	if (r < 0)
 	{
 		panic("sorry, env_create_priority:env_alloc failed");
 		return;
 	}
 	/*Step 2: assign priority to the new env. */
-	e->env_pri = priority;
 	e->env_pri = priority;
 
 	/*Step 3: Use load_icode() to load the named elf binary. */
@@ -646,12 +637,10 @@ void env_create_share(char *binary, int num, int priority)
 	}
 	// 调试：输出 env_runnable 链表的 head tail
 	printf("list ID: 0x%x \n", env_runnable_head->env_id);
-	printf("tail ID: 0x%x \n", env_runnable_tail->env_id);
 
 	struct Page *p = NULL;
 	u_long rr;
 	u_long perm;
-	p = create_share_vm(1, BY2PG); // todo 测试 key先都给1
 	p = create_share_vm(1, BY2PG); // todo 测试 key先都给1
 	p->pp_ref++;
 	if (p == NULL)
@@ -696,7 +685,6 @@ void pthread_create(void *func, int arg)
 		printf("\nlist=null\n");
 		env_runnable_head = env_runnable_tail = e;
 		env_runnable_tail->env_link = env_runnable_head; // 成环
-		env_runnable_tail->env_link = env_runnable_head; // 成环
 	}
 	else
 	{
@@ -706,7 +694,6 @@ void pthread_create(void *func, int arg)
 		env_runnable_tail->env_link = env_runnable_head;
 	}
 	printf("list ID: 0x%x \n", env_runnable_head->env_id);
-	printf("tail ID: 0x%x \n", env_runnable_tail->env_id);
 }
 
 /*
@@ -758,12 +745,11 @@ void copy_curenv(struct Env *e, struct Env *env_src, void *func, int arg) // 不
 		for (pteno = 0; pteno <= PTX(~0); pteno++)
 		{
 			if (pt[pteno] & PTE_V)
-				if (pt[pteno] & PTE_V)
-				{
-					int pa_tmp = PTE_ADDR(pt[pteno]);
-					page_insert(e->env_pgdir, pa2page(pa_tmp), (pdeno << PDSHIFT) | (pteno << PGSHIFT), PTE_V | PTE_R);
-					pa2page(pa_tmp)->pp_ref++; // 增加物理页的物理引用
-				}
+			{
+				int pa_tmp = PTE_ADDR(pt[pteno]);
+				page_insert(e->env_pgdir, pa2page(pa_tmp), (pdeno << PDSHIFT) | (pteno << PGSHIFT), PTE_V | PTE_R);
+				pa2page(pa_tmp)->pp_ref++; // 增加物理页的物理引用
+			}
 		}
 	}
 	// 线程具有自己独立的栈空间，因此，在拷贝完一级页表后，我们需要其中清空栈地址
@@ -830,8 +816,6 @@ int env_free(struct Env *e)
 		/* Hint: find the pa and va of the page table. */
 		pa = PTE_ADDR(e->env_pgdir[pdeno]); // 物理地址
 		pt = (Pte *)KADDR(pa);				// 虚拟地址
-		pa = PTE_ADDR(e->env_pgdir[pdeno]); // 物理地址
-		pt = (Pte *)KADDR(pa);				// 虚拟地址
 
 		/* Hint: Unmap all PTEs in this page table. */
 		for (pteno = 0; pteno <= PTX(~0); pteno++)
@@ -839,24 +823,16 @@ int env_free(struct Env *e)
 			if (pt[pteno] & PTE_V)
 			{
 				page_remove(e->env_pgdir, (pdeno << PDSHIFT) | (pteno << PGSHIFT));
-				page_remove(e->env_pgdir, (pdeno << PDSHIFT) | (pteno << PGSHIFT));
 			}
 		}
 
 		/* Hint: free the page table itself. */
-		e->env_pgdir[pdeno] = 0;
-		page_decref(pa2page(pa));
 		e->env_pgdir[pdeno] = 0;
 		page_decref(pa2page(pa)); // 释放
 	}
 	/* Hint: free the page directory. */
 	pa = e->env_cr3;
 	e->env_pgdir = 0;
-	e->env_cr3 = 0;
-	page_decref(pa2page(pa));
-
-	pa = e->env_cr3;
-	e->env_pgdir = NULL;
 	e->env_cr3 = 0;
 	page_decref(pa2page(pa));
 
