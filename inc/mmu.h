@@ -138,6 +138,7 @@
  * Part 3.  Our helper functions.
  */
 #include <types.h>
+#include <printf.h>
 void bcopy(const void *, void *, size_t);
 void bzero(void *, size_t);
 

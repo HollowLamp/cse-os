@@ -14,7 +14,7 @@ NESTED(handle_sys,TF_SIZE, sp)
     .set at
 
     # 获取系统调用号
-    lw      t1, PT_R2(sp)         # 系统调用号存储在 v0 (R2) 中，加载到 t1
+    lw      t1, TF_REG2(sp)         # 系统调用号存储在 v0 (R2) 中，加载到 t1
 
     # 检查系统调用号是否合法
     li      t0, __NR_SYSCALLS     # 加载系统调用总数
@@ -22,14 +22,14 @@ NESTED(handle_sys,TF_SIZE, sp)
     nop
     j       illegal_syscall       # 否则跳转到非法系统调用处理
     nop
-    
+
 
                                      # v0 = v0 - __SYSCALL_BASE，得到相对偏移
                                      # _if(v0 < __NR_SYSCALLS+1) t0=1 else t0=0  __NR_SYSCALLS是系统调用总个数
 
     #  set epc as epc plus 4
     #  Where is the next being exectued cpu instruction when return from exception?
-    
+
 valid_syscall:
     # 设置 EPC 为下一条指令
     mfc0    t0, CP0_EPC           # 获取 EPC
@@ -63,7 +63,7 @@ valid_syscall:
     jalr    t2      # t2 is syscall function's address
     nop
 
-handle_return:    
+handle_return:
 
      #   把返回值放进去
 

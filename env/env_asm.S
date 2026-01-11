@@ -4,7 +4,7 @@
 #include <m32c0.h>
 #include <trap.h>
 			.data
-			.globl	KERNEL_SP 
+			.globl	KERNEL_SP
 KERNEL_SP:
 			.word		0
 
@@ -12,7 +12,7 @@ KERNEL_SP:
 
 	.text
 	.set noat
-	
+
 # 从栈中恢复上下文数据，写回各个寄存器
 LEAF(env_pop_tf)
 	.set noreorder
@@ -44,7 +44,7 @@ LEAF(env_pop_tf)
 	# 从该基址加载各个通用寄存器
 	lw		$31,TF_REG31(k0)
 	lw		$30,TF_REG30(k0)
-	lw		$29,TF_REG29(k0)															
+	lw		$29,TF_REG29(k0)
 	lw		$28,TF_REG28(k0)
 	lw		$25,TF_REG25(k0)
 	lw		$24,TF_REG24(k0)
@@ -71,7 +71,7 @@ LEAF(env_pop_tf)
 	lw		$3,TF_REG3(k0)
 	lw		$2,TF_REG2(k0)
 	lw		$1,TF_REG1(k0)
-	
+
 
 	# 开启中断，设为用户模式
 	mfc0	k0, CP0_STATUS		# 读到 status
@@ -141,6 +141,18 @@ LEAF(get_badaddr)
 	jr	ra
 	nop
 END(get_badaddr)
+
+LEAF(get_badvaddr)
+	mfc0 	v0, C0_BADVADDR
+	jr	ra
+	nop
+END(get_badvaddr)
+
+LEAF(get_cause)
+	mfc0 	v0, C0_CAUSE
+	jr	ra
+	nop
+END(get_cause)
 
 LEAF(get_asid)
 	mfc0 	v0, C0_ENTRYHI
