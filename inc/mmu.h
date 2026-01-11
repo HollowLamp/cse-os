@@ -108,7 +108,6 @@
 #define UXSTACKTOP UTOP				 /* 用户异常栈顶 */
 #define USTACKTOP (UTOP - 2 * BY2PG) /* 用户栈顶 */
 
-#define UXSTACKTOP (UTOP)
 #define TIMESTACK 0x82000000
 #define USTACKTOP (UTOP - 2 * BY2PG)
 

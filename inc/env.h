@@ -70,6 +70,13 @@ extern struct Env *env_runnable_head;
 extern struct Env *env_runnable_tail;
 extern struct Env *env_free_list;
 
+extern u32 get_status(void);
+extern u32 get_badaddr(void);
+extern u32 get_badvaddr(void);
+extern u32 get_cause(void);
+extern u32 get_epc(void);
+extern u32 get_asid(void);
+
 void env_init(void);
 int env_alloc(struct Env **e, u_int parent_id);
 int env_free(struct Env *);
