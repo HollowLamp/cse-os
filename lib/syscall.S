@@ -6,76 +6,60 @@
 
 
 NESTED(handle_sys,TF_SIZE, sp)
-    # save cpu s registers
+    # 保存所有寄存器到栈上
     SAVE_ALL
-    # close interrput
-    CLI
     nop
     .set at
 
-    # 获取系统调用号
-    lw      t1, TF_REG2(sp)         # 系统调用号存储在 v0 (R2) 中，加载到 t1
+    # 从 a0 寄存器获取系统调用号（用户通过 msyscall 的第一个参数传入）
+    # a0 对应 TF_REG4，系统调用号格式为 __SYSCALL_BASE + 偏移
+    lw      a0, TF_REG4(sp)         # 从栈中恢复 a0（系统调用号）
 
-    # 检查系统调用号是否合法
-    li      t0, __NR_SYSCALLS     # 加载系统调用总数
-    blt     t1, t0, valid_syscall # 如果 t1 < __NR_SYSCALLS，跳转到 valid_syscall
-    nop
-    j       illegal_syscall       # 否则跳转到非法系统调用处理
-    nop
+    # 减去基地址，得到系统调用表中的索引
+    subu    a0, a0, __SYSCALL_BASE  # a0 = a0 - 9527，得到实际索引 (0, 1, 2, ...)
 
+    # 检查系统调用号是否在合法范围内
+    # 如果 a0 < __NR_SYSCALLS + 1，则 t0 = 1，否则 t0 = 0
+    sltiu   t0, a0, __NR_SYSCALLS + 1
 
-                                     # v0 = v0 - __SYSCALL_BASE，得到相对偏移
-                                     # _if(v0 < __NR_SYSCALLS+1) t0=1 else t0=0  __NR_SYSCALLS是系统调用总个数
+    # 设置 EPC 为下一条指令（系统调用返回后从 syscall 的下一条指令继续执行）
+    lw      t1, TF_EPC(sp)          # 从栈中读取 EPC
+    addiu   t1, t1, 4               # EPC + 4
+    sw      t1, TF_EPC(sp)          # 保存回栈中
 
-    #  set epc as epc plus 4
-    #  Where is the next being exectued cpu instruction when return from exception?
-
-valid_syscall:
-    # 设置 EPC 为下一条指令
-    mfc0    t0, CP0_EPC           # 获取 EPC
-    addiu   t0, t0, 4             # EPC + 4，跳过当前指令
-    mtc0    t0, CP0_EPC           # 更新 EPC
-
-    # 计算系统调用函数地址
-    la      t0, sys_call_table    # 加载系统调用表基地址
-    sll     t1, t1, 2             # 系统调用号左移 2 位（乘以 4），得到偏移量
-    addu    t0, t0, t1            # t0 = sys_call_table + 偏移量
-    lw      t2, 0(t0)             # 加载系统调用函数地址到 t2
-    beqz    t2, illegal_syscall   # 如果 t2 为 0，跳转到非法系统调用处理
+    # 如果系统调用号非法，跳转到错误处理
+    beq     t0, zero, illegal_syscall
     nop
 
-                          # 系统调用结束后得进行下一条指令
+    # 计算系统调用函数在表中的地址
+    sll     t0, a0, 2               # t0 = 索引 * 4（每个函数指针占 4 字节）
+    la      t1, sys_call_table      # t1 = 系统调用表基地址
+    addu    t1, t1, t0              # t1 = 表基址 + 偏移
+    lw      t2, 0(t1)               # t2 = 函数指针
 
-    #  ——if legal , goto the right function s address
-                                 # _if t0 = 0, goto illegal_syscall
-    nop
-                                 # 把序号偏移左移两位，相当于乘以4，得到一个地址偏移（一个地址4字节
-                                 # load address : t1 <- sys_call_table 总入口
-                                 # t1 = t1 + t0 得到具体入口
-                                 # t2 = MEM(t1)  取这个位置的指针
-                                 # _if t2 = 0, goto illegal_syscall
+    # 检查函数指针是否为空
+    beq     t2, zero, illegal_syscall
     nop
 
-
-    nop
-    la  ra,handle_return
-    # go to exectue the syscall
-    jalr    t2      # t2 is syscall function's address
+    # 设置返回地址，执行系统调用
+    la      ra, handle_return       # 系统调用返回后跳转到 handle_return
+    jalr    t2                      # 跳转执行系统调用函数
     nop
 
 handle_return:
+    # 系统调用返回值在 v0 中，需要保存到栈上的 TF_REG2 位置
+    # 这样异常返回时会恢复到 v0 寄存器，用户程序就能拿到返回值
+    sw      v0, TF_REG2(sp)
 
-     #   把返回值放进去
-
-    j   ret_from_exception
+    j       ret_from_exception
     nop
 
-    # _error and loop
 illegal_syscall:
-
-    move a0,t0        # t0为中断号*4
-    jal   print_illegal
-    j   ret_from_exception
+    # 打印错误信息
+    move    a0, t0
+    jal     print_illegal
+    nop
+    j       ret_from_exception
     nop
 
 END(handle_sys)

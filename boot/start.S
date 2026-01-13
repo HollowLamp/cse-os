@@ -85,8 +85,7 @@ _mips_general_exception:  # 中断处理地址
 		 */
 
 		# 取出中断号（异常码）
-		andi	k1, k1, 0x7c        # 提取 Cause[6:2] (ExcCode)，掩码为 0111 1100
-		srl		k1, k1, 2           # 右移 2 位，得到异常号 (0-31)
+		andi	k1, 0x7c
 
 		# 把内存中 k0 地址处的值赋给 k0
 		addu	k0, k0, k1          # k0 = exception_handlers + (ExcCode * 4)

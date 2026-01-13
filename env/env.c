@@ -849,17 +849,24 @@ int env_free(struct Env *e)
 		}
 	}
 	// 现在我们找到了 e，tempE 指向 e，tempE_pre 是 e 前一个
-	if (tempE == env_runnable_tail)
-	{
-		env_runnable_tail = tempE_pre;
-	}
+	// 先保存下一个要运行的进程
+	struct Env *next_env = e->env_link;
+
+	// 检查是否还有可运行的进程（如果 next_env == e，说明只有一个进程）
+	int has_runnable = (next_env != e);
+
+	// 从 env_runnable 里删去 e
+	tempE_pre->env_link = next_env;
+
+	// 更新链表头尾指针
 	if (env_runnable_head == e)
 	{
-		env_runnable_head = env_runnable_head->env_link;
+		env_runnable_head = has_runnable ? next_env : NULL;
 	}
-
-	tempE_pre->env_link = tempE->env_link; // 从 env_runnable 里删去e
-	tempE = e->env_link;				   // 如果释放的进程是当前进程，那么就调度它之后的那个进程进来运行
+	if (env_runnable_tail == e)
+	{
+		env_runnable_tail = has_runnable ? tempE_pre : NULL;
+	}
 
 	// 把 e 加入 env_free_list
 	e->env_status = ENV_FREE;
@@ -868,16 +875,28 @@ int env_free(struct Env *e)
 
 	if (e == curenv)
 	{
-		printf("next env->id: 0x%x  cur env->id: %x\n", tempE->env_id, curenv->env_id);
 		clear_timer0_int();
-		printf("free->sched \n");
-		env_run(tempE);
+		if (has_runnable)
+		{
+			// 还有其他可运行的进程，调度它
+			printf("next env->id: 0x%x  cur env->id: %x\n", next_env->env_id, curenv->env_id);
+			printf("free->sched \n");
+			env_run(next_env);
+		}
+		else
+		{
+			// 没有可运行的进程了，进入空闲状态
+			printf("All processes finished. System idle.\n");
+			curenv = NULL;
+			while (1)
+			{
+				// 空闲循环，等待中断或新进程
+			}
+		}
 	}
 	else
 	{
 		printf("env_free_not_current \n");
-		while (1)
-			;
 		return 1;
 	}
 }
