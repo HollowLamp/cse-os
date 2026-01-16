@@ -12,6 +12,7 @@
 #include <../drivers/console.h>
 #include <../drivers/leds.h>
 #include <../drivers/switches.h>
+#include <../drivers/buzzer.h>
 
 extern char *KERNEL_SP;
 extern struct Env *curenv;
@@ -1016,4 +1017,13 @@ bool sys_rt_write_by_num(int sysno, u32 device_id, u32 num, char *buf)
 bool sys_rt_exit(int sysno)
 {
 	rt_task_exit();
+}
+
+/**
+ * 设置蜂鸣器频率值
+ * val: 蜂鸣器频率控制值（0 = 停止，其他值 = 对应频率）
+ */
+void sys_set_buzzer(int sysno, u32 val)
+{
+	set_buzzers(val);
 }

@@ -171,3 +171,15 @@ int syscall_rt_exit()
 {
 	msyscall(SYS_rt_exit,0,0,0,0,0);
 }
+
+/**
+ * 设置蜂鸣器频率
+ * val: 蜂鸣器控制值（0=停止，其他=对应频率）
+ * 常用频率值：
+ *   Do(262Hz)=0x106, Re(294Hz)=0x126, Mi(330Hz)=0x14A
+ *   Fa(349Hz)=0x15D, So(392Hz)=0x188, La(440Hz)=0x1B8, Xi(494Hz)=0x1EE
+ */
+void syscall_set_buzzer(u32 val)
+{
+	msyscall(SYS_set_buzzer, val, 0, 0, 0, 0);
+}

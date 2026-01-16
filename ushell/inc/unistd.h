@@ -2,7 +2,7 @@
 #define UNISTD_H
 
 #define __SYSCALL_BASE 9527
-#define __NR_SYSCALLS 35
+#define __NR_SYSCALLS 36
 
 
 #define SYS_putchar 		((__SYSCALL_BASE ) + (0 ) )
@@ -40,5 +40,6 @@
 #define SYS_rt_claim_device  ((__SYSCALL_BASE ) + (32 ) )
 #define SYS_rt_write_by_num  ((__SYSCALL_BASE ) + (33 ) )
 #define SYS_rt_exit          ((__SYSCALL_BASE ) + (34 ) )
+#define SYS_set_buzzer       ((__SYSCALL_BASE ) + (35 ) )
 
 #endif

@@ -98,6 +98,8 @@ END(handle_sys)
     .extern sys_rt_release_device
     .extern sys_rt_claim_device
     .extern sys_rt_write_by_num
+    .extern sys_rt_exit
+    .extern sys_set_buzzer
     # //Overview:
     # //syscalltable stores all the syscall function s entrypoints
 
@@ -137,6 +139,7 @@ END(handle_sys)
     .word sys_rt_claim_device
     .word sys_rt_write_by_num
     .word sys_rt_exit
+    .word sys_set_buzzer
 .endm
 EXPORT(sys_call_table)
 
