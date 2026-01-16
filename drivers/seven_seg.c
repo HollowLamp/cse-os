@@ -110,63 +110,68 @@ bool rt_seven_seg_write_by_num(char* buf,u32 num){
 
 /**
  * 申请数码管资源（互斥访问控制）
- * num 资源编号（0-3），每个资源控制2个数码管
+ * num 请求的资源数量（1-4），每个资源控制2个数码管
  *
- * 8个数码管分为4组资源，支持多任务独立控制，资源被占用时，其他任务无法申请，使用完毕后需调用 rt_seven_seg_release() 释放
+ * 8个数码管分为4组资源（第0组、第1组、第2组、第3组），从第0组开始依次分配num个资源。
+ * 支持多任务独立控制，资源被占用时，其他任务无法申请，使用完毕后需调用 rt_seven_seg_release() 释放
  */
 bool rt_seven_seg_require(u32 num){
-    if (num >= 4) {
+    if (num == 0 || num > 4) {
         return false;
     }
 
-    // 检查资源是否已被占用
-    if (seg_status[num] != -1) {
-        // 资源已被占用
-        return false;
+    // 检查是否有足够的连续空闲资源（从第0组开始）
+    for (u32 i = 0; i < num; i++) {
+        if (seg_status[i] != -1) {
+            // 资源已被占用，无法满足请求
+            return false;
+        }
     }
 
-    // 标记资源为已占用
-    seg_status[num] = 0;
+    // 标记前num个资源为已占用，并使能对应的数码管
+    for (u32 i = 0; i < num; i++) {
+        seg_status[i] = 0;
 
-    // 使能对应的2个数码管
-    u32 seg_base = num * 2;
-    enable_one_seven_seg(seg_base);
-    enable_one_seven_seg(seg_base + 1);
+        // 使能对应的2个数码管
+        u32 seg_base = i * 2;
+        enable_one_seven_seg(seg_base);
+        enable_one_seven_seg(seg_base + 1);
+    }
 
     return true;
 }
 /**
  * 释放数码管资源
- * num 资源编号（0-3）
+ * num 释放的资源数量（1-4）
  *
- * 释放已申请的数码管资源，供其他任务使用，释放时会禁用并清除对应数码管的显示
+ * 从第0组开始依次释放num个数码管资源，供其他任务使用，释放时会禁用并清除对应数码管的显示
  */
 bool rt_seven_seg_release(u32 num){
-    if (num >= 4) {
+    if (num == 0 || num > 4) {
         return false;
     }
 
-    // 检查资源是否已被占用
-    if (seg_status[num] == -1) {
-        // 资源未被占用，无需释放
-        return false;
+    // 释放前num个资源
+    for (u32 i = 0; i < num; i++) {
+        // 只释放已被占用的资源
+        if (seg_status[i] != -1) {
+            // 计算对应的数码管编号
+            u32 seg_base = i * 2;
+
+            // 清除对应的2个数码管显示值
+            u32 current = get_seven_seg_value();
+            u32 mask = 0xFF << (seg_base * 4);  // 2个数码管占8位
+            current = current & ~mask;
+            set_seven_seg_value(current);
+
+            // 禁用对应的2个数码管
+            disable_one_seven_seg(seg_base);
+            disable_one_seven_seg(seg_base + 1);
+
+            // 标记资源为未占用
+            seg_status[i] = -1;
+        }
     }
-
-    // 计算对应的数码管编号
-    u32 seg_base = num * 2;
-
-    // 清除对应的2个数码管显示值
-    u32 current = get_seven_seg_value();
-    u32 mask = 0xFF << (seg_base * 4);  // 2个数码管占8位
-    current = current & ~mask;
-    set_seven_seg_value(current);
-
-    // 禁用对应的2个数码管
-    disable_one_seven_seg(seg_base);
-    disable_one_seven_seg(seg_base + 1);
-
-    // 标记资源为未占用
-    seg_status[num] = -1;
 
     return true;
 }

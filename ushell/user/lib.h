@@ -87,7 +87,7 @@ int syscall_rt_write_by_num(u32 device_id, u32 num, char *buf);
 // string.c
 // int strlen(const char *s);
 // char *strcpy(char *dst, const char *src);
-// const char *strchr(const char *s, char c); 
+// const char *strchr(const char *s, char c);
 // void *memcpy(void *destaddr, void const *srcaddr, u_int len);
 // int strcmp(const char *p, const char *q);
 

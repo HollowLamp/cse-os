@@ -16,7 +16,7 @@
 // max size of file image is 16M
 #define MAX_FILE_SIZE 0x1000000
 
-// size of DDR RAM (256M for Minisys) 
+// size of DDR RAM (256M for Minisys)
 #define DDR_SIZE 0x10000000
 
 // 4K size read burst
@@ -104,7 +104,7 @@ static int runcmd(char *buf, struct Trapframe *tf)
     //     for(int i=0;i<5;i++) syscall_printf(" %d ",buf[i]);
     //     syscall_printf("\nargv[0]:%x\n",argv[0]);
     //     for(int i=0;i<5;i++) syscall_printf(" %d ",argv[0][i]);
-    // }   
+    // }
     if (argc == 0) return 0;
     for (i = 0; i < ARRAY_SIZE(commands); i++) {
         if (strcmp(argv[0], commands[i].name) == 0){
@@ -143,7 +143,7 @@ static int runcmd(char *buf, struct Trapframe *tf)
 
 void shell(struct Trapframe *tf)
 {
-    
+
     syscall_printf("Aurora, an operating system based on MIPS32\n");
     syscall_printf("Type 'help' for more commands.\n");
 
@@ -204,40 +204,40 @@ int mon_write(int argc, char **argv, struct Trapframe *tf){
 	return syscall_fwrite(argv[1], argv[2]);
 }
 
-char* Int2String(int num,char *str)//10进制 
+char* Int2String(int num,char *str)//10进制
 {
-    int i = 0;//指示填充str 
-    if(num<0)//如果num为负数，将num变正 
+    int i = 0;//指示填充str
+    if(num<0)//如果num为负数，将num变正
     {
         num = -num;
         str[i++] = '-';
-    } 
-    //转换 
+    }
+    //转换
     do
     {
-        str[i++] = num%10+48;//取num最低位 字符0~9的ASCII码是48~57；简单来说数字0+48=48，ASCII码对应字符'0' 
-        num /= 10;//去掉最低位    
+        str[i++] = num%10+48;//取num最低位 字符0~9的ASCII码是48~57；简单来说数字0+48=48，ASCII码对应字符'0'
+        num /= 10;//去掉最低位
     }while(num);//num不为0继续循环
-    
+
     str[i] = '\0';
-    
-    //确定开始调整的位置 
+
+    //确定开始调整的位置
     int j = 0;
-    if(str[0]=='-')//如果有负号，负号不用调整 
+    if(str[0]=='-')//如果有负号，负号不用调整
     {
-        j = 1;//从第二位开始调整 
-        ++i;//由于有负号，所以交换的对称轴也要后移1位 
+        j = 1;//从第二位开始调整
+        ++i;//由于有负号，所以交换的对称轴也要后移1位
     }
-    //对称交换 
+    //对称交换
     for(;j<i/2;j++)
     {
-        //对称交换两端的值 其实就是省下中间变量交换a+b的值：a=a+b;b=a-b;a=a-b; 
+        //对称交换两端的值 其实就是省下中间变量交换a+b的值：a=a+b;b=a-b;a=a-b;
         str[j] = str[j] + str[i-1-j];
         str[i-1-j] = str[j] - str[i-1-j];
         str[j] = str[j] - str[i-1-j];
-    } 
-    
-    return str;//返回转换后的值 
+    }
+
+    return str;//返回转换后的值
 }
 
 void test_end()
@@ -256,7 +256,7 @@ void test1()
 			syscall_printf("test one :%d\n",i);
 			if(i==10000) i=1;
 		}
-		
+
 	}
 }
 
@@ -270,7 +270,7 @@ void test2()
 			syscall_printf("test two :%d\n",i);
 			if(i==10000) i=1;
 		}
-		
+
 	}
 }
 
@@ -314,7 +314,7 @@ void share1()
     *(share_pg+4) = 99;
     while(1)
     {
-        
+
     }
 }
 
@@ -325,7 +325,7 @@ void share2()
     syscall_printf("test three :%d\n",result);
     while(1)
     {
-        
+
     }
 }
 
@@ -341,7 +341,7 @@ int test_banker(){
      syscall_printf("in RT.elf");
     char buf = 10;
     char buf1 = 11;
-    
+
     u32 device [2];
     device[0] = 2;
     device[1] = 2;

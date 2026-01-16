@@ -5,7 +5,7 @@
 #define __NR_SYSCALLS 35
 
 
-#define SYS_putchar 		((__SYSCALL_BASE ) + (0 ) ) 
+#define SYS_putchar 		((__SYSCALL_BASE ) + (0 ) )
 #define SYS_getenvid 		((__SYSCALL_BASE ) + (1 ) )
 #define SYS_get_shm			((__SYSCALL_BASE ) + (2 ) )
 #define SYS_env_create		((__SYSCALL_BASE ) + (3 ) )
@@ -29,7 +29,7 @@
 #define SYS_env_create_1      ((__SYSCALL_BASE ) + (21 ) )
 #define SYS_mkdir           ((__SYSCALL_BASE ) + (22 ) )
 #define SYS_cd              ((__SYSCALL_BASE ) + (23 ) )
-#define SYS_fcraete         ((__SYSCALL_BASE ) + (24 ) )   
+#define SYS_fcraete         ((__SYSCALL_BASE ) + (24 ) )
 #define SYS_fread           ((__SYSCALL_BASE ) + (25 ) )
 #define SYS_fwrite          ((__SYSCALL_BASE ) + (26 ) )
 #define SYS_ls              ((__SYSCALL_BASE ) + (27 ) )

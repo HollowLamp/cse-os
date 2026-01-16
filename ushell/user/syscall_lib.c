@@ -12,7 +12,7 @@ u_int syscall_getenvid(void)
 	return msyscall(SYS_getenvid, 0, 0, 0, 0, 0);
 }
 
-// 共享内存系统调用  
+// 共享内存系统调用
 void* syscall_get_shm(int key, int size)
 {
 	return msyscall(SYS_get_shm, key, size, 0, 0, 0);
@@ -116,7 +116,7 @@ void syscall_env_create_1(u32 env_va)
 {
 	msyscall(SYS_env_create_1, env_va, 0, 0, 0, 0);
 }
-    
+
 int syscall_mkdir(char *path)
 {
 	msyscall(SYS_mkdir, path, 0, 0, 0, 0);
