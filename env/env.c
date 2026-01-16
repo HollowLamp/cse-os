@@ -494,6 +494,16 @@ load_icode(struct Env *e, char *elf_name)
 	e->env_tf.cp0_epc = entry_point; // 将 elf 指定的的代码入口地址 entry_point,
 									 // 存在当前进程 env 的 env_tf.cp0_epc 当中，
 									 // 作为后续代码运行的起始 pc 地址
+
+	/* 对于 PIC (Position Independent Code) 程序，入口处会用 t9 计算 GP 寄存器
+	 * 例如：
+	 *   lui  gp, %hi(_gp_disp)
+	 *   addiu gp, gp, %lo(_gp_disp)
+	 *   addu gp, gp, t9    <-- 需要 t9 = 入口地址
+	 * 因此需要将 t9 ($25) 设置为入口地址
+	 */
+	e->env_tf.regs[25] = entry_point; // t9 = 入口地址，用于 PIC 代码的 GP 计算
+
 	return;
 }
 

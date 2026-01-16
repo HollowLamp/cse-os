@@ -1,0 +1,3 @@
+
+libmath.so:     file format elf32-tradlittlemips
+

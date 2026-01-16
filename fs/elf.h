@@ -28,16 +28,119 @@
 #define IS_ELF64(hdr) (IS_ELF(hdr) && (hdr).e_ident[4] == 2)
 
 /**
- * Program Header 类型：可加载段
- * PT_LOAD - Loadable segment
+ * Program Header 类型
  */
-#define PT_LOAD 1
+#define PT_NULL     0   /* 未使用 */
+#define PT_LOAD     1   /* 可加载段 */
+#define PT_DYNAMIC  2   /* 动态链接信息 */
+#define PT_INTERP   3   /* 解释器路径 */
 
 /**
  * Section Header 类型：未初始化数据段（BSS）
  * SHT_NOBITS - Section with no data (BSS)
  */
 #define SHT_NOBITS 8
+
+/*
+ * 动态链接相关定义
+ */
+
+/**
+ * 动态节条目结构 (Dynamic Section Entry)
+ * 用于描述动态链接信息
+ */
+typedef struct {
+    int32_t  d_tag;     /* 条目类型 */
+    uint32_t d_val;     /* 值（可以是地址或整数） */
+} Elf32_Dyn;
+
+/**
+ * 动态节标签类型 (d_tag values)
+ */
+#define DT_NULL     0   /* 结束标记 */
+#define DT_NEEDED   1   /* 依赖的共享库名称（字符串表偏移） */
+#define DT_PLTGOT   3   /* GOT 表地址 */
+#define DT_HASH     4   /* 符号哈希表地址 */
+#define DT_STRTAB   5   /* 字符串表地址 */
+#define DT_SYMTAB   6   /* 符号表地址 */
+#define DT_STRSZ    10  /* 字符串表大小 */
+#define DT_SYMENT   11  /* 符号表项大小 */
+
+/* MIPS 特定的动态标签 */
+#define DT_MIPS_LOCAL_GOTNO  0x7000000a  /* 本地 GOT 项数量 */
+#define DT_MIPS_SYMTABNO     0x70000011  /* 符号表项数量 */
+#define DT_MIPS_GOTSYM       0x70000013  /* GOT 中第一个符号的索引 */
+
+/**
+ * 重定位条目结构 (Relocation Entry)
+ */
+typedef struct {
+    uint32_t r_offset;  /* 重定位位置（相对于段基址的偏移） */
+    uint32_t r_info;    /* 符号索引和重定位类型 */
+} Elf32_Rel;
+
+/**
+ * 带加数的重定位条目结构
+ */
+typedef struct {
+    uint32_t r_offset;
+    uint32_t r_info;
+    int32_t  r_addend;  /* 加数 */
+} Elf32_Rela;
+
+/**
+ * 提取重定位信息的宏
+ */
+#define ELF32_R_SYM(info)   ((info) >> 8)       /* 符号索引 */
+#define ELF32_R_TYPE(info)  ((info) & 0xff)     /* 重定位类型 */
+
+/**
+ * MIPS 重定位类型（基于测试程序需要的类型）
+ */
+#define R_MIPS_NONE     0   /* 无操作 */
+#define R_MIPS_32       2   /* 32位绝对地址: S + A */
+#define R_MIPS_HI16     5   /* 高16位: ((AHL + S) >> 16) */
+#define R_MIPS_LO16     6   /* 低16位: (AHL + S) & 0xFFFF */
+#define R_MIPS_GOT16    9   /* GOT 项偏移 */
+#define R_MIPS_CALL16   11  /* 函数调用 GOT 偏移 */
+#define R_MIPS_JALR     45  /* 间接跳转提示（可忽略） */
+
+/**
+ * 符号绑定类型
+ */
+#define STB_LOCAL   0   /* 本地符号 */
+#define STB_GLOBAL  1   /* 全局符号 */
+#define STB_WEAK    2   /* 弱符号 */
+
+#define ELF32_ST_BIND(info)  ((info) >> 4)
+#define ELF32_ST_TYPE(info)  ((info) & 0xf)
+
+/**
+ * ELF32 符号表项结构（前置声明，用于 DynLinkInfo）
+ * ELF32 Symbol Table Entry Structure
+ */
+typedef struct
+{
+  uint32_t st_name;         // 符号名在字符串表中的偏移 (Symbol name offset)
+  uint32_t st_value;        // 符号值（地址） (Symbol value/address)
+  uint32_t st_size;         // 符号大小 (Symbol size)
+  uint8_t  st_info;         // 符号类型和绑定 (Symbol type and binding)
+  uint8_t  st_other;        // 符号可见性 (Symbol visibility)
+  uint16_t st_shndx;        // 符号所在节索引 (Section index)
+} Elf32_Sym;
+
+/**
+ * 动态链接信息结构（解析后的缓存）
+ */
+typedef struct {
+    uint32_t    base_addr;      /* 加载基地址 */
+    Elf32_Sym  *symtab;         /* 符号表指针 */
+    const char *strtab;         /* 字符串表指针 */
+    uint32_t   *got;            /* GOT 表指针 */
+    uint32_t    symtab_count;   /* 符号表项数量 */
+    uint32_t    local_gotno;    /* 本地 GOT 项数量 */
+    uint32_t    gotsym;         /* GOT 中第一个符号的索引 */
+} DynLinkInfo;
 
 /**
  * ELF32 文件头结构
@@ -94,19 +197,7 @@ typedef struct
   uint32_t p_align;         // 段对齐 (Segment alignment)
 } Elf32_Phdr;
 
-/**
- * ELF32 符号表项结构
- * ELF32 Symbol Table Entry Structure
- */
-typedef struct
-{
-  uint32_t st_name;         // 符号名在字符串表中的偏移 (Symbol name offset)
-  uint32_t st_value;        // 符号值（地址） (Symbol value/address)
-  uint32_t st_size;         // 符号大小 (Symbol size)
-  uint8_t  st_info;         // 符号类型和绑定 (Symbol type and binding)
-  uint8_t  st_other;        // 符号可见性 (Symbol visibility)
-  uint16_t st_shndx;        // 符号所在节索引 (Section index)
-} Elf32_Sym;
+/* 注意：Elf32_Sym 已在前面定义（动态链接需要） */
 
 /**
  * ELF64 文件头结构（64位系统使用）
@@ -200,5 +291,54 @@ int load_elf_sd(const uint8_t *elf, const uint32_t elf_size);
  * return ELF 程序入口地址
  */
 uint32_t get_entry(const uint8_t *elf, const uint32_t elf_size);
+
+/**
+ * 动态链接器函数
+ */
+
+/**
+ * 检查 ELF 是否需要动态链接
+ * @param elf ELF 文件数据指针
+ * @param elf_size ELF 文件大小
+ * @return 1 表示需要动态链接，0 表示不需要
+ */
+int elf_needs_dynlink(const uint8_t *elf, const uint32_t elf_size);
+
+/**
+ * 加载动态链接的 ELF 文件
+ * 处理流程：加载主程序 -> 加载依赖的 .so -> 符号解析 -> 重定位 -> 返回入口
+ * @param elf 主 ELF 文件数据指针
+ * @param elf_size 主 ELF 文件大小
+ * @param so_loader 加载 .so 文件的回调函数（参数：库名，返回：加载后的基地址，0 表示失败）
+ * @return 成功返回 0，失败返回 -1
+ */
+int load_elf_dynamic(const uint8_t *elf, const uint32_t elf_size,
+                     uint32_t (*so_loader)(const char *so_name));
+
+/**
+ * 解析动态节，提取符号表、字符串表、GOT 等信息
+ * @param elf ELF 文件数据指针
+ * @param elf_size ELF 文件大小
+ * @param info 输出的动态链接信息结构
+ * @return 成功返回 0，失败返回 -1
+ */
+int parse_dynamic_section(const uint8_t *elf, const uint32_t elf_size,
+                          DynLinkInfo *info);
+
+/**
+ * 在符号表中查找符号
+ * @param name 符号名称
+ * @param info 动态链接信息
+ * @return 符号地址，0 表示未找到
+ */
+uint32_t lookup_symbol(const char *name, const DynLinkInfo *info);
+
+/**
+ * 填充 GOT 表（MIPS 特定）
+ * @param main_info 主程序的动态链接信息
+ * @param so_info 共享库的动态链接信息
+ * @return 成功返回 0，失败返回 -1
+ */
+int fill_got_table(DynLinkInfo *main_info, const DynLinkInfo *so_info);
 
 #endif

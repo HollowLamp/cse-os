@@ -1,0 +1,41 @@
+
+libmath.so:     file format elf32-tradlittlemips
+
+SYMBOL TABLE:
+000000d8 l    d  .MIPS.abiflags	00000000 .MIPS.abiflags
+000000f0 l    d  .reginfo	00000000 .reginfo
+000000f0 l    d  .dynamic	00000000 .dynamic
+00000188 l    d  .hash	00000000 .hash
+000001d0 l    d  .dynsym	00000000 .dynsym
+000002a0 l    d  .dynstr	00000000 .dynstr
+000002f8 l    d  .text	00000000 .text
+00010358 l    d  .data	00000000 .data
+00010360 l    d  .got	00000000 .got
+00000000 l    d  .comment	00000000 .comment
+00000000 l    d  .pdr	00000000 .pdr
+00000000 l    d  .debug_aranges	00000000 .debug_aranges
+00000000 l    d  .debug_info	00000000 .debug_info
+00000000 l    d  .debug_abbrev	00000000 .debug_abbrev
+00000000 l    d  .debug_line	00000000 .debug_line
+00000000 l    d  .debug_frame	00000000 .debug_frame
+00000000 l    d  .debug_str	00000000 .debug_str
+00000000 l    d  .gnu.attributes	00000000 .gnu.attributes
+00000000 l    d  .mdebug.abi32	00000000 .mdebug.abi32
+00000000 l    df *ABS*	00000000 libmath.c
+00000000 l    df *ABS*	00000000 
+000000f0 l     O *ABS*	00000000 _DYNAMIC
+00018350 l       .got	00000000 _gp
+00010360 l     O *ABS*	00000000 _GLOBAL_OFFSET_TABLE_
+00000340 g     F .text	00000018 get_counter
+00010358 g       .data	00000000 _fdata
+00018350 g    d  *ABS*	00000000 _gp_disp
+00010358 g     O .data	00000004 lib_counter
+000002f8 g     F .text	00000024 add
+000002f8 g       .text	00000000 _ftext
+0000031c g     F .text	00000024 mul
+0001036c g       .got	00000000 __bss_start
+0001036c g       .got	00000000 _edata
+0001036c g       .got	00000000 _end
+0001036c g       .got	00000000 _fbss
+
+

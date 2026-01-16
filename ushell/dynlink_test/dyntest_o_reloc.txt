@@ -1,0 +1,132 @@
+
+dyntest.o:     file format elf32-tradlittlemips
+
+RELOCATION RECORDS FOR [.text]:
+OFFSET   TYPE              VALUE 
+00000000 R_MIPS_HI16       _gp_disp
+00000004 R_MIPS_LO16       _gp_disp
+00000024 R_MIPS_GOT16      .LC0
+00000028 R_MIPS_LO16       .LC0
+0000002c R_MIPS_CALL16     syscall_printf
+00000030 R_MIPS_JALR       syscall_printf
+00000044 R_MIPS_CALL16     add
+00000048 R_MIPS_JALR       add
+0000005c R_MIPS_GOT16      .LC1
+00000060 R_MIPS_LO16       .LC1
+00000064 R_MIPS_CALL16     syscall_printf
+00000068 R_MIPS_JALR       syscall_printf
+0000007c R_MIPS_CALL16     mul
+00000080 R_MIPS_JALR       mul
+00000094 R_MIPS_GOT16      .LC2
+00000098 R_MIPS_LO16       .LC2
+0000009c R_MIPS_CALL16     syscall_printf
+000000a0 R_MIPS_JALR       syscall_printf
+000000b4 R_MIPS_CALL16     add
+000000b8 R_MIPS_JALR       add
+000000d4 R_MIPS_GOT16      .LC3
+000000d8 R_MIPS_LO16       .LC3
+000000dc R_MIPS_CALL16     syscall_printf
+000000e0 R_MIPS_JALR       syscall_printf
+000000ec R_MIPS_CALL16     get_counter
+000000f0 R_MIPS_JALR       get_counter
+00000100 R_MIPS_GOT16      .LC4
+00000104 R_MIPS_LO16       .LC4
+00000108 R_MIPS_CALL16     syscall_printf
+0000010c R_MIPS_JALR       syscall_printf
+00000118 R_MIPS_GOT16      lib_counter
+00000120 R_MIPS_GOT16      .LC5
+00000124 R_MIPS_LO16       .LC5
+00000128 R_MIPS_CALL16     syscall_printf
+0000012c R_MIPS_JALR       syscall_printf
+00000144 R_MIPS_GOT16      .LC6
+00000148 R_MIPS_LO16       .LC6
+0000014c R_MIPS_CALL16     syscall_printf
+00000150 R_MIPS_JALR       syscall_printf
+00000160 R_MIPS_GOT16      .LC7
+00000164 R_MIPS_LO16       .LC7
+00000168 R_MIPS_CALL16     syscall_printf
+0000016c R_MIPS_JALR       syscall_printf
+00000178 R_MIPS_GOT16      .LC8
+0000017c R_MIPS_LO16       .LC8
+00000180 R_MIPS_CALL16     syscall_printf
+00000184 R_MIPS_JALR       syscall_printf
+
+
+RELOCATION RECORDS FOR [.pdr]:
+OFFSET   TYPE              VALUE 
+00000000 R_MIPS_32         main
+
+
+RELOCATION RECORDS FOR [.debug_info]:
+OFFSET   TYPE              VALUE 
+00000006 R_MIPS_32         .debug_abbrev
+0000000c R_MIPS_32         .debug_str
+00000011 R_MIPS_32         .debug_str
+00000015 R_MIPS_32         .debug_str
+00000019 R_MIPS_32         .text
+00000021 R_MIPS_32         .debug_line
+00000028 R_MIPS_32         .debug_str
+0000002f R_MIPS_32         .debug_str
+00000036 R_MIPS_32         .debug_str
+0000003d R_MIPS_32         .debug_str
+00000044 R_MIPS_32         .debug_str
+0000004b R_MIPS_32         .debug_str
+00000052 R_MIPS_32         .debug_str
+00000059 R_MIPS_32         .debug_str
+00000067 R_MIPS_32         .debug_str
+0000006e R_MIPS_32         .debug_str
+00000075 R_MIPS_32         .debug_str
+00000090 R_MIPS_32         .debug_str
+0000009b R_MIPS_32         .debug_str
+000000a6 R_MIPS_32         .debug_str
+000000b0 R_MIPS_32         .text
+000000bb R_MIPS_32         .debug_str
+000000c5 R_MIPS_32         .debug_loc
+000000ca R_MIPS_32         .debug_str
+000000d4 R_MIPS_32         .debug_loc
+000000d9 R_MIPS_32         .debug_str
+000000e3 R_MIPS_32         .debug_loc
+000000e8 R_MIPS_32         .debug_str
+000000f9 R_MIPS_32         .debug_str
+00000103 R_MIPS_32         .debug_loc
+00000108 R_MIPS_32         .text
+00000115 R_MIPS_32         .rodata.str1.4
+0000011b R_MIPS_32         .text
+0000012f R_MIPS_32         .text
+0000013c R_MIPS_32         .rodata.str1.4
+00000148 R_MIPS_32         .text
+0000015c R_MIPS_32         .text
+00000169 R_MIPS_32         .rodata.str1.4
+00000175 R_MIPS_32         .text
+0000018b R_MIPS_32         .text
+00000198 R_MIPS_32         .rodata.str1.4
+000001b0 R_MIPS_32         .text
+000001b5 R_MIPS_32         .text
+000001c2 R_MIPS_32         .rodata.str1.4
+000001c8 R_MIPS_32         .text
+000001d5 R_MIPS_32         .rodata.str1.4
+000001db R_MIPS_32         .text
+000001e8 R_MIPS_32         .rodata.str1.4
+000001f4 R_MIPS_32         .text
+00000201 R_MIPS_32         .rodata.str1.4
+0000020d R_MIPS_32         .text
+00000216 R_MIPS_32         .rodata.str1.4
+
+
+RELOCATION RECORDS FOR [.debug_aranges]:
+OFFSET   TYPE              VALUE 
+00000006 R_MIPS_32         .debug_info
+00000010 R_MIPS_32         .text
+
+
+RELOCATION RECORDS FOR [.debug_line]:
+OFFSET   TYPE              VALUE 
+0000003e R_MIPS_32         .text
+
+
+RELOCATION RECORDS FOR [.debug_frame]:
+OFFSET   TYPE              VALUE 
+00000014 R_MIPS_32         .debug_frame
+00000018 R_MIPS_32         .text
+
+
