@@ -2,7 +2,9 @@
   "files.associations": {
     "types.h": "c",
     "console.h": "c",
-    "hash.h": "c"
+    "hash.h": "c",
+    "elf.h": "c",
+    "lib.h": "c"
   },
   "C_Cpp.errorSquiggles": "enabled",
   "C_Cpp_Runner.cCompilerPath": "gcc",
