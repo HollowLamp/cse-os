@@ -23062,7 +23062,7 @@ Disassembly of section .debug_line:
     3d5c:	bd06ba06 	cache	0x6,-17914(t0)
     3d60:	033d08c1 	0x33d08c1
     3d64:	85827fa3 	lh	v0,32675(t4)
-    3d68:	f202e903 	0xf202e903
+    3d68:	f202e703 	0xf202e703
     3d6c:	82170316 	lb	s7,790(s0)
     3d70:	0d03bf13 	jal	40efc4c <__tlb_stride_length+0x40efc4b>
     3d74:	02003c08 	0x2003c08
@@ -23164,9 +23164,9 @@ Disassembly of section .debug_line:
     3ef4:	0402003d 	bltzl	zero,3fec <__tlb_stride_length+0x3feb>
     3ef8:	06ba0601 	0x6ba0601
     3efc:	08c0bcbc 	j	302f2f0 <__tlb_stride_length+0x302f2ef>
-    3f00:	7ec5033d 	0x7ec5033d
+    3f00:	7ec7033d 	0x7ec7033d
     3f04:	49838582 	0x49838582
-    3f08:	8201bd03 	lb	at,-17149(s0)
+    3f08:	8201bb03 	lb	at,-17661(s0)
     3f0c:	03826d03 	0x3826d03
     3f10:	09034a18 	j	40d2860 <__tlb_stride_length+0x40d285f>
     3f14:	1003e408 	beq	zero,v1,ffffcf38 <check_for_tlb_done+0x403fcbe4>
@@ -23193,8 +23193,8 @@ Disassembly of section .debug_line:
     3f68:	ba060104 	swr	a2,260(s0)
     3f6c:	08bcbb06 	j	2f2ec18 <__tlb_stride_length+0x2f2ec17>
     3f70:	03838842 	0x3838842
-    3f74:	854a7ddd 	lh	t2,32221(t2)
-    3f78:	8f0349bb 	lw	v1,18875(t8)
+    3f74:	854a7ddf 	lh	t2,32223(t2)
+    3f78:	8d0349bb 	lw	v1,18875(t0)
     3f7c:	1d038202 	0x1d038202
     3f80:	082e0382 	j	b80e08 <__tlb_stride_length+0xb80e07>
     3f84:	0257033c 	0x257033c
@@ -36959,61 +36959,61 @@ Disassembly of section .debug_info:
     c8d0:	4b140305 	c2	0x1140305
     c8d4:	02138002 	0x2138002
     c8d8:	0100001b 	divu	zero,t0,zero
-    c8dc:	00bf0280 	0xbf0280
+    c8dc:	00bf027e 	0xbf027e
     c8e0:	93f40000 	lbu	s4,0(ra)
     c8e4:	01dc8001 	movf	s0,t6,$fcc7
     c8e8:	9c010000 	0x9c010000
     c8ec:	000007ba 	0x7ba
     c8f0:	666c6514 	0x666c6514
-    c8f4:	02800100 	0x2800100
+    c8f4:	027e0100 	0x27e0100
     c8f8:	000007ba 	0x7ba
     c8fc:	00007a1c 	0x7a1c
     c900:	001de515 	0x1de515
-    c904:	02800100 	0x2800100
+    c904:	027e0100 	0x27e0100
     c908:	000000ba 	0xba
     c90c:	00007aac 	0x7aac
     c910:	001d0015 	0x1d0015
-    c914:	02810100 	0x2810100
+    c914:	027f0100 	0x27f0100
     c918:	000007cf 	sync	0x1f
     c91c:	00007b23 	0x7b23
     c920:	001b8216 	0x1b8216
-    c924:	028c0100 	0x28c0100
+    c924:	028a0100 	0x28a0100
     c928:	000001da 	0x1da
     c92c:	17409102 	bnez	k0,ffff0d38 <check_for_tlb_done+0x403f09e4>
     c930:	01006865 	0x1006865
-    c934:	07d50293 	0x7d50293
+    c934:	07d50291 	0x7d50291
     c938:	7b5a0000 	xori.b	$w0,$w0,0x5a
     c93c:	70170000 	madd	zero,s7
-    c940:	94010068 	lhu	at,104(zero)
+    c940:	92010068 	lbu	at,104(s0)
     c944:	0007db02 	srl	k1,a3,0xc
     c948:	007bc900 	0x7bc900
     c94c:	1c821800 	0x1c821800
-    c950:	96010000 	lhu	at,0(s0)
+    c950:	94010000 	lhu	at,0(zero)
     c954:	0000bf02 	srl	s7,zero,0x1c
     c958:	007c4400 	0x7c4400
     c95c:	05d81900 	0x5d81900
     c960:	06fc0000 	0x6fc0000
     c964:	69170000 	0x69170000
-    c968:	02990100 	0x2990100
+    c968:	02970100 	0x2970100
     c96c:	000000af 	0xaf
     c970:	00007c86 	0x7c86
     c974:	0005f01a 	0x5f01a
     c978:	79641700 	ori.b	$w28,$w2,0x64
-    c97c:	9b01006e 	lwr	at,110(t8)
+    c97c:	9901006e 	lwr	at,110(t0)
     c980:	0007e102 	srl	gp,a3,0x4
     c984:	007cbc00 	0x7cbc00
     c988:	06081a00 	tgei	s0,6656
     c98c:	6a170000 	0x6a170000
-    c990:	029d0100 	0x29d0100
+    c990:	029b0100 	0x29b0100
     c994:	000000bf 	0xbf
     c998:	00007cf7 	0x7cf7
     c99c:	0006201a 	0x6201a
     c9a0:	1d681800 	0x1d681800
-    c9a4:	a0010000 	sb	at,0(zero)
+    c9a4:	9e010000 	0x9e010000
     c9a8:	0001c202 	srl	t8,at,0x8
     c9ac:	007d1700 	0x7d1700
     c9b0:	1ddd1800 	0x1ddd1800
-    c9b4:	a5010000 	sh	at,0(t0)
+    c9b4:	a3010000 	sb	at,0(t8)
     c9b8:	0000af02 	srl	s5,zero,0x1c
     c9bc:	007d3500 	0x7d3500
     c9c0:	94fc1b00 	lhu	gp,6912(a3)
@@ -37094,55 +37094,55 @@ Disassembly of section .debug_info:
     caec:	f9040900 	sdc2	$4,2304(t0)
     caf0:	13000000 	beqz	t8,caf4 <__tlb_stride_length+0xcaf3>
     caf4:	00001db1 	tgeu	zero,zero,0x76
-    caf8:	bf023a01 	cache	0x2,14849(t8)
+    caf8:	bf023801 	cache	0x2,14337(t8)
     cafc:	64000000 	0x64000000
     cb00:	f880018b 	sdc2	$0,395(a0)
     cb04:	01000001 	movf	zero,t0,$fcc0
     cb08:	00098c9c 	0x98c9c
     cb0c:	1b821500 	0x1b821500
-    cb10:	3a010000 	xori	at,s0,0x0
+    cb10:	38010000 	xori	at,zero,0x0
     cb14:	00098c02 	srl	s1,t1,0x10
     cb18:	007d5300 	0x7d5300
     cb1c:	1b461500 	0x1b461500
-    cb20:	3a010000 	xori	at,s0,0x0
+    cb20:	38010000 	xori	at,zero,0x0
     cb24:	00099202 	srl	s2,t1,0x8
     cb28:	007dae00 	0x7dae00
     cb2c:	1c621800 	0x1c621800
-    cb30:	42010000 	c0	0x10000
+    cb30:	40010000 	mfc0	at,c0_index
     cb34:	0000af02 	srl	s5,zero,0x1c
     cb38:	007e0900 	0x7e0900
     cb3c:	04d81900 	0x4d81900
     cb40:	095b0000 	j	56c0000 <__tlb_stride_length+0x56bffff>
     cb44:	69170000 	0x69170000
-    cb48:	02480100 	0x2480100
+    cb48:	02460100 	0x2460100
     cb4c:	000000af 	0xaf
     cb50:	00007e32 	tlt	zero,zero,0x1f8
     cb54:	0004f01a 	0x4f01a
     cb58:	1d121800 	0x1d121800
-    cb5c:	49010000 	bc2t	cb60 <__tlb_stride_length+0xcb5f>
+    cb5c:	47010000 	bz.b	$w1,cb60 <__tlb_stride_length+0xcb5f>
     cb60:	0000af02 	srl	s5,zero,0x1c
     cb64:	007e5d00 	0x7e5d00
     cb68:	1b731800 	0x1b731800
-    cb6c:	4a010000 	c2	0x10000
+    cb6c:	48010000 	mfc2	at,$0
     cb70:	0000af02 	srl	s5,zero,0x1c
     cb74:	007e7b00 	0x7e7b00
     cb78:	79731700 	ori.b	$w28,$w2,0x73
-    cb7c:	4c01006d 	0x4c01006d
+    cb7c:	4a01006d 	c2	0x1006d
     cb80:	00099802 	srl	s3,t1,0x0
     cb84:	007e8e00 	0x7e8e00
     cb88:	1b271800 	0x1b271800
-    cb8c:	4d010000 	lwxc1	$f0,at(t0)
+    cb8c:	4b010000 	c2	0x1010000
     cb90:	0001c202 	srl	t8,at,0x8
     cb94:	007eac00 	0x7eac00
     cb98:	1cc41800 	0x1cc41800
-    cb9c:	5e010000 	0x5e010000
+    cb9c:	5c010000 	0x5c010000
     cba0:	0000af02 	srl	s5,zero,0x1c
     cba4:	007eca00 	0x7eca00
     cba8:	05101900 	bltzal	t0,12fac <__tlb_stride_length+0x12fab>
     cbac:	08d40000 	j	3500000 <__tlb_stride_length+0x34fffff>
     cbb0:	c4180000 	lwc1	$f24,0(zero)
     cbb4:	0100001c 	0x100001c
-    cbb8:	00af0256 	0xaf0256
+    cbb8:	00af0254 	0xaf0254
     cbbc:	7f000000 	ext	zero,t8,0x0,0x1
     cbc0:	f81e0000 	sdc2	$30,0(zero)
     cbc4:	4f80018c 	c3	0x180018c
@@ -37204,38 +37204,38 @@ Disassembly of section .debug_info:
     cca4:	015a0409 	0x15a0409
     cca8:	04130000 	bgezall	zero,ccac <__tlb_stride_length+0xccab>
     ccac:	0100001e 	0x100001e
-    ccb0:	00af0216 	0xaf0216
+    ccb0:	00af0214 	0xaf0214
     ccb4:	8a5c0000 	lwl	gp,0(s2)
     ccb8:	01088001 	movf	s0,t0,$fcc2
     ccbc:	9c010000 	0x9c010000
     ccc0:	00000a74 	teq	zero,zero,0x29
     ccc4:	00202b15 	0x202b15
-    ccc8:	02160100 	0x2160100
+    ccc8:	02140100 	0x2140100
     cccc:	000001c2 	srl	zero,zero,0x7
     ccd0:	00007f13 	0x7f13
     ccd4:	001b8715 	0x1b8715
-    ccd8:	02160100 	0x2160100
+    ccd8:	02140100 	0x2140100
     ccdc:	00000992 	0x992
     cce0:	00007f63 	0x7f63
     cce4:	0004701a 	0x4701a
     cce8:	00691700 	0x691700
-    ccec:	af021c01 	sw	v0,7169(t8)
+    ccec:	af021a01 	sw	v0,6657(t8)
     ccf0:	b3000000 	0xb3000000
     ccf4:	1a00007f 	blez	s0,cef4 <__tlb_stride_length+0xcef3>
     ccf8:	00000490 	0x490
     ccfc:	6d797317 	0x6d797317
-    cd00:	021d0100 	0x21d0100
+    cd00:	021b0100 	0x21b0100
     cd04:	00000998 	0x998
     cd08:	00007fdd 	0x7fdd
     cd0c:	001b2718 	0x1b2718
-    cd10:	021e0100 	0x21e0100
+    cd10:	021c0100 	0x21c0100
     cd14:	000001c2 	srl	zero,zero,0x7
     cd18:	00008011 	0x8011
     cd1c:	018b1421 	0x18b1421
     cd20:	00002880 	sll	a1,zero,0x2
     cd24:	000a4e00 	sll	t1,t2,0x18
     cd28:	1cc41800 	0x1cc41800
-    cd2c:	24010000 	li	at,0
+    cd2c:	22010000 	addi	at,s0,0
     cd30:	0000af02 	srl	s5,zero,0x1c
     cd34:	00808f00 	0x808f00
     cd38:	8b341e00 	lwl	s4,7680(t9)
@@ -37250,68 +37250,68 @@ Disassembly of section .debug_info:
     cd5c:	9800000c 	lwr	zero,12(zero)
     cd60:	b880018a 	swr	zero,394(a0)
     cd64:	01000004 	sllv	zero,zero,t0
-    cd68:	49230220 	0x49230220
+    cd68:	4923021e 	0x4923021e
     cd6c:	a200000c 	sb	zero,12(s0)
     cd70:	23000080 	addi	zero,t8,128
     cd74:	00000c3e 	0xc3e
     cd78:	000080c0 	sll	s0,zero,0x3
     cd7c:	00000000 	nop
     cd80:	001dee13 	0x1dee13
-    cd84:	01b60100 	0x1b60100
+    cd84:	01b40100 	0x1b40100
     cd88:	000000bf 	0xbf
     cd8c:	8001882c 	lb	at,-30676(zero)
     cd90:	00000230 	tge	zero,zero,0x8
     cd94:	0bc09c01 	j	f027004 <__tlb_stride_length+0xf027003>
     cd98:	65140000 	0x65140000
     cd9c:	0100666c 	0x100666c
-    cda0:	07ba01b6 	0x7ba01b6
+    cda0:	07ba01b4 	0x7ba01b4
     cda4:	80f40000 	lb	s4,0(a3)
     cda8:	e5150000 	swc1	$f21,0(t0)
     cdac:	0100001d 	0x100001d
-    cdb0:	00ba01b6 	tne	a1,k0,0x6
+    cdb0:	00ba01b4 	teq	a1,k0,0x6
     cdb4:	81390000 	lb	t9,0(t1)
     cdb8:	87150000 	lh	s5,0(t8)
     cdbc:	0100001b 	divu	zero,t0,zero
-    cdc0:	098c01b7 	j	63006dc <__tlb_stride_length+0x63006db>
+    cdc0:	098c01b5 	j	63006d4 <__tlb_stride_length+0x63006d3>
     cdc4:	81730000 	lb	s3,0(t3)
     cdc8:	65170000 	0x65170000
-    cdcc:	bd010068 	cache	0x1,104(t0)
+    cdcc:	bb010068 	swr	at,104(t8)
     cdd0:	0007d501 	0x7d501
     cdd4:	0081b500 	0x81b500
     cdd8:	68701700 	0x68701700
-    cddc:	01be0100 	0x1be0100
+    cddc:	01bc0100 	0x1bc0100
     cde0:	000007db 	0x7db
     cde4:	000081ef 	0x81ef
     cde8:	6e796417 	0x6e796417
-    cdec:	01ca0100 	0x1ca0100
+    cdec:	01c80100 	0x1c80100
     cdf0:	000007e1 	0x7e1
     cdf4:	00008212 	0x8212
     cdf8:	001d1c18 	0x1d1c18
-    cdfc:	01cb0100 	0x1cb0100
+    cdfc:	01c90100 	0x1c90100
     ce00:	000000af 	0xaf
     ce04:	00008249 	0x8249
     ce08:	001c0318 	0x1c0318
-    ce0c:	01e50100 	0x1e50100
+    ce0c:	01e30100 	0x1e30100
     ce10:	000000af 	0xaf
     ce14:	0000825e 	0x825e
     ce18:	001cbd18 	0x1cbd18
-    ce1c:	01e60100 	0x1e60100
+    ce1c:	01e40100 	0x1e40100
     ce20:	000000af 	0xaf
     ce24:	0000827d 	0x827d
     ce28:	001bc918 	0x1bc918
-    ce2c:	01e70100 	0x1e70100
+    ce2c:	01e50100 	0x1e50100
     ce30:	000000af 	0xaf
     ce34:	0000829c 	0x829c
     ce38:	00043819 	0x43819
     ce3c:	000b4400 	sll	t0,t3,0x10
     ce40:	00691700 	0x691700
-    ce44:	af01cd01 	sw	at,-13055(t8)
+    ce44:	af01cb01 	sw	at,-13567(t8)
     ce48:	bb000000 	swr	zero,0(t8)
     ce4c:	00000082 	srl	zero,zero,0x2
     ce50:	00045019 	0x45019
     ce54:	000b6c00 	sll	t5,t3,0x10
     ce58:	00691700 	0x691700
-    ce5c:	bf01e901 	cache	0x1,-5887(t8)
+    ce5c:	bf01e701 	cache	0x1,-6399(t8)
     ce60:	cf000000 	pref	0x0,0(t8)
     ce64:	1e000082 	bgtz	s0,d070 <__tlb_stride_length+0xd06f>
     ce68:	80018a18 	lb	at,-30184(zero)
@@ -37340,116 +37340,116 @@ Disassembly of section .debug_info:
     cec4:	f8c00305 	sdc2	$0,773(a2)
     cec8:	00008001 	movf	s0,zero,$fcc0
     cecc:	001b5713 	0x1b5713
-    ced0:	019d0100 	0x19d0100
+    ced0:	019b0100 	0x19b0100
     ced4:	000000bf 	0xbf
     ced8:	80018790 	lb	at,-30832(zero)
     cedc:	0000009c 	0x9c
     cee0:	0c2d9c01 	jal	b67004 <__tlb_stride_length+0xb67003>
     cee4:	65140000 	0x65140000
     cee8:	0100666c 	0x100666c
-    ceec:	07ba019d 	0x7ba019d
+    ceec:	07ba019b 	0x7ba019b
     cef0:	82e30000 	lb	v1,0(s7)
     cef4:	e5150000 	swc1	$f21,0(t0)
     cef8:	0100001d 	0x100001d
-    cefc:	00ba019d 	0xba019d
+    cefc:	00ba019b 	0xba019b
     cf00:	83360000 	lb	s6,0(t9)
     cf04:	65170000 	0x65170000
-    cf08:	a3010068 	sb	at,104(t8)
+    cf08:	a1010068 	sb	at,104(t0)
     cf0c:	0007d501 	0x7d501
     cf10:	00835700 	0x835700
     cf14:	68701700 	0x68701700
-    cf18:	01a80100 	0x1a80100
+    cf18:	01a60100 	0x1a60100
     cf1c:	000007db 	0x7db
     cf20:	0000839c 	0x839c
     cf24:	0004201a 	0x4201a
     cf28:	00691700 	0x691700
-    cf2c:	af01aa01 	sw	at,-22015(t8)
+    cf2c:	af01a801 	sw	at,-22527(t8)
     cf30:	f0000000 	0xf0000000
     cf34:	00000083 	sra	zero,zero,0x2
     cf38:	1d532400 	0x1d532400
-    cf3c:	90010000 	lbu	at,0(zero)
+    cf3c:	8e010000 	lw	at,0(s0)
     cf40:	0000bf01 	0xbf01
     cf44:	0c550100 	jal	1540400 <__tlb_stride_length+0x15403ff>
     cf48:	73250000 	madd	t9,a1
-    cf4c:	90010031 	lbu	at,49(zero)
+    cf4c:	8e010031 	lw	at,49(s0)
     cf50:	0001c201 	0x1c201
     cf54:	32732500 	andi	s3,s3,0x2500
-    cf58:	01900100 	0x1900100
+    cf58:	018e0100 	0x18e0100
     cf5c:	000001c2 	srl	zero,zero,0x7
     cf60:	1a2d1300 	0x1a2d1300
-    cf64:	82010000 	lb	at,0(s0)
+    cf64:	80010000 	lb	at,0(zero)
     cf68:	0000af01 	0xaf01
     cf6c:	01878800 	0x1878800
     cf70:	00000880 	sll	at,zero,0x2
     cf74:	ac9c0100 	sw	gp,256(a0)
     cf78:	2600000c 	addiu	zero,s0,12
     cf7c:	00666c65 	0x666c65
-    cf80:	ba018201 	swr	at,-32255(s0)
+    cf80:	ba018001 	swr	at,-32767(s0)
     cf84:	01000007 	srav	zero,zero,t0
     cf88:	1de52754 	0x1de52754
-    cf8c:	82010000 	lb	at,0(s0)
+    cf8c:	80010000 	lb	at,0(zero)
     cf90:	0000ba01 	0xba01
     cf94:	28550100 	slti	s5,v0,256
     cf98:	01006865 	0x1006865
-    cf9c:	07d50184 	0x7d50184
+    cf9c:	07d50182 	0x7d50182
     cfa0:	54010000 	bnel	zero,at,cfa4 <__tlb_stride_length+0xcfa3>
     cfa4:	00687028 	0x687028
-    cfa8:	db018501 	ldc2	$1,-31487(t8)
+    cfa8:	db018301 	ldc2	$1,-31999(t8)
     cfac:	07000007 	bltz	t8,cfcc <__tlb_stride_length+0xcfcb>
     cfb0:	1c740074 	0x1c740074
     cfb4:	009f2206 	0x9f2206
     cfb8:	001a8813 	0x1a8813
-    cfbc:	010d0100 	0x10d0100
+    cfbc:	010b0100 	0x10b0100
     cfc0:	000000bf 	0xbf
     cfc4:	80019104 	lb	at,-28412(zero)
     cfc8:	000002f0 	tge	zero,zero,0xb
     cfcc:	0f019c01 	jal	c067004 <__tlb_stride_length+0xc067003>
     cfd0:	65140000 	0x65140000
     cfd4:	0100666c 	0x100666c
-    cfd8:	07ba010d 	0x7ba010d
+    cfd8:	07ba010b 	0x7ba010b
     cfdc:	841b0000 	lh	k1,0(zero)
     cfe0:	e5150000 	swc1	$f21,0(t0)
     cfe4:	0100001d 	0x100001d
-    cfe8:	00ba010d 	break	0xba,0x4
+    cfe8:	00ba010b 	0xba010b
     cfec:	84c40000 	lh	a0,0(a2)
     cff0:	65170000 	0x65170000
-    cff4:	17010068 	bne	t8,at,d198 <__tlb_stride_length+0xd197>
+    cff4:	15010068 	bne	t0,at,d198 <__tlb_stride_length+0xd197>
     cff8:	0007d501 	0x7d501
     cffc:	00852a00 	0x852a00
     d000:	68701700 	0x68701700
-    d004:	01250100 	0x1250100
+    d004:	01230100 	0x1230100
     d008:	000007db 	0x7db
     d00c:	000085b7 	0x85b7
     d010:	01006917 	0x1006917
-    d014:	00af0128 	0xaf0128
+    d014:	00af0126 	0xaf0126
     d018:	85f60000 	lh	s6,0(t7)
     d01c:	82160000 	lb	s6,0(s0)
     d020:	0100001b 	divu	zero,t0,zero
-    d024:	01da014e 	0x1da014e
+    d024:	01da014c 	syscall	0x76805
     d028:	91020000 	lbu	v0,0(t0)
     d02c:	1c821840 	0x1c821840
-    d030:	55010000 	bnel	t0,at,d034 <__tlb_stride_length+0xd033>
+    d030:	53010000 	beql	t8,at,d034 <__tlb_stride_length+0xd033>
     d034:	0000bf01 	0xbf01
     d038:	00864300 	0x864300
     d03c:	05901900 	bltzal	t4,13440 <__tlb_stride_length+0x1343f>
     d040:	0db20000 	jal	6c80000 <__tlb_stride_length+0x6c7ffff>
     d044:	64170000 	0x64170000
     d048:	01006e79 	0x1006e79
-    d04c:	07e10158 	bgez	ra,d5b0 <__tlb_stride_length+0xd5af>
+    d04c:	07e10156 	bgez	ra,d5a8 <__tlb_stride_length+0xd5a7>
     d050:	86790000 	lh	t9,0(s3)
     d054:	a81a0000 	swl	k0,0(zero)
     d058:	17000005 	bnez	t8,d070 <__tlb_stride_length+0xd06f>
-    d05c:	5a01006a 	0x5a01006a
+    d05c:	5801006a 	0x5801006a
     d060:	0000bf01 	0xbf01
     d064:	0086b400 	0x86b400
     d068:	05c01a00 	bltz	t6,1386c <__tlb_stride_length+0x1386b>
     d06c:	68180000 	0x68180000
     d070:	0100001d 	0x100001d
-    d074:	01c2015d 	0x1c2015d
+    d074:	01c2015b 	0x1c2015b
     d078:	86d40000 	lh	s4,0(s6)
     d07c:	dd180000 	ldc3	$24,0(t0)
     d080:	0100001d 	0x100001d
-    d084:	00af0160 	0xaf0160
+    d084:	00af015e 	0xaf015e
     d088:	86f20000 	lh	s2,0(s7)
     d08c:	541b0000 	bnel	zero,k1,d090 <__tlb_stride_length+0xd08f>
     d090:	4f800193 	c3	0x1800193
@@ -37467,7 +37467,7 @@ Disassembly of section .debug_info:
     d0c0:	48000014 	0x48000014
     d0c4:	20800192 	addi	zero,a0,402
     d0c8:	01000000 	0x1000000
-    d0cc:	0df5013a 	jal	7d404e8 <__tlb_stride_length+0x7d404e7>
+    d0cc:	0df50138 	jal	7d404e0 <__tlb_stride_length+0x7d404df>
     d0d0:	3a230000 	xori	v1,s1,0x0
     d0d4:	10000014 	b	d128 <__tlb_stride_length+0xd127>
     d0d8:	23000087 	addi	zero,t8,135
@@ -37548,68 +37548,68 @@ Disassembly of section .debug_info:
     d204:	50030554 	beql	zero,v1,e758 <__tlb_stride_length+0xe757>
     d208:	008001fd 	0x8001fd
     d20c:	1d762d00 	0x1d762d00
-    d210:	82010000 	lb	at,0(s0)
+    d210:	80010000 	lb	at,0(zero)
     d214:	000000af 	0xaf
     d218:	80018d5c 	lb	at,-29348(zero)
     d21c:	000003a8 	0x3a8
     d220:	12a19c01 	beq	s5,at,ffff4228 <check_for_tlb_done+0x403f3ed4>
     d224:	682e0000 	0x682e0000
     d228:	0100001d 	0x100001d
-    d22c:	0001c282 	srl	t8,at,0xa
+    d22c:	0001c280 	sll	t8,at,0xa
     d230:	00876a00 	0x876a00
     d234:	69662f00 	0x69662f00
-    d238:	8301006c 	lb	at,108(t8)
+    d238:	8101006c 	lb	at,108(t0)
     d23c:	000004e8 	0x4e8
     d240:	7ba89103 	0x7ba89103
     d244:	00726630 	tge	v1,s2,0x198
-    d248:	05788401 	0x5788401
+    d248:	05788201 	0x5788201
     d24c:	87ac0000 	lh	t4,0(sp)
     d250:	622f0000 	0x622f0000
-    d254:	85010072 	lh	at,114(t0)
+    d254:	83010072 	lb	at,114(t8)
     d258:	000000af 	0xaf
     d25c:	124c9102 	beq	s2,t4,ffff1668 <check_for_tlb_done+0x403f1314>
     d260:	00001c92 	0x1c92
-    d264:	00af9f01 	0xaf9f01
+    d264:	00af9d01 	0xaf9d01
     d268:	62010000 	0x62010000
     d26c:	00686530 	tge	v1,t0,0x194
-    d270:	07d5a801 	0x7d5a801
+    d270:	07d5a601 	0x7d5a601
     d274:	87d50000 	lh	s5,0(s8)
     d278:	70300000 	madd	at,s0
-    d27c:	af010068 	sw	at,104(t8)
+    d27c:	ad010068 	sw	at,104(t0)
     d280:	000007db 	0x7db
     d284:	000087fd 	0x87fd
     d288:	001b1b31 	tgeu	zero,k1,0x6c
-    d28c:	afb60100 	sw	s6,256(sp)
+    d28c:	afb40100 	sw	s4,256(sp)
     d290:	26000000 	addiu	zero,s0,0
     d294:	31000088 	andi	zero,t0,0x88
     d298:	00001cc9 	0x1cc9
-    d29c:	00afbe01 	0xafbe01
+    d29c:	00afbc01 	0xafbc01
     d2a0:	887a0000 	lwl	k0,0(v1)
     d2a4:	dd310000 	ldc3	$17,0(t1)
     d2a8:	0100001d 	0x100001d
-    d2ac:	0000afc4 	0xafc4
+    d2ac:	0000afc2 	srl	s5,zero,0x1f
     d2b0:	0088b200 	0x88b200
     d2b4:	05281900 	tgei	t1,6400
     d2b8:	0fc00000 	jal	f000000 <__tlb_stride_length+0xeffffff>
     d2bc:	69300000 	0x69300000
-    d2c0:	afb70100 	sw	s7,256(sp)
+    d2c0:	afb50100 	sw	s5,256(sp)
     d2c4:	d0000000 	0xd0000000
     d2c8:	00000088 	0x88
     d2cc:	00054019 	0x54019
     d2d0:	00105b00 	sll	t3,s0,0xc
     d2d4:	00693000 	0x693000
-    d2d8:	00afc601 	0xafc601
+    d2d8:	00afc401 	0xafc401
     d2dc:	88f00000 	lwl	s0,0(a3)
     d2e0:	681a0000 	0x681a0000
     d2e4:	31000005 	andi	zero,t0,0x5
     d2e8:	00001bdf 	0x1bdf
-    d2ec:	00afc901 	0xafc901
+    d2ec:	00afc701 	0xafc701
     d2f0:	891b0000 	lwl	k1,0(t0)
     d2f4:	18320000 	0x18320000
     d2f8:	e8000014 	swc2	$0,20(zero)
     d2fc:	1c80018f 	bgtz	a0,d93c <__tlb_stride_length+0xd93b>
     d300:	01000000 	0x1000000
-    d304:	00102cd2 	0x102cd2
+    d304:	00102cd0 	0x102cd0
     d308:	143a2300 	bne	at,k0,15f0c <__tlb_stride_length+0x15f0b>
     d30c:	89510000 	lwl	s1,0(t2)
     d310:	31230000 	andi	v1,t1,0x0
@@ -37638,15 +37638,15 @@ Disassembly of section .debug_info:
     d36c:	0000003c 	0x3c
     d370:	000010af 	0x10af
     d374:	001bd231 	tgeu	zero,k1,0x348
-    d378:	afe60100 	sw	a2,256(ra)
+    d378:	afe40100 	sw	a0,256(ra)
     d37c:	bc000000 	cache	0x0,0(zero)
     d380:	31000089 	andi	zero,t0,0x89
     d384:	00001bb4 	teq	zero,zero,0x6e
-    d388:	00afe701 	0xafe701
+    d388:	00afe501 	0xafe501
     d38c:	89d30000 	lwl	s3,0(t6)
     d390:	69310000 	0x69310000
     d394:	0100001b 	divu	zero,t0,zero
-    d398:	0000afe8 	0xafe8
+    d398:	0000afe6 	0xafe6
     d39c:	0089f500 	0x89f500
     d3a0:	90b81e00 	lbu	t8,7680(a1)
     d3a4:	144f8001 	bne	v0,t7,fffed3ac <check_for_tlb_done+0x403ed058>

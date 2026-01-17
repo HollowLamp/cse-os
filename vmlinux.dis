@@ -13474,34 +13474,34 @@ E:\0school\seucse\code\cse-os\fs/elf.c:26
 
 80018788 <get_entry>:
 get_entry():
-E:\0school\seucse\code\cse-os\fs/elf.c:391
+E:\0school\seucse\code\cse-os\fs/elf.c:389
 80018788:	03e00008 	jr	ra
 8001878c:	8c820018 	lw	v0,24(a0)
 
 80018790 <elf_needs_dynlink>:
 elf_needs_dynlink():
-E:\0school\seucse\code\cse-os\fs/elf.c:415
+E:\0school\seucse\code\cse-os\fs/elf.c:413
 80018790:	2ca50034 	sltiu	a1,a1,52
 80018794:	14a00006 	bnez	a1,800187b0 <elf_needs_dynlink+0x20>
 80018798:	00001025 	move	v0,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:420
+E:\0school\seucse\code\cse-os\fs/elf.c:418
 8001879c:	8c850000 	lw	a1,0(a0)
 800187a0:	3c03464c 	lui	v1,0x464c
 800187a4:	2463457f 	addiu	v1,v1,17791
 800187a8:	50a30003 	beql	a1,v1,800187b8 <elf_needs_dynlink+0x28>
 800187ac:	90850004 	lbu	a1,4(a0)
-E:\0school\seucse\code\cse-os\fs/elf.c:433
+E:\0school\seucse\code\cse-os\fs/elf.c:431
 800187b0:	03e00008 	jr	ra
 800187b4:	00000000 	nop
-E:\0school\seucse\code\cse-os\fs/elf.c:420 (discriminator 1)
+E:\0school\seucse\code\cse-os\fs/elf.c:418 (discriminator 1)
 800187b8:	24030001 	li	v1,1
 800187bc:	14a3fffc 	bne	a1,v1,800187b0 <elf_needs_dynlink+0x20>
 800187c0:	00000000 	nop
-E:\0school\seucse\code\cse-os\fs/elf.c:426
+E:\0school\seucse\code\cse-os\fs/elf.c:424
 800187c4:	9485002c 	lhu	a1,44(a0)
 800187c8:	10a00014 	beqz	a1,8001881c <elf_needs_dynlink+0x8c>
 800187cc:	8c82001c 	lw	v0,28(a0)
-E:\0school\seucse\code\cse-os\fs/elf.c:427
+E:\0school\seucse\code\cse-os\fs/elf.c:425
 800187d0:	00822021 	addu	a0,a0,v0
 800187d4:	8c820000 	lw	v0,0(a0)
 800187d8:	2442fffe 	addiu	v0,v0,-2
@@ -13509,41 +13509,41 @@ E:\0school\seucse\code\cse-os\fs/elf.c:427
 800187e0:	14400010 	bnez	v0,80018824 <elf_needs_dynlink+0x94>
 800187e4:	00000000 	nop
 800187e8:	00001825 	move	v1,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:426 (discriminator 2)
+E:\0school\seucse\code\cse-os\fs/elf.c:424 (discriminator 2)
 800187ec:	24630001 	addiu	v1,v1,1
 800187f0:	10650008 	beq	v1,a1,80018814 <elf_needs_dynlink+0x84>
 800187f4:	00000000 	nop
-E:\0school\seucse\code\cse-os\fs/elf.c:427
+E:\0school\seucse\code\cse-os\fs/elf.c:425
 800187f8:	8c820020 	lw	v0,32(a0)
 800187fc:	2442fffe 	addiu	v0,v0,-2
 80018800:	2c420002 	sltiu	v0,v0,2
 80018804:	1040fff9 	beqz	v0,800187ec <elf_needs_dynlink+0x5c>
 80018808:	24840020 	addiu	a0,a0,32
-E:\0school\seucse\code\cse-os\fs/elf.c:428
+E:\0school\seucse\code\cse-os\fs/elf.c:426
 8001880c:	03e00008 	jr	ra
 80018810:	24020001 	li	v0,1
 80018814:	03e00008 	jr	ra
 80018818:	00001025 	move	v0,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:432
+E:\0school\seucse\code\cse-os\fs/elf.c:430
 8001881c:	03e00008 	jr	ra
 80018820:	00001025 	move	v0,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:428
+E:\0school\seucse\code\cse-os\fs/elf.c:426
 80018824:	03e00008 	jr	ra
 80018828:	24020001 	li	v0,1
 
 8001882c <parse_dynamic_section>:
 parse_dynamic_section():
-E:\0school\seucse\code\cse-os\fs/elf.c:441
+E:\0school\seucse\code\cse-os\fs/elf.c:439
 8001882c:	10800085 	beqz	a0,80018a44 <parse_dynamic_section+0x218>
 80018830:	00000000 	nop
-E:\0school\seucse\code\cse-os\fs/elf.c:441 (discriminator 1)
+E:\0school\seucse\code\cse-os\fs/elf.c:439 (discriminator 1)
 80018834:	10c00085 	beqz	a2,80018a4c <parse_dynamic_section+0x220>
 80018838:	00000000 	nop
-E:\0school\seucse\code\cse-os\fs/elf.c:441 (discriminator 2)
+E:\0school\seucse\code\cse-os\fs/elf.c:439 (discriminator 2)
 8001883c:	2ca50034 	sltiu	a1,a1,52
 80018840:	14a00084 	bnez	a1,80018a54 <parse_dynamic_section+0x228>
 80018844:	00000000 	nop
-E:\0school\seucse\code\cse-os\fs/elf.c:440
+E:\0school\seucse\code\cse-os\fs/elf.c:438
 80018848:	27bdffc8 	addiu	sp,sp,-56
 8001884c:	afbf0034 	sw	ra,52(sp)
 80018850:	afbe0030 	sw	s8,48(sp)
@@ -13556,23 +13556,23 @@ E:\0school\seucse\code\cse-os\fs/elf.c:440
 8001886c:	afb10014 	sw	s1,20(sp)
 80018870:	afb00010 	sw	s0,16(sp)
 80018874:	00c08825 	move	s1,a2
-E:\0school\seucse\code\cse-os\fs/elf.c:446
+E:\0school\seucse\code\cse-os\fs/elf.c:444
 80018878:	8c86001c 	lw	a2,28(a0)
-E:\0school\seucse\code\cse-os\fs/elf.c:449
+E:\0school\seucse\code\cse-os\fs/elf.c:447
 8001887c:	ae200000 	sw	zero,0(s1)
-E:\0school\seucse\code\cse-os\fs/elf.c:450
+E:\0school\seucse\code\cse-os\fs/elf.c:448
 80018880:	ae200004 	sw	zero,4(s1)
-E:\0school\seucse\code\cse-os\fs/elf.c:451
+E:\0school\seucse\code\cse-os\fs/elf.c:449
 80018884:	ae200008 	sw	zero,8(s1)
-E:\0school\seucse\code\cse-os\fs/elf.c:452
+E:\0school\seucse\code\cse-os\fs/elf.c:450
 80018888:	ae20000c 	sw	zero,12(s1)
-E:\0school\seucse\code\cse-os\fs/elf.c:453
+E:\0school\seucse\code\cse-os\fs/elf.c:451
 8001888c:	ae200010 	sw	zero,16(s1)
-E:\0school\seucse\code\cse-os\fs/elf.c:454
+E:\0school\seucse\code\cse-os\fs/elf.c:452
 80018890:	ae200014 	sw	zero,20(s1)
-E:\0school\seucse\code\cse-os\fs/elf.c:455
+E:\0school\seucse\code\cse-os\fs/elf.c:453
 80018894:	ae200018 	sw	zero,24(s1)
-E:\0school\seucse\code\cse-os\fs/elf.c:461
+E:\0school\seucse\code\cse-os\fs/elf.c:459
 80018898:	9483002c 	lhu	v1,44(a0)
 8001889c:	1060003d 	beqz	v1,80018994 <parse_dynamic_section+0x168>
 800188a0:	00032940 	sll	a1,v1,0x5
@@ -13580,67 +13580,67 @@ E:\0school\seucse\code\cse-os\fs/elf.c:461
 800188a8:	00a62821 	addu	a1,a1,a2
 800188ac:	00852821 	addu	a1,a0,a1
 800188b0:	00008025 	move	s0,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:462
+E:\0school\seucse\code\cse-os\fs/elf.c:460
 800188b4:	10000004 	b	800188c8 <parse_dynamic_section+0x9c>
 800188b8:	24060002 	li	a2,2
 800188bc:	24420020 	addiu	v0,v0,32
-E:\0school\seucse\code\cse-os\fs/elf.c:461 (discriminator 2)
+E:\0school\seucse\code\cse-os\fs/elf.c:459 (discriminator 2)
 800188c0:	10a20007 	beq	a1,v0,800188e0 <parse_dynamic_section+0xb4>
 800188c4:	00000000 	nop
-E:\0school\seucse\code\cse-os\fs/elf.c:462
+E:\0school\seucse\code\cse-os\fs/elf.c:460
 800188c8:	8c430000 	lw	v1,0(v0)
 800188cc:	5466fffc 	bnel	v1,a2,800188c0 <parse_dynamic_section+0x94>
 800188d0:	24420020 	addiu	v0,v0,32
-E:\0school\seucse\code\cse-os\fs/elf.c:463
+E:\0school\seucse\code\cse-os\fs/elf.c:461
 800188d4:	8c500004 	lw	s0,4(v0)
 800188d8:	1000fff8 	b	800188bc <parse_dynamic_section+0x90>
 800188dc:	00908021 	addu	s0,a0,s0
-E:\0school\seucse\code\cse-os\fs/elf.c:479
+E:\0school\seucse\code\cse-os\fs/elf.c:477
 800188e0:	1200002d 	beqz	s0,80018998 <parse_dynamic_section+0x16c>
 800188e4:	3c048002 	lui	a0,0x8002
-E:\0school\seucse\code\cse-os\fs/elf.c:489 (discriminator 1)
+E:\0school\seucse\code\cse-os\fs/elf.c:487 (discriminator 1)
 800188e8:	8e020000 	lw	v0,0(s0)
 800188ec:	1040000a 	beqz	v0,80018918 <parse_dynamic_section+0xec>
 800188f0:	26100004 	addiu	s0,s0,4
-E:\0school\seucse\code\cse-os\fs/elf.c:489
+E:\0school\seucse\code\cse-os\fs/elf.c:487
 800188f4:	0000b025 	move	s6,zero
 800188f8:	0000a025 	move	s4,zero
 800188fc:	0000a825 	move	s5,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:490
+E:\0school\seucse\code\cse-os\fs/elf.c:488
 80018900:	3c137000 	lui	s3,0x7000
 80018904:	26720011 	addiu	s2,s3,17
 80018908:	26770013 	addiu	s7,s3,19
-E:\0school\seucse\code\cse-os\fs/elf.c:511
+E:\0school\seucse\code\cse-os\fs/elf.c:509
 8001890c:	3c1e8002 	lui	s8,0x8002
 80018910:	10000033 	b	800189e0 <parse_dynamic_section+0x1b4>
 80018914:	27def8e8 	addiu	s8,s8,-1816
-E:\0school\seucse\code\cse-os\fs/elf.c:489
+E:\0school\seucse\code\cse-os\fs/elf.c:487
 80018918:	0000b025 	move	s6,zero
 8001891c:	0000a025 	move	s4,zero
 80018920:	0000a825 	move	s5,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:518
+E:\0school\seucse\code\cse-os\fs/elf.c:516
 80018924:	ae350008 	sw	s5,8(s1)
-E:\0school\seucse\code\cse-os\fs/elf.c:519
+E:\0school\seucse\code\cse-os\fs/elf.c:517
 80018928:	ae340004 	sw	s4,4(s1)
-E:\0school\seucse\code\cse-os\fs/elf.c:520
+E:\0school\seucse\code\cse-os\fs/elf.c:518
 8001892c:	ae36000c 	sw	s6,12(s1)
-E:\0school\seucse\code\cse-os\fs/elf.c:522
+E:\0school\seucse\code\cse-os\fs/elf.c:520
 80018930:	02c03825 	move	a3,s6
 80018934:	02a03025 	move	a2,s5
 80018938:	02802825 	move	a1,s4
 8001893c:	3c048002 	lui	a0,0x8002
 80018940:	0c0043be 	jal	80010ef8 <printf>
 80018944:	2484f90c 	addiu	a0,a0,-1780
-E:\0school\seucse\code\cse-os\fs/elf.c:524
+E:\0school\seucse\code\cse-os\fs/elf.c:522
 80018948:	8e270018 	lw	a3,24(s1)
 8001894c:	8e260014 	lw	a2,20(s1)
 80018950:	8e250010 	lw	a1,16(s1)
 80018954:	3c048002 	lui	a0,0x8002
 80018958:	0c0043be 	jal	80010ef8 <printf>
 8001895c:	2484f934 	addiu	a0,a0,-1740
-E:\0school\seucse\code\cse-os\fs/elf.c:527
+E:\0school\seucse\code\cse-os\fs/elf.c:525
 80018960:	00001025 	move	v0,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:528
+E:\0school\seucse\code\cse-os\fs/elf.c:526
 80018964:	8fbf0034 	lw	ra,52(sp)
 80018968:	8fbe0030 	lw	s8,48(sp)
 8001896c:	8fb7002c 	lw	s7,44(sp)
@@ -13653,33 +13653,33 @@ E:\0school\seucse\code\cse-os\fs/elf.c:528
 80018988:	8fb00010 	lw	s0,16(sp)
 8001898c:	03e00008 	jr	ra
 80018990:	27bd0038 	addiu	sp,sp,56
-E:\0school\seucse\code\cse-os\fs/elf.c:480
+E:\0school\seucse\code\cse-os\fs/elf.c:478
 80018994:	3c048002 	lui	a0,0x8002
 80018998:	0c0043be 	jal	80010ef8 <printf>
 8001899c:	2484f8c0 	addiu	a0,a0,-1856
-E:\0school\seucse\code\cse-os\fs/elf.c:481
+E:\0school\seucse\code\cse-os\fs/elf.c:479
 800189a0:	1000fff0 	b	80018964 <parse_dynamic_section+0x138>
 800189a4:	2402ffff 	li	v0,-1
-E:\0school\seucse\code\cse-os\fs/elf.c:490
+E:\0school\seucse\code\cse-os\fs/elf.c:488
 800189a8:	50520021 	beql	v0,s2,80018a30 <parse_dynamic_section+0x204>
 800189ac:	8e020000 	lw	v0,0(s0)
 800189b0:	10570021 	beq	v0,s7,80018a38 <parse_dynamic_section+0x20c>
 800189b4:	2663000a 	addiu	v1,s3,10
 800189b8:	54430006 	bnel	v0,v1,800189d4 <parse_dynamic_section+0x1a8>
 800189bc:	26100008 	addiu	s0,s0,8
-E:\0school\seucse\code\cse-os\fs/elf.c:504
+E:\0school\seucse\code\cse-os\fs/elf.c:502
 800189c0:	8e020000 	lw	v0,0(s0)
-E:\0school\seucse\code\cse-os\fs/elf.c:505
+E:\0school\seucse\code\cse-os\fs/elf.c:503
 800189c4:	10000002 	b	800189d0 <parse_dynamic_section+0x1a4>
 800189c8:	ae220014 	sw	v0,20(s1)
-E:\0school\seucse\code\cse-os\fs/elf.c:492
+E:\0school\seucse\code\cse-os\fs/elf.c:490
 800189cc:	8e150000 	lw	s5,0(s0)
 800189d0:	26100008 	addiu	s0,s0,8
-E:\0school\seucse\code\cse-os\fs/elf.c:489 (discriminator 2)
+E:\0school\seucse\code\cse-os\fs/elf.c:487 (discriminator 2)
 800189d4:	8e02fffc 	lw	v0,-4(s0)
 800189d8:	5040ffd3 	beqzl	v0,80018928 <parse_dynamic_section+0xfc>
 800189dc:	ae350008 	sw	s5,8(s1)
-E:\0school\seucse\code\cse-os\fs/elf.c:490
+E:\0school\seucse\code\cse-os\fs/elf.c:488
 800189e0:	24030006 	li	v1,6
 800189e4:	1043000e 	beq	v0,v1,80018a20 <parse_dynamic_section+0x1f4>
 800189e8:	28430007 	slti	v1,v0,7
@@ -13691,28 +13691,28 @@ E:\0school\seucse\code\cse-os\fs/elf.c:490
 80018a00:	24030001 	li	v1,1
 80018a04:	5443fff3 	bnel	v0,v1,800189d4 <parse_dynamic_section+0x1a8>
 80018a08:	26100008 	addiu	s0,s0,8
-E:\0school\seucse\code\cse-os\fs/elf.c:511
+E:\0school\seucse\code\cse-os\fs/elf.c:509
 80018a0c:	8e050000 	lw	a1,0(s0)
 80018a10:	0c0043be 	jal	80010ef8 <printf>
 80018a14:	03c02025 	move	a0,s8
-E:\0school\seucse\code\cse-os\fs/elf.c:512
+E:\0school\seucse\code\cse-os\fs/elf.c:510
 80018a18:	1000ffee 	b	800189d4 <parse_dynamic_section+0x1a8>
 80018a1c:	26100008 	addiu	s0,s0,8
-E:\0school\seucse\code\cse-os\fs/elf.c:496
+E:\0school\seucse\code\cse-os\fs/elf.c:494
 80018a20:	1000ffeb 	b	800189d0 <parse_dynamic_section+0x1a4>
 80018a24:	8e140000 	lw	s4,0(s0)
-E:\0school\seucse\code\cse-os\fs/elf.c:499
+E:\0school\seucse\code\cse-os\fs/elf.c:497
 80018a28:	1000ffe9 	b	800189d0 <parse_dynamic_section+0x1a4>
 80018a2c:	8e160000 	lw	s6,0(s0)
-E:\0school\seucse\code\cse-os\fs/elf.c:502
+E:\0school\seucse\code\cse-os\fs/elf.c:500
 80018a30:	1000ffe7 	b	800189d0 <parse_dynamic_section+0x1a4>
 80018a34:	ae220010 	sw	v0,16(s1)
-E:\0school\seucse\code\cse-os\fs/elf.c:507
+E:\0school\seucse\code\cse-os\fs/elf.c:505
 80018a38:	8e020000 	lw	v0,0(s0)
-E:\0school\seucse\code\cse-os\fs/elf.c:508
+E:\0school\seucse\code\cse-os\fs/elf.c:506
 80018a3c:	1000ffe4 	b	800189d0 <parse_dynamic_section+0x1a4>
 80018a40:	ae220018 	sw	v0,24(s1)
-E:\0school\seucse\code\cse-os\fs/elf.c:442
+E:\0school\seucse\code\cse-os\fs/elf.c:440
 80018a44:	03e00008 	jr	ra
 80018a48:	2402ffff 	li	v0,-1
 80018a4c:	03e00008 	jr	ra
@@ -13722,29 +13722,29 @@ E:\0school\seucse\code\cse-os\fs/elf.c:442
 
 80018a5c <lookup_symbol>:
 lookup_symbol():
-E:\0school\seucse\code\cse-os\fs/elf.c:535
+E:\0school\seucse\code\cse-os\fs/elf.c:533
 80018a5c:	27bdffe0 	addiu	sp,sp,-32
 80018a60:	afbf001c 	sw	ra,28(sp)
-E:\0school\seucse\code\cse-os\fs/elf.c:536
+E:\0school\seucse\code\cse-os\fs/elf.c:534
 80018a64:	1080003b 	beqz	a0,80018b54 <lookup_symbol+0xf8>
 80018a68:	afb00018 	sw	s0,24(sp)
-E:\0school\seucse\code\cse-os\fs/elf.c:536 (discriminator 1)
+E:\0school\seucse\code\cse-os\fs/elf.c:534 (discriminator 1)
 80018a6c:	10a00034 	beqz	a1,80018b40 <lookup_symbol+0xe4>
 80018a70:	00008025 	move	s0,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:536 (discriminator 2)
+E:\0school\seucse\code\cse-os\fs/elf.c:534 (discriminator 2)
 80018a74:	8ca80004 	lw	t0,4(a1)
 80018a78:	11000031 	beqz	t0,80018b40 <lookup_symbol+0xe4>
 80018a7c:	00000000 	nop
-E:\0school\seucse\code\cse-os\fs/elf.c:536 (discriminator 3)
+E:\0school\seucse\code\cse-os\fs/elf.c:534 (discriminator 3)
 80018a80:	8cac0008 	lw	t4,8(a1)
 80018a84:	1180002f 	beqz	t4,80018b44 <lookup_symbol+0xe8>
 80018a88:	02001025 	move	v0,s0
-E:\0school\seucse\code\cse-os\fs/elf.c:540 (discriminator 1)
+E:\0school\seucse\code\cse-os\fs/elf.c:538 (discriminator 1)
 80018a8c:	8cb00010 	lw	s0,16(a1)
 80018a90:	1200002b 	beqz	s0,80018b40 <lookup_symbol+0xe4>
 80018a94:	00004825 	move	t1,zero
 strCmp():
-E:\0school\seucse\code\cse-os\fs/elf.c:402
+E:\0school\seucse\code\cse-os\fs/elf.c:400
 80018a98:	908a0000 	lbu	t2,0(a0)
 lookup_symbol():
 80018a9c:	1000000a 	b	80018ac8 <lookup_symbol+0x6c>
@@ -13752,31 +13752,31 @@ lookup_symbol():
 strCmp():
 80018aa4:	01a03025 	move	a2,t5
 lookup_symbol():
-E:\0school\seucse\code\cse-os\fs/elf.c:544
+E:\0school\seucse\code\cse-os\fs/elf.c:542
 80018aa8:	90420000 	lbu	v0,0(v0)
 80018aac:	14460004 	bne	v0,a2,80018ac0 <lookup_symbol+0x64>
 80018ab0:	25290001 	addiu	t1,t1,1
-E:\0school\seucse\code\cse-os\fs/elf.c:546
+E:\0school\seucse\code\cse-os\fs/elf.c:544
 80018ab4:	9562000e 	lhu	v0,14(t3)
 80018ab8:	14400015 	bnez	v0,80018b10 <lookup_symbol+0xb4>
 80018abc:	00a01025 	move	v0,a1
-E:\0school\seucse\code\cse-os\fs/elf.c:540 (discriminator 2)
+E:\0school\seucse\code\cse-os\fs/elf.c:538 (discriminator 2)
 80018ac0:	1209001e 	beq	s0,t1,80018b3c <lookup_symbol+0xe0>
 80018ac4:	25080010 	addiu	t0,t0,16
-E:\0school\seucse\code\cse-os\fs/elf.c:541
+E:\0school\seucse\code\cse-os\fs/elf.c:539
 80018ac8:	01005825 	move	t3,t0
-E:\0school\seucse\code\cse-os\fs/elf.c:542
+E:\0school\seucse\code\cse-os\fs/elf.c:540
 80018acc:	8d020000 	lw	v0,0(t0)
 strCmp():
-E:\0school\seucse\code\cse-os\fs/elf.c:402
+E:\0school\seucse\code\cse-os\fs/elf.c:400
 80018ad0:	1140fff4 	beqz	t2,80018aa4 <lookup_symbol+0x48>
 80018ad4:	01821021 	addu	v0,t4,v0
 80018ad8:	90430000 	lbu	v1,0(v0)
 80018adc:	146a000a 	bne	v1,t2,80018b08 <lookup_symbol+0xac>
 80018ae0:	00801825 	move	v1,a0
-E:\0school\seucse\code\cse-os\fs/elf.c:403
+E:\0school\seucse\code\cse-os\fs/elf.c:401
 80018ae4:	24630001 	addiu	v1,v1,1
-E:\0school\seucse\code\cse-os\fs/elf.c:402
+E:\0school\seucse\code\cse-os\fs/elf.c:400
 80018ae8:	90660000 	lbu	a2,0(v1)
 80018aec:	10c0ffee 	beqz	a2,80018aa8 <lookup_symbol+0x4c>
 80018af0:	24420001 	addiu	v0,v0,1
@@ -13784,35 +13784,35 @@ E:\0school\seucse\code\cse-os\fs/elf.c:402
 80018af8:	50e6fffb 	beql	a3,a2,80018ae8 <lookup_symbol+0x8c>
 80018afc:	24630001 	addiu	v1,v1,1
 lookup_symbol():
-E:\0school\seucse\code\cse-os\fs/elf.c:544
+E:\0school\seucse\code\cse-os\fs/elf.c:542
 80018b00:	1000ffea 	b	80018aac <lookup_symbol+0x50>
 80018b04:	90420000 	lbu	v0,0(v0)
-E:\0school\seucse\code\cse-os\fs/elf.c:402
+E:\0school\seucse\code\cse-os\fs/elf.c:400
 80018b08:	1000ffe7 	b	80018aa8 <lookup_symbol+0x4c>
 80018b0c:	01a03025 	move	a2,t5
 80018b10:	00802825 	move	a1,a0
-E:\0school\seucse\code\cse-os\fs/elf.c:548
+E:\0school\seucse\code\cse-os\fs/elf.c:546
 80018b14:	8c470000 	lw	a3,0(v0)
 80018b18:	8d620004 	lw	v0,4(t3)
 80018b1c:	00e28021 	addu	s0,a3,v0
-E:\0school\seucse\code\cse-os\fs/elf.c:549
+E:\0school\seucse\code\cse-os\fs/elf.c:547
 80018b20:	afa20010 	sw	v0,16(sp)
 80018b24:	02003025 	move	a2,s0
 80018b28:	3c048002 	lui	a0,0x8002
 80018b2c:	0c0043be 	jal	80010ef8 <printf>
 80018b30:	2484f96c 	addiu	a0,a0,-1684
-E:\0school\seucse\code\cse-os\fs/elf.c:551
+E:\0school\seucse\code\cse-os\fs/elf.c:549
 80018b34:	10000003 	b	80018b44 <lookup_symbol+0xe8>
 80018b38:	02001025 	move	v0,s0
-E:\0school\seucse\code\cse-os\fs/elf.c:556
+E:\0school\seucse\code\cse-os\fs/elf.c:554
 80018b3c:	00008025 	move	s0,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:557
+E:\0school\seucse\code\cse-os\fs/elf.c:555
 80018b40:	02001025 	move	v0,s0
 80018b44:	8fbf001c 	lw	ra,28(sp)
 80018b48:	8fb00018 	lw	s0,24(sp)
 80018b4c:	03e00008 	jr	ra
 80018b50:	27bd0020 	addiu	sp,sp,32
-E:\0school\seucse\code\cse-os\fs/elf.c:537
+E:\0school\seucse\code\cse-os\fs/elf.c:535
 80018b54:	1000fffa 	b	80018b40 <lookup_symbol+0xe4>
 80018b58:	00008025 	move	s0,zero
 80018b5c:	1000fff8 	b	80018b40 <lookup_symbol+0xe4>
@@ -13820,7 +13820,7 @@ E:\0school\seucse\code\cse-os\fs/elf.c:537
 
 80018b64 <fill_got_table>:
 fill_got_table():
-E:\0school\seucse\code\cse-os\fs/elf.c:571
+E:\0school\seucse\code\cse-os\fs/elf.c:569
 80018b64:	27bdffb8 	addiu	sp,sp,-72
 80018b68:	afbf0044 	sw	ra,68(sp)
 80018b6c:	afbe0040 	sw	s8,64(sp)
@@ -13831,118 +13831,118 @@ E:\0school\seucse\code\cse-os\fs/elf.c:571
 80018b80:	afb3002c 	sw	s3,44(sp)
 80018b84:	afb20028 	sw	s2,40(sp)
 80018b88:	afb10024 	sw	s1,36(sp)
-E:\0school\seucse\code\cse-os\fs/elf.c:572
+E:\0school\seucse\code\cse-os\fs/elf.c:570
 80018b8c:	10800020 	beqz	a0,80018c10 <fill_got_table+0xac>
 80018b90:	afb00020 	sw	s0,32(sp)
 80018b94:	00808825 	move	s1,a0
-E:\0school\seucse\code\cse-os\fs/elf.c:572 (discriminator 1)
+E:\0school\seucse\code\cse-os\fs/elf.c:570 (discriminator 1)
 80018b98:	8c82000c 	lw	v0,12(a0)
 80018b9c:	1040001c 	beqz	v0,80018c10 <fill_got_table+0xac>
 80018ba0:	00a0a825 	move	s5,a1
-E:\0school\seucse\code\cse-os\fs/elf.c:572 (discriminator 2)
+E:\0school\seucse\code\cse-os\fs/elf.c:570 (discriminator 2)
 80018ba4:	8c820004 	lw	v0,4(a0)
 80018ba8:	5040001a 	beqzl	v0,80018c14 <fill_got_table+0xb0>
 80018bac:	3c048002 	lui	a0,0x8002
-E:\0school\seucse\code\cse-os\fs/elf.c:572 (discriminator 3)
+E:\0school\seucse\code\cse-os\fs/elf.c:570 (discriminator 3)
 80018bb0:	8c820008 	lw	v0,8(a0)
 80018bb4:	50400017 	beqzl	v0,80018c14 <fill_got_table+0xb0>
 80018bb8:	3c048002 	lui	a0,0x8002
-E:\0school\seucse\code\cse-os\fs/elf.c:578
+E:\0school\seucse\code\cse-os\fs/elf.c:576
 80018bbc:	8c960010 	lw	s6,16(a0)
 80018bc0:	8c820018 	lw	v0,24(a0)
 80018bc4:	02c2b023 	subu	s6,s6,v0
-E:\0school\seucse\code\cse-os\fs/elf.c:580
+E:\0school\seucse\code\cse-os\fs/elf.c:578
 80018bc8:	8c860014 	lw	a2,20(a0)
 80018bcc:	02c02825 	move	a1,s6
 80018bd0:	3c048002 	lui	a0,0x8002
 80018bd4:	0c0043be 	jal	80010ef8 <printf>
 80018bd8:	2484f9c0 	addiu	a0,a0,-1600
-E:\0school\seucse\code\cse-os\fs/elf.c:584
+E:\0school\seucse\code\cse-os\fs/elf.c:582
 80018bdc:	12c0005d 	beqz	s6,80018d54 <fill_got_table+0x1f0>
 80018be0:	00009825 	move	s3,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:592
+E:\0school\seucse\code\cse-os\fs/elf.c:590
 80018be4:	3c178002 	lui	s7,0x8002
 80018be8:	26f7f9f8 	addiu	s7,s7,-1544
-E:\0school\seucse\code\cse-os\fs/elf.c:618
+E:\0school\seucse\code\cse-os\fs/elf.c:616
 80018bec:	3c1e8002 	lui	s8,0x8002
 80018bf0:	27defa5c 	addiu	s8,s8,-1444
-E:\0school\seucse\code\cse-os\fs/elf.c:621
+E:\0school\seucse\code\cse-os\fs/elf.c:619
 80018bf4:	3c028002 	lui	v0,0x8002
 80018bf8:	2442fa84 	addiu	v0,v0,-1404
 80018bfc:	afa20018 	sw	v0,24(sp)
-E:\0school\seucse\code\cse-os\fs/elf.c:600
+E:\0school\seucse\code\cse-os\fs/elf.c:598
 80018c00:	3c028002 	lui	v0,0x8002
 80018c04:	2442fa24 	addiu	v0,v0,-1500
 80018c08:	10000018 	b	80018c6c <fill_got_table+0x108>
 80018c0c:	afa2001c 	sw	v0,28(sp)
-E:\0school\seucse\code\cse-os\fs/elf.c:573
+E:\0school\seucse\code\cse-os\fs/elf.c:571
 80018c10:	3c048002 	lui	a0,0x8002
 80018c14:	0c0043be 	jal	80010ef8 <printf>
 80018c18:	2484f9a4 	addiu	a0,a0,-1628
-E:\0school\seucse\code\cse-os\fs/elf.c:574
+E:\0school\seucse\code\cse-os\fs/elf.c:572
 80018c1c:	10000041 	b	80018d24 <fill_got_table+0x1c0>
 80018c20:	2402ffff 	li	v0,-1
-E:\0school\seucse\code\cse-os\fs/elf.c:607
+E:\0school\seucse\code\cse-os\fs/elf.c:605
 80018c24:	12a00036 	beqz	s5,80018d00 <fill_got_table+0x19c>
 80018c28:	02a02825 	move	a1,s5
-E:\0school\seucse\code\cse-os\fs/elf.c:608
+E:\0school\seucse\code\cse-os\fs/elf.c:606
 80018c2c:	0c006297 	jal	80018a5c <lookup_symbol>
 80018c30:	02402025 	move	a0,s2
-E:\0school\seucse\code\cse-os\fs/elf.c:612
+E:\0school\seucse\code\cse-os\fs/elf.c:610
 80018c34:	10400033 	beqz	v0,80018d04 <fill_got_table+0x1a0>
 80018c38:	02202825 	move	a1,s1
-E:\0school\seucse\code\cse-os\fs/elf.c:617
+E:\0school\seucse\code\cse-os\fs/elf.c:615
 80018c3c:	8e23000c 	lw	v1,12(s1)
 80018c40:	00142080 	sll	a0,s4,0x2
 80018c44:	00641821 	addu	v1,v1,a0
 80018c48:	ac620000 	sw	v0,0(v1)
-E:\0school\seucse\code\cse-os\fs/elf.c:618
+E:\0school\seucse\code\cse-os\fs/elf.c:616
 80018c4c:	02403825 	move	a3,s2
 80018c50:	00403025 	move	a2,v0
 80018c54:	02802825 	move	a1,s4
 80018c58:	0c0043be 	jal	80010ef8 <printf>
 80018c5c:	03c02025 	move	a0,s8
-E:\0school\seucse\code\cse-os\fs/elf.c:584 (discriminator 2)
+E:\0school\seucse\code\cse-os\fs/elf.c:582 (discriminator 2)
 80018c60:	26730001 	addiu	s3,s3,1
 80018c64:	12d3002f 	beq	s6,s3,80018d24 <fill_got_table+0x1c0>
 80018c68:	00001025 	move	v0,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:585
+E:\0school\seucse\code\cse-os\fs/elf.c:583
 80018c6c:	8e340014 	lw	s4,20(s1)
 80018c70:	0274a021 	addu	s4,s3,s4
-E:\0school\seucse\code\cse-os\fs/elf.c:586
+E:\0school\seucse\code\cse-os\fs/elf.c:584
 80018c74:	8e250018 	lw	a1,24(s1)
 80018c78:	02652821 	addu	a1,s3,a1
-E:\0school\seucse\code\cse-os\fs/elf.c:588
+E:\0school\seucse\code\cse-os\fs/elf.c:586
 80018c7c:	00051100 	sll	v0,a1,0x4
 80018c80:	8e300004 	lw	s0,4(s1)
 80018c84:	02028021 	addu	s0,s0,v0
-E:\0school\seucse\code\cse-os\fs/elf.c:589
+E:\0school\seucse\code\cse-os\fs/elf.c:587
 80018c88:	8e320008 	lw	s2,8(s1)
 80018c8c:	8e020000 	lw	v0,0(s0)
 80018c90:	02429021 	addu	s2,s2,v0
-E:\0school\seucse\code\cse-os\fs/elf.c:592
+E:\0school\seucse\code\cse-os\fs/elf.c:590
 80018c94:	9607000e 	lhu	a3,14(s0)
 80018c98:	8e020004 	lw	v0,4(s0)
 80018c9c:	afa20010 	sw	v0,16(sp)
 80018ca0:	02403025 	move	a2,s2
 80018ca4:	0c0043be 	jal	80010ef8 <printf>
 80018ca8:	02e02025 	move	a0,s7
-E:\0school\seucse\code\cse-os\fs/elf.c:596
+E:\0school\seucse\code\cse-os\fs/elf.c:594
 80018cac:	9602000e 	lhu	v0,14(s0)
 80018cb0:	1040ffdc 	beqz	v0,80018c24 <fill_got_table+0xc0>
 80018cb4:	00000000 	nop
-E:\0school\seucse\code\cse-os\fs/elf.c:596 (discriminator 1)
+E:\0school\seucse\code\cse-os\fs/elf.c:594 (discriminator 1)
 80018cb8:	8e060004 	lw	a2,4(s0)
 80018cbc:	10c0ffd9 	beqz	a2,80018c24 <fill_got_table+0xc0>
 80018cc0:	00141880 	sll	v1,s4,0x2
-E:\0school\seucse\code\cse-os\fs/elf.c:598
+E:\0school\seucse\code\cse-os\fs/elf.c:596
 80018cc4:	8e220000 	lw	v0,0(s1)
 80018cc8:	00c23021 	addu	a2,a2,v0
-E:\0school\seucse\code\cse-os\fs/elf.c:599
+E:\0school\seucse\code\cse-os\fs/elf.c:597
 80018ccc:	8e22000c 	lw	v0,12(s1)
 80018cd0:	00431021 	addu	v0,v0,v1
 80018cd4:	ac460000 	sw	a2,0(v0)
-E:\0school\seucse\code\cse-os\fs/elf.c:600
+E:\0school\seucse\code\cse-os\fs/elf.c:598
 80018cd8:	8e020004 	lw	v0,4(s0)
 80018cdc:	afa20014 	sw	v0,20(sp)
 80018ce0:	8e220000 	lw	v0,0(s1)
@@ -13951,23 +13951,23 @@ E:\0school\seucse\code\cse-os\fs/elf.c:600
 80018cec:	02802825 	move	a1,s4
 80018cf0:	0c0043be 	jal	80010ef8 <printf>
 80018cf4:	8fa4001c 	lw	a0,28(sp)
-E:\0school\seucse\code\cse-os\fs/elf.c:602
+E:\0school\seucse\code\cse-os\fs/elf.c:600
 80018cf8:	1000ffda 	b	80018c64 <fill_got_table+0x100>
 80018cfc:	26730001 	addiu	s3,s3,1
-E:\0school\seucse\code\cse-os\fs/elf.c:613
+E:\0school\seucse\code\cse-os\fs/elf.c:611
 80018d00:	02202825 	move	a1,s1
 80018d04:	0c006297 	jal	80018a5c <lookup_symbol>
 80018d08:	02402025 	move	a0,s2
-E:\0school\seucse\code\cse-os\fs/elf.c:616
+E:\0school\seucse\code\cse-os\fs/elf.c:614
 80018d0c:	1440ffcb 	bnez	v0,80018c3c <fill_got_table+0xd8>
 80018d10:	02402825 	move	a1,s2
-E:\0school\seucse\code\cse-os\fs/elf.c:621
+E:\0school\seucse\code\cse-os\fs/elf.c:619
 80018d14:	0c0043be 	jal	80010ef8 <printf>
 80018d18:	8fa40018 	lw	a0,24(sp)
-E:\0school\seucse\code\cse-os\fs/elf.c:584
+E:\0school\seucse\code\cse-os\fs/elf.c:582
 80018d1c:	1000ffd1 	b	80018c64 <fill_got_table+0x100>
 80018d20:	26730001 	addiu	s3,s3,1
-E:\0school\seucse\code\cse-os\fs/elf.c:627
+E:\0school\seucse\code\cse-os\fs/elf.c:625
 80018d24:	8fbf0044 	lw	ra,68(sp)
 80018d28:	8fbe0040 	lw	s8,64(sp)
 80018d2c:	8fb7003c 	lw	s7,60(sp)
@@ -13980,13 +13980,13 @@ E:\0school\seucse\code\cse-os\fs/elf.c:627
 80018d48:	8fb00020 	lw	s0,32(sp)
 80018d4c:	03e00008 	jr	ra
 80018d50:	27bd0048 	addiu	sp,sp,72
-E:\0school\seucse\code\cse-os\fs/elf.c:626
+E:\0school\seucse\code\cse-os\fs/elf.c:624
 80018d54:	1000fff3 	b	80018d24 <fill_got_table+0x1c0>
 80018d58:	00001025 	move	v0,zero
 
 80018d5c <load_so_file>:
 load_so_file():
-E:\0school\seucse\code\cse-os\fs/elf.c:130
+E:\0school\seucse\code\cse-os\fs/elf.c:128
 80018d5c:	27bdfd98 	addiu	sp,sp,-616
 80018d60:	afbf0264 	sw	ra,612(sp)
 80018d64:	afbe0260 	sw	s8,608(sp)
@@ -13999,48 +13999,48 @@ E:\0school\seucse\code\cse-os\fs/elf.c:130
 80018d80:	afb10244 	sw	s1,580(sp)
 80018d84:	afb00240 	sw	s0,576(sp)
 80018d88:	00808025 	move	s0,a0
-E:\0school\seucse\code\cse-os\fs/elf.c:135
+E:\0school\seucse\code\cse-os\fs/elf.c:133
 80018d8c:	00802825 	move	a1,a0
 80018d90:	3c048002 	lui	a0,0x8002
 80018d94:	0c0043be 	jal	80010ef8 <printf>
 80018d98:	2484fab0 	addiu	a0,a0,-1360
-E:\0school\seucse\code\cse-os\fs/elf.c:138
+E:\0school\seucse\code\cse-os\fs/elf.c:136
 80018d9c:	24060001 	li	a2,1
 80018da0:	02002825 	move	a1,s0
 80018da4:	0c006caf 	jal	8001b2bc <f_open>
 80018da8:	27a40010 	addiu	a0,sp,16
-E:\0school\seucse\code\cse-os\fs/elf.c:139
+E:\0school\seucse\code\cse-os\fs/elf.c:137
 80018dac:	14400023 	bnez	v0,80018e3c <load_so_file+0xe0>
 80018db0:	8fa6001c 	lw	a2,28(sp)
-E:\0school\seucse\code\cse-os\fs/elf.c:145
+E:\0school\seucse\code\cse-os\fs/elf.c:143
 80018db4:	3c020010 	lui	v0,0x10
 80018db8:	24420001 	addiu	v0,v0,1
 80018dbc:	00c2102b 	sltu	v0,a2,v0
 80018dc0:	10400025 	beqz	v0,80018e58 <load_so_file+0xfc>
 80018dc4:	27a70234 	addiu	a3,sp,564
-E:\0school\seucse\code\cse-os\fs/elf.c:152
+E:\0school\seucse\code\cse-os\fs/elf.c:150
 80018dc8:	3c058002 	lui	a1,0x8002
 80018dcc:	24a54b30 	addiu	a1,a1,19248
 80018dd0:	0c006d51 	jal	8001b544 <f_read>
 80018dd4:	27a40010 	addiu	a0,sp,16
-E:\0school\seucse\code\cse-os\fs/elf.c:153
+E:\0school\seucse\code\cse-os\fs/elf.c:151
 80018dd8:	14400004 	bnez	v0,80018dec <load_so_file+0x90>
 80018ddc:	8fb2001c 	lw	s2,28(sp)
-E:\0school\seucse\code\cse-os\fs/elf.c:153 (discriminator 1)
+E:\0school\seucse\code\cse-os\fs/elf.c:151 (discriminator 1)
 80018de0:	8fa20234 	lw	v0,564(sp)
 80018de4:	12420025 	beq	s2,v0,80018e7c <load_so_file+0x120>
 80018de8:	00000000 	nop
-E:\0school\seucse\code\cse-os\fs/elf.c:154
+E:\0school\seucse\code\cse-os\fs/elf.c:152
 80018dec:	02002825 	move	a1,s0
 80018df0:	3c048002 	lui	a0,0x8002
 80018df4:	0c0043be 	jal	80010ef8 <printf>
 80018df8:	2484fb24 	addiu	a0,a0,-1244
-E:\0school\seucse\code\cse-os\fs/elf.c:155
+E:\0school\seucse\code\cse-os\fs/elf.c:153
 80018dfc:	0c006f34 	jal	8001bcd0 <f_close>
 80018e00:	27a40010 	addiu	a0,sp,16
-E:\0school\seucse\code\cse-os\fs/elf.c:156
+E:\0school\seucse\code\cse-os\fs/elf.c:154
 80018e04:	00008825 	move	s1,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:252
+E:\0school\seucse\code\cse-os\fs/elf.c:250
 80018e08:	02201025 	move	v0,s1
 80018e0c:	8fbf0264 	lw	ra,612(sp)
 80018e10:	8fbe0260 	lw	s8,608(sp)
@@ -14054,65 +14054,65 @@ E:\0school\seucse\code\cse-os\fs/elf.c:252
 80018e30:	8fb00240 	lw	s0,576(sp)
 80018e34:	03e00008 	jr	ra
 80018e38:	27bd0268 	addiu	sp,sp,616
-E:\0school\seucse\code\cse-os\fs/elf.c:140
+E:\0school\seucse\code\cse-os\fs/elf.c:138
 80018e3c:	00403025 	move	a2,v0
 80018e40:	02002825 	move	a1,s0
 80018e44:	3c048002 	lui	a0,0x8002
 80018e48:	0c0043be 	jal	80010ef8 <printf>
 80018e4c:	2484fad8 	addiu	a0,a0,-1320
-E:\0school\seucse\code\cse-os\fs/elf.c:141
+E:\0school\seucse\code\cse-os\fs/elf.c:139
 80018e50:	1000ffed 	b	80018e08 <load_so_file+0xac>
 80018e54:	00008825 	move	s1,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:146
+E:\0school\seucse\code\cse-os\fs/elf.c:144
 80018e58:	3c070010 	lui	a3,0x10
 80018e5c:	02002825 	move	a1,s0
 80018e60:	3c048002 	lui	a0,0x8002
 80018e64:	0c0043be 	jal	80010ef8 <printf>
 80018e68:	2484fb00 	addiu	a0,a0,-1280
-E:\0school\seucse\code\cse-os\fs/elf.c:147
+E:\0school\seucse\code\cse-os\fs/elf.c:145
 80018e6c:	0c006f34 	jal	8001bcd0 <f_close>
 80018e70:	27a40010 	addiu	a0,sp,16
-E:\0school\seucse\code\cse-os\fs/elf.c:148
+E:\0school\seucse\code\cse-os\fs/elf.c:146
 80018e74:	1000ffe4 	b	80018e08 <load_so_file+0xac>
 80018e78:	00008825 	move	s1,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:160
+E:\0school\seucse\code\cse-os\fs/elf.c:158
 80018e7c:	0c006f34 	jal	8001bcd0 <f_close>
 80018e80:	27a40010 	addiu	a0,sp,16
-E:\0school\seucse\code\cse-os\fs/elf.c:163
+E:\0school\seucse\code\cse-os\fs/elf.c:161
 80018e84:	2e420034 	sltiu	v0,s2,52
 80018e88:	14400010 	bnez	v0,80018ecc <load_so_file+0x170>
 80018e8c:	3c028002 	lui	v0,0x8002
-E:\0school\seucse\code\cse-os\fs/elf.c:169
+E:\0school\seucse\code\cse-os\fs/elf.c:167
 80018e90:	8c434b30 	lw	v1,19248(v0)
 80018e94:	3c02464c 	lui	v0,0x464c
 80018e98:	2442457f 	addiu	v0,v0,17791
 80018e9c:	14620005 	bne	v1,v0,80018eb4 <load_so_file+0x158>
 80018ea0:	3c028002 	lui	v0,0x8002
-E:\0school\seucse\code\cse-os\fs/elf.c:169 (discriminator 1)
+E:\0school\seucse\code\cse-os\fs/elf.c:167 (discriminator 1)
 80018ea4:	90434b34 	lbu	v1,19252(v0)
 80018ea8:	24020001 	li	v0,1
 80018eac:	1062000d 	beq	v1,v0,80018ee4 <load_so_file+0x188>
 80018eb0:	3c028002 	lui	v0,0x8002
-E:\0school\seucse\code\cse-os\fs/elf.c:170
+E:\0school\seucse\code\cse-os\fs/elf.c:168
 80018eb4:	02002825 	move	a1,s0
 80018eb8:	3c048002 	lui	a0,0x8002
 80018ebc:	0c0043be 	jal	80010ef8 <printf>
 80018ec0:	2484fb58 	addiu	a0,a0,-1192
-E:\0school\seucse\code\cse-os\fs/elf.c:171
+E:\0school\seucse\code\cse-os\fs/elf.c:169
 80018ec4:	1000ffd0 	b	80018e08 <load_so_file+0xac>
 80018ec8:	00008825 	move	s1,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:164
+E:\0school\seucse\code\cse-os\fs/elf.c:162
 80018ecc:	02002825 	move	a1,s0
 80018ed0:	3c048002 	lui	a0,0x8002
 80018ed4:	0c0043be 	jal	80010ef8 <printf>
 80018ed8:	2484fb40 	addiu	a0,a0,-1216
-E:\0school\seucse\code\cse-os\fs/elf.c:165
+E:\0school\seucse\code\cse-os\fs/elf.c:163
 80018edc:	1000ffca 	b	80018e08 <load_so_file+0xac>
 80018ee0:	00008825 	move	s1,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:175
+E:\0school\seucse\code\cse-os\fs/elf.c:173
 80018ee4:	24424b30 	addiu	v0,v0,19248
 80018ee8:	8c53001c 	lw	s3,28(v0)
-E:\0school\seucse\code\cse-os\fs/elf.c:183
+E:\0school\seucse\code\cse-os\fs/elf.c:181
 80018eec:	9455002c 	lhu	s5,44(v0)
 80018ef0:	12a00046 	beqz	s5,8001900c <load_so_file+0x2b0>
 80018ef4:	00539821 	addu	s3,v0,s3
@@ -14120,14 +14120,14 @@ E:\0school\seucse\code\cse-os\fs/elf.c:183
 80018efc:	00152140 	sll	a0,s5,0x5
 80018f00:	02642021 	addu	a0,s3,a0
 80018f04:	2411ffff 	li	s1,-1
-E:\0school\seucse\code\cse-os\fs/elf.c:184
+E:\0school\seucse\code\cse-os\fs/elf.c:182
 80018f08:	10000004 	b	80018f1c <load_so_file+0x1c0>
 80018f0c:	24050001 	li	a1,1
 80018f10:	24420020 	addiu	v0,v0,32
-E:\0school\seucse\code\cse-os\fs/elf.c:183 (discriminator 2)
+E:\0school\seucse\code\cse-os\fs/elf.c:181 (discriminator 2)
 80018f14:	10440070 	beq	v0,a0,800190d8 <load_so_file+0x37c>
 80018f18:	00000000 	nop
-E:\0school\seucse\code\cse-os\fs/elf.c:184
+E:\0school\seucse\code\cse-os\fs/elf.c:182
 80018f1c:	8c430000 	lw	v1,0(v0)
 80018f20:	5465fffc 	bnel	v1,a1,80018f14 <load_so_file+0x1b8>
 80018f24:	24420020 	addiu	v0,v0,32
@@ -14135,62 +14135,62 @@ E:\0school\seucse\code\cse-os\fs/elf.c:184
 80018f2c:	0071302b 	sltu	a2,v1,s1
 80018f30:	1000fff7 	b	80018f10 <load_so_file+0x1b4>
 80018f34:	0066880b 	movn	s1,v1,a2
-E:\0school\seucse\code\cse-os\fs/elf.c:193
+E:\0school\seucse\code\cse-os\fs/elf.c:191
 80018f38:	3c048002 	lui	a0,0x8002
 80018f3c:	0c0043be 	jal	80010ef8 <printf>
 80018f40:	2484fb80 	addiu	a0,a0,-1152
-E:\0school\seucse\code\cse-os\fs/elf.c:196
+E:\0school\seucse\code\cse-os\fs/elf.c:194
 80018f44:	3c022000 	lui	v0,0x2000
 80018f48:	02228821 	addu	s1,s1,v0
-E:\0school\seucse\code\cse-os\fs/elf.c:198
+E:\0school\seucse\code\cse-os\fs/elf.c:196
 80018f4c:	3c028002 	lui	v0,0x8002
 80018f50:	94424b5c 	lhu	v0,19292(v0)
 80018f54:	14400063 	bnez	v0,800190e4 <load_so_file+0x388>
 80018f58:	3c152000 	lui	s5,0x2000
-E:\0school\seucse\code\cse-os\fs/elf.c:220
+E:\0school\seucse\code\cse-os\fs/elf.c:218
 80018f5c:	1000002d 	b	80019014 <load_so_file+0x2b8>
 80018f60:	3c068002 	lui	a2,0x8002
-E:\0school\seucse\code\cse-os\fs/elf.c:204
+E:\0school\seucse\code\cse-os\fs/elf.c:202
 80018f64:	02e52821 	addu	a1,s7,a1
 80018f68:	0c006166 	jal	80018598 <memCpy>
 80018f6c:	00402025 	move	a0,v0
-E:\0school\seucse\code\cse-os\fs/elf.c:209
+E:\0school\seucse\code\cse-os\fs/elf.c:207
 80018f70:	10000017 	b	80018fd0 <load_so_file+0x274>
 80018f74:	8ec30014 	lw	v1,20(s6)
-E:\0school\seucse\code\cse-os\fs/elf.c:215
+E:\0school\seucse\code\cse-os\fs/elf.c:213
 80018f78:	8ec60014 	lw	a2,20(s6)
 80018f7c:	8fa50238 	lw	a1,568(sp)
 80018f80:	0c0043be 	jal	80010ef8 <printf>
 80018f84:	8fa4023c 	lw	a0,572(sp)
-E:\0school\seucse\code\cse-os\fs/elf.c:198 (discriminator 2)
+E:\0school\seucse\code\cse-os\fs/elf.c:196 (discriminator 2)
 80018f88:	26940001 	addiu	s4,s4,1
 80018f8c:	96e2002c 	lhu	v0,44(s7)
 80018f90:	0282102b 	sltu	v0,s4,v0
 80018f94:	1040001e 	beqz	v0,80019010 <load_so_file+0x2b4>
 80018f98:	26730020 	addiu	s3,s3,32
-E:\0school\seucse\code\cse-os\fs/elf.c:199
+E:\0school\seucse\code\cse-os\fs/elf.c:197
 80018f9c:	8e620000 	lw	v0,0(s3)
 80018fa0:	145efff9 	bne	v0,s8,80018f88 <load_so_file+0x22c>
 80018fa4:	0260b025 	move	s6,s3
-E:\0school\seucse\code\cse-os\fs/elf.c:199 (discriminator 1)
+E:\0school\seucse\code\cse-os\fs/elf.c:197 (discriminator 1)
 80018fa8:	8e620014 	lw	v0,20(s3)
 80018fac:	5040fff7 	beqzl	v0,80018f8c <load_so_file+0x230>
 80018fb0:	26940001 	addiu	s4,s4,1
-E:\0school\seucse\code\cse-os\fs/elf.c:201
+E:\0school\seucse\code\cse-os\fs/elf.c:199
 80018fb4:	8e620008 	lw	v0,8(s3)
 80018fb8:	02a21021 	addu	v0,s5,v0
 80018fbc:	afa20238 	sw	v0,568(sp)
-E:\0school\seucse\code\cse-os\fs/elf.c:203
+E:\0school\seucse\code\cse-os\fs/elf.c:201
 80018fc0:	8e660010 	lw	a2,16(s3)
 80018fc4:	54c0ffe7 	bnezl	a2,80018f64 <load_so_file+0x208>
 80018fc8:	8e650004 	lw	a1,4(s3)
-E:\0school\seucse\code\cse-os\fs/elf.c:209
+E:\0school\seucse\code\cse-os\fs/elf.c:207
 80018fcc:	8ec30014 	lw	v1,20(s6)
 80018fd0:	8ec40010 	lw	a0,16(s6)
 80018fd4:	0083102b 	sltu	v0,a0,v1
 80018fd8:	5040ffe8 	beqzl	v0,80018f7c <load_so_file+0x220>
 80018fdc:	8ec60014 	lw	a2,20(s6)
-E:\0school\seucse\code\cse-os\fs/elf.c:210
+E:\0school\seucse\code\cse-os\fs/elf.c:208
 80018fe0:	8fa20238 	lw	v0,568(sp)
 80018fe4:	00441021 	addu	v0,v0,a0
 memSet():
@@ -14206,12 +14206,12 @@ E:\0school\seucse\code\cse-os\fs/elf.c:26
 80018ffc:	1462fffe 	bne	v1,v0,80018ff8 <load_so_file+0x29c>
 80019000:	a040ffff 	sb	zero,-1(v0)
 load_so_file():
-E:\0school\seucse\code\cse-os\fs/elf.c:215
+E:\0school\seucse\code\cse-os\fs/elf.c:213
 80019004:	1000ffdd 	b	80018f7c <load_so_file+0x220>
 80019008:	8ec60014 	lw	a2,20(s6)
-E:\0school\seucse\code\cse-os\fs/elf.c:196
+E:\0school\seucse\code\cse-os\fs/elf.c:194
 8001900c:	2411ffff 	li	s1,-1
-E:\0school\seucse\code\cse-os\fs/elf.c:220
+E:\0school\seucse\code\cse-os\fs/elf.c:218
 80019010:	3c068002 	lui	a2,0x8002
 80019014:	24c64b14 	addiu	a2,a2,19220
 80019018:	02402825 	move	a1,s2
@@ -14220,84 +14220,84 @@ E:\0school\seucse\code\cse-os\fs/elf.c:220
 80019024:	24844b30 	addiu	a0,a0,19248
 80019028:	1440000f 	bnez	v0,80019068 <load_so_file+0x30c>
 8001902c:	02002825 	move	a1,s0
-E:\0school\seucse\code\cse-os\fs/elf.c:229
+E:\0school\seucse\code\cse-os\fs/elf.c:227
 80019030:	56a00012 	bnezl	s5,8001907c <load_so_file+0x320>
 80019034:	3c048002 	lui	a0,0x8002
-E:\0school\seucse\code\cse-os\fs/elf.c:245
+E:\0school\seucse\code\cse-os\fs/elf.c:243
 80019038:	00002825 	move	a1,zero
 8001903c:	3c048002 	lui	a0,0x8002
 80019040:	0c0062d9 	jal	80018b64 <fill_got_table>
 80019044:	24844b14 	addiu	a0,a0,19220
 80019048:	1440001d 	bnez	v0,800190c0 <load_so_file+0x364>
 8001904c:	02203025 	move	a2,s1
-E:\0school\seucse\code\cse-os\fs/elf.c:250
+E:\0school\seucse\code\cse-os\fs/elf.c:248
 80019050:	02002825 	move	a1,s0
 80019054:	3c048002 	lui	a0,0x8002
 80019058:	0c0043be 	jal	80010ef8 <printf>
 8001905c:	2484fc74 	addiu	a0,a0,-908
-E:\0school\seucse\code\cse-os\fs/elf.c:251
+E:\0school\seucse\code\cse-os\fs/elf.c:249
 80019060:	1000ff6a 	b	80018e0c <load_so_file+0xb0>
 80019064:	02201025 	move	v0,s1
-E:\0school\seucse\code\cse-os\fs/elf.c:221
+E:\0school\seucse\code\cse-os\fs/elf.c:219
 80019068:	3c048002 	lui	a0,0x8002
 8001906c:	0c0043be 	jal	80010ef8 <printf>
 80019070:	2484fbdc 	addiu	a0,a0,-1060
-E:\0school\seucse\code\cse-os\fs/elf.c:222
+E:\0school\seucse\code\cse-os\fs/elf.c:220
 80019074:	1000ff64 	b	80018e08 <load_so_file+0xac>
 80019078:	00008825 	move	s1,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:231
+E:\0school\seucse\code\cse-os\fs/elf.c:229
 8001907c:	24824b14 	addiu	v0,a0,19220
 80019080:	8c460008 	lw	a2,8(v0)
-E:\0school\seucse\code\cse-os\fs/elf.c:232
+E:\0school\seucse\code\cse-os\fs/elf.c:230
 80019084:	8c43000c 	lw	v1,12(v0)
-E:\0school\seucse\code\cse-os\fs/elf.c:235
+E:\0school\seucse\code\cse-os\fs/elf.c:233
 80019088:	8c450004 	lw	a1,4(v0)
 8001908c:	00b52821 	addu	a1,a1,s5
 80019090:	ac450004 	sw	a1,4(v0)
-E:\0school\seucse\code\cse-os\fs/elf.c:236
+E:\0school\seucse\code\cse-os\fs/elf.c:234
 80019094:	00d53021 	addu	a2,a2,s5
 80019098:	ac460008 	sw	a2,8(v0)
-E:\0school\seucse\code\cse-os\fs/elf.c:237
+E:\0school\seucse\code\cse-os\fs/elf.c:235
 8001909c:	00751821 	addu	v1,v1,s5
 800190a0:	ac43000c 	sw	v1,12(v0)
-E:\0school\seucse\code\cse-os\fs/elf.c:238
+E:\0school\seucse\code\cse-os\fs/elf.c:236
 800190a4:	ac954b14 	sw	s5,19220(a0)
-E:\0school\seucse\code\cse-os\fs/elf.c:240
+E:\0school\seucse\code\cse-os\fs/elf.c:238
 800190a8:	02a03825 	move	a3,s5
 800190ac:	3c048002 	lui	a0,0x8002
 800190b0:	0c0043be 	jal	80010ef8 <printf>
 800190b4:	2484fc0c 	addiu	a0,a0,-1012
-E:\0school\seucse\code\cse-os\fs/elf.c:245
+E:\0school\seucse\code\cse-os\fs/elf.c:243
 800190b8:	1000ffe0 	b	8001903c <load_so_file+0x2e0>
 800190bc:	00002825 	move	a1,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:246
+E:\0school\seucse\code\cse-os\fs/elf.c:244
 800190c0:	02002825 	move	a1,s0
 800190c4:	3c048002 	lui	a0,0x8002
 800190c8:	0c0043be 	jal	80010ef8 <printf>
 800190cc:	2484fc4c 	addiu	a0,a0,-948
-E:\0school\seucse\code\cse-os\fs/elf.c:247
+E:\0school\seucse\code\cse-os\fs/elf.c:245
 800190d0:	1000ff4d 	b	80018e08 <load_so_file+0xac>
 800190d4:	00008825 	move	s1,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:191
+E:\0school\seucse\code\cse-os\fs/elf.c:189
 800190d8:	1220ff97 	beqz	s1,80018f38 <load_so_file+0x1dc>
 800190dc:	3c052000 	lui	a1,0x2000
-E:\0school\seucse\code\cse-os\fs/elf.c:190
+E:\0school\seucse\code\cse-os\fs/elf.c:188
 800190e0:	0000a825 	move	s5,zero
 800190e4:	0000a025 	move	s4,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:199
+E:\0school\seucse\code\cse-os\fs/elf.c:197
 800190e8:	241e0001 	li	s8,1
-E:\0school\seucse\code\cse-os\fs/elf.c:215
+E:\0school\seucse\code\cse-os\fs/elf.c:213
 800190ec:	3c028002 	lui	v0,0x8002
 800190f0:	2442fbb0 	addiu	v0,v0,-1104
 800190f4:	afa2023c 	sw	v0,572(sp)
-E:\0school\seucse\code\cse-os\fs/elf.c:204
+E:\0school\seucse\code\cse-os\fs/elf.c:202
 800190f8:	3c178002 	lui	s7,0x8002
 800190fc:	1000ffa7 	b	80018f9c <load_so_file+0x240>
 80019100:	26f74b30 	addiu	s7,s7,19248
 
 80019104 <load_elf_sd>:
 load_elf_sd():
-E:\0school\seucse\code\cse-os\fs/elf.c:269
+E:\0school\seucse\code\cse-os\fs/elf.c:267
 80019104:	27bdffb0 	addiu	sp,sp,-80
 80019108:	afbf004c 	sw	ra,76(sp)
 8001910c:	afb60048 	sw	s6,72(sp)
@@ -14306,23 +14306,23 @@ E:\0school\seucse\code\cse-os\fs/elf.c:269
 80019118:	afb3003c 	sw	s3,60(sp)
 8001911c:	afb20038 	sw	s2,56(sp)
 80019120:	afb10034 	sw	s1,52(sp)
-E:\0school\seucse\code\cse-os\fs/elf.c:274
+E:\0school\seucse\code\cse-os\fs/elf.c:272
 80019124:	2ca20034 	sltiu	v0,a1,52
 80019128:	14400018 	bnez	v0,8001918c <load_elf_sd+0x88>
 8001912c:	afb00030 	sw	s0,48(sp)
 80019130:	00809025 	move	s2,a0
-E:\0school\seucse\code\cse-os\fs/elf.c:282
+E:\0school\seucse\code\cse-os\fs/elf.c:280
 80019134:	8c830000 	lw	v1,0(a0)
 80019138:	3c02464c 	lui	v0,0x464c
 8001913c:	2442457f 	addiu	v0,v0,17791
 80019140:	14620017 	bne	v1,v0,800191a0 <load_elf_sd+0x9c>
 80019144:	00a0a825 	move	s5,a1
-E:\0school\seucse\code\cse-os\fs/elf.c:282 (discriminator 1)
+E:\0school\seucse\code\cse-os\fs/elf.c:280 (discriminator 1)
 80019148:	90830004 	lbu	v1,4(a0)
 8001914c:	24020001 	li	v0,1
 80019150:	54620014 	bnel	v1,v0,800191a4 <load_elf_sd+0xa0>
 80019154:	3c048002 	lui	a0,0x8002
-E:\0school\seucse\code\cse-os\fs/elf.c:288
+E:\0school\seucse\code\cse-os\fs/elf.c:286
 80019158:	8c94001c 	lw	s4,28(a0)
 8001915c:	9483002c 	lhu	v1,44(a0)
 80019160:	00031140 	sll	v0,v1,0x5
@@ -14330,77 +14330,77 @@ E:\0school\seucse\code\cse-os\fs/elf.c:288
 80019168:	00a2102b 	sltu	v0,a1,v0
 8001916c:	54400011 	bnezl	v0,800191b4 <load_elf_sd+0xb0>
 80019170:	3c048002 	lui	a0,0x8002
-E:\0school\seucse\code\cse-os\fs/elf.c:297
+E:\0school\seucse\code\cse-os\fs/elf.c:295
 80019174:	1060003e 	beqz	v1,80019270 <load_elf_sd+0x16c>
 80019178:	0094a021 	addu	s4,a0,s4
 8001917c:	02808025 	move	s0,s4
 80019180:	00008825 	move	s1,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:298
+E:\0school\seucse\code\cse-os\fs/elf.c:296
 80019184:	1000001d 	b	800191fc <load_elf_sd+0xf8>
 80019188:	24130001 	li	s3,1
-E:\0school\seucse\code\cse-os\fs/elf.c:275
+E:\0school\seucse\code\cse-os\fs/elf.c:273
 8001918c:	3c048002 	lui	a0,0x8002
 80019190:	0c0043be 	jal	80010ef8 <printf>
 80019194:	2484f878 	addiu	a0,a0,-1928
-E:\0school\seucse\code\cse-os\fs/elf.c:276
+E:\0school\seucse\code\cse-os\fs/elf.c:274
 80019198:	1000003a 	b	80019284 <load_elf_sd+0x180>
 8001919c:	2410ffff 	li	s0,-1
-E:\0school\seucse\code\cse-os\fs/elf.c:283
+E:\0school\seucse\code\cse-os\fs/elf.c:281
 800191a0:	3c048002 	lui	a0,0x8002
 800191a4:	0c0043be 	jal	80010ef8 <printf>
 800191a8:	2484f88c 	addiu	a0,a0,-1908
-E:\0school\seucse\code\cse-os\fs/elf.c:284
+E:\0school\seucse\code\cse-os\fs/elf.c:282
 800191ac:	10000035 	b	80019284 <load_elf_sd+0x180>
 800191b0:	2410ffff 	li	s0,-1
-E:\0school\seucse\code\cse-os\fs/elf.c:289
+E:\0school\seucse\code\cse-os\fs/elf.c:287
 800191b4:	0c0043be 	jal	80010ef8 <printf>
 800191b8:	2484f8a4 	addiu	a0,a0,-1884
-E:\0school\seucse\code\cse-os\fs/elf.c:290
+E:\0school\seucse\code\cse-os\fs/elf.c:288
 800191bc:	10000031 	b	80019284 <load_elf_sd+0x180>
 800191c0:	2410ffff 	li	s0,-1
-E:\0school\seucse\code\cse-os\fs/elf.c:302
+E:\0school\seucse\code\cse-os\fs/elf.c:300
 800191c4:	3c048002 	lui	a0,0x8002
 800191c8:	0c0043be 	jal	80010ef8 <printf>
 800191cc:	2484fc98 	addiu	a0,a0,-872
-E:\0school\seucse\code\cse-os\fs/elf.c:303
+E:\0school\seucse\code\cse-os\fs/elf.c:301
 800191d0:	1000002c 	b	80019284 <load_elf_sd+0x180>
 800191d4:	2410ffff 	li	s0,-1
-E:\0school\seucse\code\cse-os\fs/elf.c:313
+E:\0school\seucse\code\cse-os\fs/elf.c:311
 800191d8:	8ec40010 	lw	a0,16(s6)
 800191dc:	0083102b 	sltu	v0,a0,v1
 800191e0:	54400018 	bnezl	v0,80019244 <load_elf_sd+0x140>
 800191e4:	8ec20008 	lw	v0,8(s6)
-E:\0school\seucse\code\cse-os\fs/elf.c:297 (discriminator 2)
+E:\0school\seucse\code\cse-os\fs/elf.c:295 (discriminator 2)
 800191e8:	26310001 	addiu	s1,s1,1
 800191ec:	9642002c 	lhu	v0,44(s2)
 800191f0:	0222102b 	sltu	v0,s1,v0
 800191f4:	1040001e 	beqz	v0,80019270 <load_elf_sd+0x16c>
 800191f8:	26100020 	addiu	s0,s0,32
-E:\0school\seucse\code\cse-os\fs/elf.c:298
+E:\0school\seucse\code\cse-os\fs/elf.c:296
 800191fc:	8e020000 	lw	v0,0(s0)
 80019200:	1453fff9 	bne	v0,s3,800191e8 <load_elf_sd+0xe4>
 80019204:	0200b025 	move	s6,s0
-E:\0school\seucse\code\cse-os\fs/elf.c:298 (discriminator 1)
+E:\0school\seucse\code\cse-os\fs/elf.c:296 (discriminator 1)
 80019208:	8e020014 	lw	v0,20(s0)
 8001920c:	5040fff7 	beqzl	v0,800191ec <load_elf_sd+0xe8>
 80019210:	26310001 	addiu	s1,s1,1
-E:\0school\seucse\code\cse-os\fs/elf.c:299
+E:\0school\seucse\code\cse-os\fs/elf.c:297
 80019214:	8e060010 	lw	a2,16(s0)
 80019218:	50c0ffef 	beqzl	a2,800191d8 <load_elf_sd+0xd4>
 8001921c:	8ec30014 	lw	v1,20(s6)
-E:\0school\seucse\code\cse-os\fs/elf.c:301
+E:\0school\seucse\code\cse-os\fs/elf.c:299
 80019220:	8e050004 	lw	a1,4(s0)
 80019224:	00c51021 	addu	v0,a2,a1
 80019228:	02a2102b 	sltu	v0,s5,v0
 8001922c:	1440ffe5 	bnez	v0,800191c4 <load_elf_sd+0xc0>
 80019230:	02452821 	addu	a1,s2,a1
-E:\0school\seucse\code\cse-os\fs/elf.c:307
+E:\0school\seucse\code\cse-os\fs/elf.c:305
 80019234:	0c006166 	jal	80018598 <memCpy>
 80019238:	8e040008 	lw	a0,8(s0)
-E:\0school\seucse\code\cse-os\fs/elf.c:313
+E:\0school\seucse\code\cse-os\fs/elf.c:311
 8001923c:	1000ffe6 	b	800191d8 <load_elf_sd+0xd4>
 80019240:	8ec30014 	lw	v1,20(s6)
-E:\0school\seucse\code\cse-os\fs/elf.c:314
+E:\0school\seucse\code\cse-os\fs/elf.c:312
 80019244:	00821021 	addu	v0,a0,v0
 memSet():
 E:\0school\seucse\code\cse-os\fs/elf.c:23
@@ -14416,16 +14416,16 @@ E:\0school\seucse\code\cse-os\fs/elf.c:26
 80019260:	1462fffe 	bne	v1,v0,8001925c <load_elf_sd+0x158>
 80019264:	a040ffff 	sb	zero,-1(v0)
 load_elf_sd():
-E:\0school\seucse\code\cse-os\fs/elf.c:297
+E:\0school\seucse\code\cse-os\fs/elf.c:295
 80019268:	1000ffe0 	b	800191ec <load_elf_sd+0xe8>
 8001926c:	26310001 	addiu	s1,s1,1
-E:\0school\seucse\code\cse-os\fs/elf.c:326
+E:\0school\seucse\code\cse-os\fs/elf.c:324
 80019270:	02a02825 	move	a1,s5
 80019274:	0c0061e4 	jal	80018790 <elf_needs_dynlink>
 80019278:	02402025 	move	a0,s2
 8001927c:	1440000c 	bnez	v0,800192b0 <load_elf_sd+0x1ac>
 80019280:	00408025 	move	s0,v0
-E:\0school\seucse\code\cse-os\fs/elf.c:372
+E:\0school\seucse\code\cse-os\fs/elf.c:370
 80019284:	02001025 	move	v0,s0
 80019288:	8fbf004c 	lw	ra,76(sp)
 8001928c:	8fb60048 	lw	s6,72(sp)
@@ -14437,97 +14437,97 @@ E:\0school\seucse\code\cse-os\fs/elf.c:372
 800192a4:	8fb00030 	lw	s0,48(sp)
 800192a8:	03e00008 	jr	ra
 800192ac:	27bd0050 	addiu	sp,sp,80
-E:\0school\seucse\code\cse-os\fs/elf.c:331
+E:\0school\seucse\code\cse-os\fs/elf.c:329
 800192b0:	3c048002 	lui	a0,0x8002
 800192b4:	0c0043be 	jal	80010ef8 <printf>
 800192b8:	2484fcb4 	addiu	a0,a0,-844
-E:\0school\seucse\code\cse-os\fs/elf.c:335
+E:\0school\seucse\code\cse-os\fs/elf.c:333
 800192bc:	27a60010 	addiu	a2,sp,16
 800192c0:	02a02825 	move	a1,s5
 800192c4:	0c00620b 	jal	8001882c <parse_dynamic_section>
 800192c8:	02402025 	move	a0,s2
 800192cc:	14400019 	bnez	v0,80019334 <load_elf_sd+0x230>
 800192d0:	3c048002 	lui	a0,0x8002
-E:\0school\seucse\code\cse-os\fs/elf.c:342 (discriminator 1)
+E:\0school\seucse\code\cse-os\fs/elf.c:340 (discriminator 1)
 800192d4:	9646002c 	lhu	a2,44(s2)
 800192d8:	10c0003d 	beqz	a2,800193d0 <load_elf_sd+0x2cc>
 800192dc:	24030002 	li	v1,2
-E:\0school\seucse\code\cse-os\fs/elf.c:343
+E:\0school\seucse\code\cse-os\fs/elf.c:341
 800192e0:	8e840000 	lw	a0,0(s4)
 800192e4:	1083000a 	beq	a0,v1,80019310 <load_elf_sd+0x20c>
 800192e8:	26830020 	addiu	v1,s4,32
 800192ec:	00002025 	move	a0,zero
 800192f0:	24070002 	li	a3,2
-E:\0school\seucse\code\cse-os\fs/elf.c:342 (discriminator 2)
+E:\0school\seucse\code\cse-os\fs/elf.c:340 (discriminator 2)
 800192f4:	24840001 	addiu	a0,a0,1
 800192f8:	10860026 	beq	a0,a2,80019394 <load_elf_sd+0x290>
 800192fc:	0060a025 	move	s4,v1
 80019300:	24630020 	addiu	v1,v1,32
-E:\0school\seucse\code\cse-os\fs/elf.c:343
+E:\0school\seucse\code\cse-os\fs/elf.c:341
 80019304:	8c65ffe0 	lw	a1,-32(v1)
 80019308:	14a7fffb 	bne	a1,a3,800192f8 <load_elf_sd+0x1f4>
 8001930c:	24840001 	addiu	a0,a0,1
-E:\0school\seucse\code\cse-os\fs/elf.c:344
+E:\0school\seucse\code\cse-os\fs/elf.c:342
 80019310:	8e830004 	lw	v1,4(s4)
-E:\0school\seucse\code\cse-os\fs/elf.c:346
+E:\0school\seucse\code\cse-os\fs/elf.c:344
 80019314:	02438021 	addu	s0,s2,v1
 80019318:	8e040000 	lw	a0,0(s0)
 8001931c:	1080002e 	beqz	a0,800193d8 <load_elf_sd+0x2d4>
 80019320:	24630008 	addiu	v1,v1,8
 80019324:	02439021 	addu	s2,s2,v1
 80019328:	26100004 	addiu	s0,s0,4
-E:\0school\seucse\code\cse-os\fs/elf.c:347
+E:\0school\seucse\code\cse-os\fs/elf.c:345
 8001932c:	1000000e 	b	80019368 <load_elf_sd+0x264>
 80019330:	24110001 	li	s1,1
-E:\0school\seucse\code\cse-os\fs/elf.c:336
+E:\0school\seucse\code\cse-os\fs/elf.c:334
 80019334:	0c0043be 	jal	80010ef8 <printf>
 80019338:	2484fce8 	addiu	a0,a0,-792
-E:\0school\seucse\code\cse-os\fs/elf.c:337
+E:\0school\seucse\code\cse-os\fs/elf.c:335
 8001933c:	1000ffd1 	b	80019284 <load_elf_sd+0x180>
 80019340:	2410ffff 	li	s0,-1
-E:\0school\seucse\code\cse-os\fs/elf.c:354
+E:\0school\seucse\code\cse-os\fs/elf.c:352
 80019344:	02602825 	move	a1,s3
 80019348:	3c048002 	lui	a0,0x8002
 8001934c:	0c0043be 	jal	80010ef8 <printf>
 80019350:	2484fd20 	addiu	a0,a0,-736
-E:\0school\seucse\code\cse-os\fs/elf.c:355
+E:\0school\seucse\code\cse-os\fs/elf.c:353
 80019354:	1000ffcb 	b	80019284 <load_elf_sd+0x180>
 80019358:	2410ffff 	li	s0,-1
 8001935c:	26520008 	addiu	s2,s2,8
-E:\0school\seucse\code\cse-os\fs/elf.c:346 (discriminator 2)
+E:\0school\seucse\code\cse-os\fs/elf.c:344 (discriminator 2)
 80019360:	10800016 	beqz	a0,800193bc <load_elf_sd+0x2b8>
 80019364:	26100008 	addiu	s0,s0,8
-E:\0school\seucse\code\cse-os\fs/elf.c:347
+E:\0school\seucse\code\cse-os\fs/elf.c:345
 80019368:	5491fffc 	bnel	a0,s1,8001935c <load_elf_sd+0x258>
 8001936c:	8e440000 	lw	a0,0(s2)
-E:\0school\seucse\code\cse-os\fs/elf.c:349
+E:\0school\seucse\code\cse-os\fs/elf.c:347
 80019370:	8e020000 	lw	v0,0(s0)
 80019374:	8fb30018 	lw	s3,24(sp)
 80019378:	02629821 	addu	s3,s3,v0
-E:\0school\seucse\code\cse-os\fs/elf.c:352
+E:\0school\seucse\code\cse-os\fs/elf.c:350
 8001937c:	0c006357 	jal	80018d5c <load_so_file>
 80019380:	02602025 	move	a0,s3
-E:\0school\seucse\code\cse-os\fs/elf.c:353
+E:\0school\seucse\code\cse-os\fs/elf.c:351
 80019384:	1040ffef 	beqz	v0,80019344 <load_elf_sd+0x240>
 80019388:	02201025 	move	v0,s1
-E:\0school\seucse\code\cse-os\fs/elf.c:346
+E:\0school\seucse\code\cse-os\fs/elf.c:344
 8001938c:	1000fff3 	b	8001935c <load_elf_sd+0x258>
 80019390:	8e440000 	lw	a0,0(s2)
-E:\0school\seucse\code\cse-os\fs/elf.c:365
+E:\0school\seucse\code\cse-os\fs/elf.c:363
 80019394:	00002825 	move	a1,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:365 (discriminator 4)
+E:\0school\seucse\code\cse-os\fs/elf.c:363 (discriminator 4)
 80019398:	0c0062d9 	jal	80018b64 <fill_got_table>
 8001939c:	27a40010 	addiu	a0,sp,16
 800193a0:	1440000f 	bnez	v0,800193e0 <load_elf_sd+0x2dc>
 800193a4:	00408025 	move	s0,v0
-E:\0school\seucse\code\cse-os\fs/elf.c:370
+E:\0school\seucse\code\cse-os\fs/elf.c:368
 800193a8:	3c048002 	lui	a0,0x8002
 800193ac:	0c0043be 	jal	80010ef8 <printf>
 800193b0:	2484fd74 	addiu	a0,a0,-652
-E:\0school\seucse\code\cse-os\fs/elf.c:371
+E:\0school\seucse\code\cse-os\fs/elf.c:369
 800193b4:	1000ffb4 	b	80019288 <load_elf_sd+0x184>
 800193b8:	02001025 	move	v0,s0
-E:\0school\seucse\code\cse-os\fs/elf.c:365
+E:\0school\seucse\code\cse-os\fs/elf.c:363
 800193bc:	1040fff6 	beqz	v0,80019398 <load_elf_sd+0x294>
 800193c0:	00002825 	move	a1,zero
 800193c4:	3c058002 	lui	a1,0x8002
@@ -14537,17 +14537,17 @@ E:\0school\seucse\code\cse-os\fs/elf.c:365
 800193d4:	00002825 	move	a1,zero
 800193d8:	1000ffef 	b	80019398 <load_elf_sd+0x294>
 800193dc:	00002825 	move	a1,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:366
+E:\0school\seucse\code\cse-os\fs/elf.c:364
 800193e0:	3c048002 	lui	a0,0x8002
 800193e4:	0c0043be 	jal	80010ef8 <printf>
 800193e8:	2484fd50 	addiu	a0,a0,-688
-E:\0school\seucse\code\cse-os\fs/elf.c:367
+E:\0school\seucse\code\cse-os\fs/elf.c:365
 800193ec:	1000ffa5 	b	80019284 <load_elf_sd+0x180>
 800193f0:	2410ffff 	li	s0,-1
 
 800193f4 <load_elf_dynamic>:
 load_elf_dynamic():
-E:\0school\seucse\code\cse-os\fs/elf.c:642
+E:\0school\seucse\code\cse-os\fs/elf.c:640
 800193f4:	27bdffb0 	addiu	sp,sp,-80
 800193f8:	afbf004c 	sw	ra,76(sp)
 800193fc:	afb50048 	sw	s5,72(sp)
@@ -14559,27 +14559,27 @@ E:\0school\seucse\code\cse-os\fs/elf.c:642
 80019414:	00808025 	move	s0,a0
 80019418:	00a08825 	move	s1,a1
 8001941c:	00c09025 	move	s2,a2
-E:\0school\seucse\code\cse-os\fs/elf.c:643
+E:\0school\seucse\code\cse-os\fs/elf.c:641
 80019420:	3c048002 	lui	a0,0x8002
 80019424:	0c0043be 	jal	80010ef8 <printf>
 80019428:	2484fd98 	addiu	a0,a0,-616
-E:\0school\seucse\code\cse-os\fs/elf.c:646
+E:\0school\seucse\code\cse-os\fs/elf.c:644
 8001942c:	02202825 	move	a1,s1
 80019430:	0c00618a 	jal	80018628 <load_elf>
 80019434:	02002025 	move	a0,s0
 80019438:	14400023 	bnez	v0,800194c8 <load_elf_dynamic+0xd4>
 8001943c:	27a60010 	addiu	a2,sp,16
-E:\0school\seucse\code\cse-os\fs/elf.c:653
+E:\0school\seucse\code\cse-os\fs/elf.c:651
 80019440:	02202825 	move	a1,s1
 80019444:	0c00620b 	jal	8001882c <parse_dynamic_section>
 80019448:	02002025 	move	a0,s0
 8001944c:	14400023 	bnez	v0,800194dc <load_elf_dynamic+0xe8>
 80019450:	3c048002 	lui	a0,0x8002
-E:\0school\seucse\code\cse-os\fs/elf.c:665
+E:\0school\seucse\code\cse-os\fs/elf.c:663
 80019454:	9606002c 	lhu	a2,44(s0)
 80019458:	10c00054 	beqz	a2,800195ac <load_elf_dynamic+0x1b8>
 8001945c:	8e03001c 	lw	v1,28(s0)
-E:\0school\seucse\code\cse-os\fs/elf.c:666
+E:\0school\seucse\code\cse-os\fs/elf.c:664
 80019460:	02033821 	addu	a3,s0,v1
 80019464:	8ce50000 	lw	a1,0(a3)
 80019468:	24040002 	li	a0,2
@@ -14588,90 +14588,90 @@ E:\0school\seucse\code\cse-os\fs/elf.c:666
 80019474:	02031821 	addu	v1,s0,v1
 80019478:	00002025 	move	a0,zero
 8001947c:	24080002 	li	t0,2
-E:\0school\seucse\code\cse-os\fs/elf.c:665 (discriminator 2)
+E:\0school\seucse\code\cse-os\fs/elf.c:663 (discriminator 2)
 80019480:	24840001 	addiu	a0,a0,1
 80019484:	10860032 	beq	a0,a2,80019550 <load_elf_dynamic+0x15c>
 80019488:	00603825 	move	a3,v1
 8001948c:	24630020 	addiu	v1,v1,32
-E:\0school\seucse\code\cse-os\fs/elf.c:666
+E:\0school\seucse\code\cse-os\fs/elf.c:664
 80019490:	8c65ffe0 	lw	a1,-32(v1)
 80019494:	14a8fffb 	bne	a1,t0,80019484 <load_elf_dynamic+0x90>
 80019498:	24840001 	addiu	a0,a0,1
-E:\0school\seucse\code\cse-os\fs/elf.c:667
+E:\0school\seucse\code\cse-os\fs/elf.c:665
 8001949c:	8ce40004 	lw	a0,4(a3)
-E:\0school\seucse\code\cse-os\fs/elf.c:669
+E:\0school\seucse\code\cse-os\fs/elf.c:667
 800194a0:	02048821 	addu	s1,s0,a0
 800194a4:	8e230000 	lw	v1,0(s1)
 800194a8:	10600042 	beqz	v1,800195b4 <load_elf_dynamic+0x1c0>
 800194ac:	24840008 	addiu	a0,a0,8
 800194b0:	02048021 	addu	s0,s0,a0
 800194b4:	26310004 	addiu	s1,s1,4
-E:\0school\seucse\code\cse-os\fs/elf.c:670
+E:\0school\seucse\code\cse-os\fs/elf.c:668
 800194b8:	24130001 	li	s3,1
-E:\0school\seucse\code\cse-os\fs/elf.c:673
+E:\0school\seucse\code\cse-os\fs/elf.c:671
 800194bc:	3c158002 	lui	s5,0x8002
 800194c0:	10000014 	b	80019514 <load_elf_dynamic+0x120>
 800194c4:	26b5fab0 	addiu	s5,s5,-1360
-E:\0school\seucse\code\cse-os\fs/elf.c:647
+E:\0school\seucse\code\cse-os\fs/elf.c:645
 800194c8:	3c048002 	lui	a0,0x8002
 800194cc:	0c0043be 	jal	80010ef8 <printf>
 800194d0:	2484fdc0 	addiu	a0,a0,-576
-E:\0school\seucse\code\cse-os\fs/elf.c:648
+E:\0school\seucse\code\cse-os\fs/elf.c:646
 800194d4:	10000026 	b	80019570 <load_elf_dynamic+0x17c>
 800194d8:	2410ffff 	li	s0,-1
-E:\0school\seucse\code\cse-os\fs/elf.c:654
+E:\0school\seucse\code\cse-os\fs/elf.c:652
 800194dc:	0c0043be 	jal	80010ef8 <printf>
 800194e0:	2484fdec 	addiu	a0,a0,-532
-E:\0school\seucse\code\cse-os\fs/elf.c:655
+E:\0school\seucse\code\cse-os\fs/elf.c:653
 800194e4:	10000022 	b	80019570 <load_elf_dynamic+0x17c>
 800194e8:	2410ffff 	li	s0,-1
-E:\0school\seucse\code\cse-os\fs/elf.c:679
+E:\0school\seucse\code\cse-os\fs/elf.c:677
 800194ec:	02802825 	move	a1,s4
 800194f0:	3c048002 	lui	a0,0x8002
 800194f4:	0c0043be 	jal	80010ef8 <printf>
 800194f8:	2484fe18 	addiu	a0,a0,-488
-E:\0school\seucse\code\cse-os\fs/elf.c:680
+E:\0school\seucse\code\cse-os\fs/elf.c:678
 800194fc:	1000001c 	b	80019570 <load_elf_dynamic+0x17c>
 80019500:	2410ffff 	li	s0,-1
-E:\0school\seucse\code\cse-os\fs/elf.c:669 (discriminator 2)
+E:\0school\seucse\code\cse-os\fs/elf.c:667 (discriminator 2)
 80019504:	8e030000 	lw	v1,0(s0)
 80019508:	26100008 	addiu	s0,s0,8
 8001950c:	10600022 	beqz	v1,80019598 <load_elf_dynamic+0x1a4>
 80019510:	26310008 	addiu	s1,s1,8
-E:\0school\seucse\code\cse-os\fs/elf.c:670
+E:\0school\seucse\code\cse-os\fs/elf.c:668
 80019514:	5473fffc 	bnel	v1,s3,80019508 <load_elf_dynamic+0x114>
 80019518:	8e030000 	lw	v1,0(s0)
-E:\0school\seucse\code\cse-os\fs/elf.c:670 (discriminator 1)
+E:\0school\seucse\code\cse-os\fs/elf.c:668 (discriminator 1)
 8001951c:	1240fff9 	beqz	s2,80019504 <load_elf_dynamic+0x110>
 80019520:	8fb40018 	lw	s4,24(sp)
-E:\0school\seucse\code\cse-os\fs/elf.c:672
+E:\0school\seucse\code\cse-os\fs/elf.c:670
 80019524:	8e220000 	lw	v0,0(s1)
 80019528:	0282a021 	addu	s4,s4,v0
-E:\0school\seucse\code\cse-os\fs/elf.c:673
+E:\0school\seucse\code\cse-os\fs/elf.c:671
 8001952c:	02802825 	move	a1,s4
 80019530:	0c0043be 	jal	80010ef8 <printf>
 80019534:	02a02025 	move	a0,s5
-E:\0school\seucse\code\cse-os\fs/elf.c:677
+E:\0school\seucse\code\cse-os\fs/elf.c:675
 80019538:	0240f809 	jalr	s2
 8001953c:	02802025 	move	a0,s4
-E:\0school\seucse\code\cse-os\fs/elf.c:678
+E:\0school\seucse\code\cse-os\fs/elf.c:676
 80019540:	1040ffea 	beqz	v0,800194ec <load_elf_dynamic+0xf8>
 80019544:	02601025 	move	v0,s3
-E:\0school\seucse\code\cse-os\fs/elf.c:669
+E:\0school\seucse\code\cse-os\fs/elf.c:667
 80019548:	1000ffef 	b	80019508 <load_elf_dynamic+0x114>
 8001954c:	8e030000 	lw	v1,0(s0)
-E:\0school\seucse\code\cse-os\fs/elf.c:690
+E:\0school\seucse\code\cse-os\fs/elf.c:688
 80019550:	00002825 	move	a1,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:690 (discriminator 4)
+E:\0school\seucse\code\cse-os\fs/elf.c:688 (discriminator 4)
 80019554:	0c0062d9 	jal	80018b64 <fill_got_table>
 80019558:	27a40010 	addiu	a0,sp,16
 8001955c:	14400017 	bnez	v0,800195bc <load_elf_dynamic+0x1c8>
 80019560:	00408025 	move	s0,v0
-E:\0school\seucse\code\cse-os\fs/elf.c:695
+E:\0school\seucse\code\cse-os\fs/elf.c:693
 80019564:	3c048002 	lui	a0,0x8002
 80019568:	0c0043be 	jal	80010ef8 <printf>
 8001956c:	2484fe34 	addiu	a0,a0,-460
-E:\0school\seucse\code\cse-os\fs/elf.c:697
+E:\0school\seucse\code\cse-os\fs/elf.c:695
 80019570:	02001025 	move	v0,s0
 80019574:	8fbf004c 	lw	ra,76(sp)
 80019578:	8fb50048 	lw	s5,72(sp)
@@ -14682,7 +14682,7 @@ E:\0school\seucse\code\cse-os\fs/elf.c:697
 8001958c:	8fb00034 	lw	s0,52(sp)
 80019590:	03e00008 	jr	ra
 80019594:	27bd0050 	addiu	sp,sp,80
-E:\0school\seucse\code\cse-os\fs/elf.c:690
+E:\0school\seucse\code\cse-os\fs/elf.c:688
 80019598:	1040ffee 	beqz	v0,80019554 <load_elf_dynamic+0x160>
 8001959c:	00002825 	move	a1,zero
 800195a0:	3c058002 	lui	a1,0x8002
@@ -14692,11 +14692,11 @@ E:\0school\seucse\code\cse-os\fs/elf.c:690
 800195b0:	00002825 	move	a1,zero
 800195b4:	1000ffe7 	b	80019554 <load_elf_dynamic+0x160>
 800195b8:	00002825 	move	a1,zero
-E:\0school\seucse\code\cse-os\fs/elf.c:691
+E:\0school\seucse\code\cse-os\fs/elf.c:689
 800195bc:	3c048002 	lui	a0,0x8002
 800195c0:	0c0043be 	jal	80010ef8 <printf>
 800195c4:	2484fd50 	addiu	a0,a0,-688
-E:\0school\seucse\code\cse-os\fs/elf.c:692
+E:\0school\seucse\code\cse-os\fs/elf.c:690
 800195c8:	1000ffe9 	b	80019570 <load_elf_dynamic+0x17c>
 800195cc:	2410ffff 	li	s0,-1
 
@@ -28740,7 +28740,7 @@ Disassembly of section .debug_line:
     3d5c:	bd06ba06 	cache	0x6,-17914(t0)
     3d60:	033d08c1 	0x33d08c1
     3d64:	85827fa3 	lh	v0,32675(t4)
-    3d68:	f202e903 	0xf202e903
+    3d68:	f202e703 	0xf202e703
     3d6c:	82170316 	lb	s7,790(s0)
     3d70:	0d03bf13 	jal	40efc4c <__tlb_stride_length+0x40efc4b>
     3d74:	02003c08 	0x2003c08
@@ -28842,9 +28842,9 @@ Disassembly of section .debug_line:
     3ef4:	0402003d 	bltzl	zero,3fec <__tlb_stride_length+0x3feb>
     3ef8:	06ba0601 	0x6ba0601
     3efc:	08c0bcbc 	j	302f2f0 <__tlb_stride_length+0x302f2ef>
-    3f00:	7ec5033d 	0x7ec5033d
+    3f00:	7ec7033d 	0x7ec7033d
     3f04:	49838582 	0x49838582
-    3f08:	8201bd03 	lb	at,-17149(s0)
+    3f08:	8201bb03 	lb	at,-17661(s0)
     3f0c:	03826d03 	0x3826d03
     3f10:	09034a18 	j	40d2860 <__tlb_stride_length+0x40d285f>
     3f14:	1003e408 	beq	zero,v1,ffffcf38 <check_for_tlb_done+0x403fcbe4>
@@ -28871,8 +28871,8 @@ Disassembly of section .debug_line:
     3f68:	ba060104 	swr	a2,260(s0)
     3f6c:	08bcbb06 	j	2f2ec18 <__tlb_stride_length+0x2f2ec17>
     3f70:	03838842 	0x3838842
-    3f74:	854a7ddd 	lh	t2,32221(t2)
-    3f78:	8f0349bb 	lw	v1,18875(t8)
+    3f74:	854a7ddf 	lh	t2,32223(t2)
+    3f78:	8d0349bb 	lw	v1,18875(t0)
     3f7c:	1d038202 	0x1d038202
     3f80:	082e0382 	j	b80e08 <__tlb_stride_length+0xb80e07>
     3f84:	0257033c 	0x257033c
@@ -42637,61 +42637,61 @@ Disassembly of section .debug_info:
     c8d0:	4b140305 	c2	0x1140305
     c8d4:	02138002 	0x2138002
     c8d8:	0100001b 	divu	zero,t0,zero
-    c8dc:	00bf0280 	0xbf0280
+    c8dc:	00bf027e 	0xbf027e
     c8e0:	93f40000 	lbu	s4,0(ra)
     c8e4:	01dc8001 	movf	s0,t6,$fcc7
     c8e8:	9c010000 	0x9c010000
     c8ec:	000007ba 	0x7ba
     c8f0:	666c6514 	0x666c6514
-    c8f4:	02800100 	0x2800100
+    c8f4:	027e0100 	0x27e0100
     c8f8:	000007ba 	0x7ba
     c8fc:	00007a1c 	0x7a1c
     c900:	001de515 	0x1de515
-    c904:	02800100 	0x2800100
+    c904:	027e0100 	0x27e0100
     c908:	000000ba 	0xba
     c90c:	00007aac 	0x7aac
     c910:	001d0015 	0x1d0015
-    c914:	02810100 	0x2810100
+    c914:	027f0100 	0x27f0100
     c918:	000007cf 	sync	0x1f
     c91c:	00007b23 	0x7b23
     c920:	001b8216 	0x1b8216
-    c924:	028c0100 	0x28c0100
+    c924:	028a0100 	0x28a0100
     c928:	000001da 	0x1da
     c92c:	17409102 	bnez	k0,ffff0d38 <check_for_tlb_done+0x403f09e4>
     c930:	01006865 	0x1006865
-    c934:	07d50293 	0x7d50293
+    c934:	07d50291 	0x7d50291
     c938:	7b5a0000 	xori.b	$w0,$w0,0x5a
     c93c:	70170000 	madd	zero,s7
-    c940:	94010068 	lhu	at,104(zero)
+    c940:	92010068 	lbu	at,104(s0)
     c944:	0007db02 	srl	k1,a3,0xc
     c948:	007bc900 	0x7bc900
     c94c:	1c821800 	0x1c821800
-    c950:	96010000 	lhu	at,0(s0)
+    c950:	94010000 	lhu	at,0(zero)
     c954:	0000bf02 	srl	s7,zero,0x1c
     c958:	007c4400 	0x7c4400
     c95c:	05d81900 	0x5d81900
     c960:	06fc0000 	0x6fc0000
     c964:	69170000 	0x69170000
-    c968:	02990100 	0x2990100
+    c968:	02970100 	0x2970100
     c96c:	000000af 	0xaf
     c970:	00007c86 	0x7c86
     c974:	0005f01a 	0x5f01a
     c978:	79641700 	ori.b	$w28,$w2,0x64
-    c97c:	9b01006e 	lwr	at,110(t8)
+    c97c:	9901006e 	lwr	at,110(t0)
     c980:	0007e102 	srl	gp,a3,0x4
     c984:	007cbc00 	0x7cbc00
     c988:	06081a00 	tgei	s0,6656
     c98c:	6a170000 	0x6a170000
-    c990:	029d0100 	0x29d0100
+    c990:	029b0100 	0x29b0100
     c994:	000000bf 	0xbf
     c998:	00007cf7 	0x7cf7
     c99c:	0006201a 	0x6201a
     c9a0:	1d681800 	0x1d681800
-    c9a4:	a0010000 	sb	at,0(zero)
+    c9a4:	9e010000 	0x9e010000
     c9a8:	0001c202 	srl	t8,at,0x8
     c9ac:	007d1700 	0x7d1700
     c9b0:	1ddd1800 	0x1ddd1800
-    c9b4:	a5010000 	sh	at,0(t0)
+    c9b4:	a3010000 	sb	at,0(t8)
     c9b8:	0000af02 	srl	s5,zero,0x1c
     c9bc:	007d3500 	0x7d3500
     c9c0:	94fc1b00 	lhu	gp,6912(a3)
@@ -42772,55 +42772,55 @@ Disassembly of section .debug_info:
     caec:	f9040900 	sdc2	$4,2304(t0)
     caf0:	13000000 	beqz	t8,caf4 <__tlb_stride_length+0xcaf3>
     caf4:	00001db1 	tgeu	zero,zero,0x76
-    caf8:	bf023a01 	cache	0x2,14849(t8)
+    caf8:	bf023801 	cache	0x2,14337(t8)
     cafc:	64000000 	0x64000000
     cb00:	f880018b 	sdc2	$0,395(a0)
     cb04:	01000001 	movf	zero,t0,$fcc0
     cb08:	00098c9c 	0x98c9c
     cb0c:	1b821500 	0x1b821500
-    cb10:	3a010000 	xori	at,s0,0x0
+    cb10:	38010000 	xori	at,zero,0x0
     cb14:	00098c02 	srl	s1,t1,0x10
     cb18:	007d5300 	0x7d5300
     cb1c:	1b461500 	0x1b461500
-    cb20:	3a010000 	xori	at,s0,0x0
+    cb20:	38010000 	xori	at,zero,0x0
     cb24:	00099202 	srl	s2,t1,0x8
     cb28:	007dae00 	0x7dae00
     cb2c:	1c621800 	0x1c621800
-    cb30:	42010000 	c0	0x10000
+    cb30:	40010000 	mfc0	at,c0_index
     cb34:	0000af02 	srl	s5,zero,0x1c
     cb38:	007e0900 	0x7e0900
     cb3c:	04d81900 	0x4d81900
     cb40:	095b0000 	j	56c0000 <__tlb_stride_length+0x56bffff>
     cb44:	69170000 	0x69170000
-    cb48:	02480100 	0x2480100
+    cb48:	02460100 	0x2460100
     cb4c:	000000af 	0xaf
     cb50:	00007e32 	tlt	zero,zero,0x1f8
     cb54:	0004f01a 	0x4f01a
     cb58:	1d121800 	0x1d121800
-    cb5c:	49010000 	bc2t	cb60 <__tlb_stride_length+0xcb5f>
+    cb5c:	47010000 	bz.b	$w1,cb60 <__tlb_stride_length+0xcb5f>
     cb60:	0000af02 	srl	s5,zero,0x1c
     cb64:	007e5d00 	0x7e5d00
     cb68:	1b731800 	0x1b731800
-    cb6c:	4a010000 	c2	0x10000
+    cb6c:	48010000 	mfc2	at,$0
     cb70:	0000af02 	srl	s5,zero,0x1c
     cb74:	007e7b00 	0x7e7b00
     cb78:	79731700 	ori.b	$w28,$w2,0x73
-    cb7c:	4c01006d 	0x4c01006d
+    cb7c:	4a01006d 	c2	0x1006d
     cb80:	00099802 	srl	s3,t1,0x0
     cb84:	007e8e00 	0x7e8e00
     cb88:	1b271800 	0x1b271800
-    cb8c:	4d010000 	lwxc1	$f0,at(t0)
+    cb8c:	4b010000 	c2	0x1010000
     cb90:	0001c202 	srl	t8,at,0x8
     cb94:	007eac00 	0x7eac00
     cb98:	1cc41800 	0x1cc41800
-    cb9c:	5e010000 	0x5e010000
+    cb9c:	5c010000 	0x5c010000
     cba0:	0000af02 	srl	s5,zero,0x1c
     cba4:	007eca00 	0x7eca00
     cba8:	05101900 	bltzal	t0,12fac <__tlb_stride_length+0x12fab>
     cbac:	08d40000 	j	3500000 <__tlb_stride_length+0x34fffff>
     cbb0:	c4180000 	lwc1	$f24,0(zero)
     cbb4:	0100001c 	0x100001c
-    cbb8:	00af0256 	0xaf0256
+    cbb8:	00af0254 	0xaf0254
     cbbc:	7f000000 	ext	zero,t8,0x0,0x1
     cbc0:	f81e0000 	sdc2	$30,0(zero)
     cbc4:	4f80018c 	c3	0x180018c
@@ -42882,38 +42882,38 @@ Disassembly of section .debug_info:
     cca4:	015a0409 	0x15a0409
     cca8:	04130000 	bgezall	zero,ccac <__tlb_stride_length+0xccab>
     ccac:	0100001e 	0x100001e
-    ccb0:	00af0216 	0xaf0216
+    ccb0:	00af0214 	0xaf0214
     ccb4:	8a5c0000 	lwl	gp,0(s2)
     ccb8:	01088001 	movf	s0,t0,$fcc2
     ccbc:	9c010000 	0x9c010000
     ccc0:	00000a74 	teq	zero,zero,0x29
     ccc4:	00202b15 	0x202b15
-    ccc8:	02160100 	0x2160100
+    ccc8:	02140100 	0x2140100
     cccc:	000001c2 	srl	zero,zero,0x7
     ccd0:	00007f13 	0x7f13
     ccd4:	001b8715 	0x1b8715
-    ccd8:	02160100 	0x2160100
+    ccd8:	02140100 	0x2140100
     ccdc:	00000992 	0x992
     cce0:	00007f63 	0x7f63
     cce4:	0004701a 	0x4701a
     cce8:	00691700 	0x691700
-    ccec:	af021c01 	sw	v0,7169(t8)
+    ccec:	af021a01 	sw	v0,6657(t8)
     ccf0:	b3000000 	0xb3000000
     ccf4:	1a00007f 	blez	s0,cef4 <__tlb_stride_length+0xcef3>
     ccf8:	00000490 	0x490
     ccfc:	6d797317 	0x6d797317
-    cd00:	021d0100 	0x21d0100
+    cd00:	021b0100 	0x21b0100
     cd04:	00000998 	0x998
     cd08:	00007fdd 	0x7fdd
     cd0c:	001b2718 	0x1b2718
-    cd10:	021e0100 	0x21e0100
+    cd10:	021c0100 	0x21c0100
     cd14:	000001c2 	srl	zero,zero,0x7
     cd18:	00008011 	0x8011
     cd1c:	018b1421 	0x18b1421
     cd20:	00002880 	sll	a1,zero,0x2
     cd24:	000a4e00 	sll	t1,t2,0x18
     cd28:	1cc41800 	0x1cc41800
-    cd2c:	24010000 	li	at,0
+    cd2c:	22010000 	addi	at,s0,0
     cd30:	0000af02 	srl	s5,zero,0x1c
     cd34:	00808f00 	0x808f00
     cd38:	8b341e00 	lwl	s4,7680(t9)
@@ -42928,68 +42928,68 @@ Disassembly of section .debug_info:
     cd5c:	9800000c 	lwr	zero,12(zero)
     cd60:	b880018a 	swr	zero,394(a0)
     cd64:	01000004 	sllv	zero,zero,t0
-    cd68:	49230220 	0x49230220
+    cd68:	4923021e 	0x4923021e
     cd6c:	a200000c 	sb	zero,12(s0)
     cd70:	23000080 	addi	zero,t8,128
     cd74:	00000c3e 	0xc3e
     cd78:	000080c0 	sll	s0,zero,0x3
     cd7c:	00000000 	nop
     cd80:	001dee13 	0x1dee13
-    cd84:	01b60100 	0x1b60100
+    cd84:	01b40100 	0x1b40100
     cd88:	000000bf 	0xbf
     cd8c:	8001882c 	lb	at,-30676(zero)
     cd90:	00000230 	tge	zero,zero,0x8
     cd94:	0bc09c01 	j	f027004 <__tlb_stride_length+0xf027003>
     cd98:	65140000 	0x65140000
     cd9c:	0100666c 	0x100666c
-    cda0:	07ba01b6 	0x7ba01b6
+    cda0:	07ba01b4 	0x7ba01b4
     cda4:	80f40000 	lb	s4,0(a3)
     cda8:	e5150000 	swc1	$f21,0(t0)
     cdac:	0100001d 	0x100001d
-    cdb0:	00ba01b6 	tne	a1,k0,0x6
+    cdb0:	00ba01b4 	teq	a1,k0,0x6
     cdb4:	81390000 	lb	t9,0(t1)
     cdb8:	87150000 	lh	s5,0(t8)
     cdbc:	0100001b 	divu	zero,t0,zero
-    cdc0:	098c01b7 	j	63006dc <__tlb_stride_length+0x63006db>
+    cdc0:	098c01b5 	j	63006d4 <__tlb_stride_length+0x63006d3>
     cdc4:	81730000 	lb	s3,0(t3)
     cdc8:	65170000 	0x65170000
-    cdcc:	bd010068 	cache	0x1,104(t0)
+    cdcc:	bb010068 	swr	at,104(t8)
     cdd0:	0007d501 	0x7d501
     cdd4:	0081b500 	0x81b500
     cdd8:	68701700 	0x68701700
-    cddc:	01be0100 	0x1be0100
+    cddc:	01bc0100 	0x1bc0100
     cde0:	000007db 	0x7db
     cde4:	000081ef 	0x81ef
     cde8:	6e796417 	0x6e796417
-    cdec:	01ca0100 	0x1ca0100
+    cdec:	01c80100 	0x1c80100
     cdf0:	000007e1 	0x7e1
     cdf4:	00008212 	0x8212
     cdf8:	001d1c18 	0x1d1c18
-    cdfc:	01cb0100 	0x1cb0100
+    cdfc:	01c90100 	0x1c90100
     ce00:	000000af 	0xaf
     ce04:	00008249 	0x8249
     ce08:	001c0318 	0x1c0318
-    ce0c:	01e50100 	0x1e50100
+    ce0c:	01e30100 	0x1e30100
     ce10:	000000af 	0xaf
     ce14:	0000825e 	0x825e
     ce18:	001cbd18 	0x1cbd18
-    ce1c:	01e60100 	0x1e60100
+    ce1c:	01e40100 	0x1e40100
     ce20:	000000af 	0xaf
     ce24:	0000827d 	0x827d
     ce28:	001bc918 	0x1bc918
-    ce2c:	01e70100 	0x1e70100
+    ce2c:	01e50100 	0x1e50100
     ce30:	000000af 	0xaf
     ce34:	0000829c 	0x829c
     ce38:	00043819 	0x43819
     ce3c:	000b4400 	sll	t0,t3,0x10
     ce40:	00691700 	0x691700
-    ce44:	af01cd01 	sw	at,-13055(t8)
+    ce44:	af01cb01 	sw	at,-13567(t8)
     ce48:	bb000000 	swr	zero,0(t8)
     ce4c:	00000082 	srl	zero,zero,0x2
     ce50:	00045019 	0x45019
     ce54:	000b6c00 	sll	t5,t3,0x10
     ce58:	00691700 	0x691700
-    ce5c:	bf01e901 	cache	0x1,-5887(t8)
+    ce5c:	bf01e701 	cache	0x1,-6399(t8)
     ce60:	cf000000 	pref	0x0,0(t8)
     ce64:	1e000082 	bgtz	s0,d070 <__tlb_stride_length+0xd06f>
     ce68:	80018a18 	lb	at,-30184(zero)
@@ -43018,116 +43018,116 @@ Disassembly of section .debug_info:
     cec4:	f8c00305 	sdc2	$0,773(a2)
     cec8:	00008001 	movf	s0,zero,$fcc0
     cecc:	001b5713 	0x1b5713
-    ced0:	019d0100 	0x19d0100
+    ced0:	019b0100 	0x19b0100
     ced4:	000000bf 	0xbf
     ced8:	80018790 	lb	at,-30832(zero)
     cedc:	0000009c 	0x9c
     cee0:	0c2d9c01 	jal	b67004 <__tlb_stride_length+0xb67003>
     cee4:	65140000 	0x65140000
     cee8:	0100666c 	0x100666c
-    ceec:	07ba019d 	0x7ba019d
+    ceec:	07ba019b 	0x7ba019b
     cef0:	82e30000 	lb	v1,0(s7)
     cef4:	e5150000 	swc1	$f21,0(t0)
     cef8:	0100001d 	0x100001d
-    cefc:	00ba019d 	0xba019d
+    cefc:	00ba019b 	0xba019b
     cf00:	83360000 	lb	s6,0(t9)
     cf04:	65170000 	0x65170000
-    cf08:	a3010068 	sb	at,104(t8)
+    cf08:	a1010068 	sb	at,104(t0)
     cf0c:	0007d501 	0x7d501
     cf10:	00835700 	0x835700
     cf14:	68701700 	0x68701700
-    cf18:	01a80100 	0x1a80100
+    cf18:	01a60100 	0x1a60100
     cf1c:	000007db 	0x7db
     cf20:	0000839c 	0x839c
     cf24:	0004201a 	0x4201a
     cf28:	00691700 	0x691700
-    cf2c:	af01aa01 	sw	at,-22015(t8)
+    cf2c:	af01a801 	sw	at,-22527(t8)
     cf30:	f0000000 	0xf0000000
     cf34:	00000083 	sra	zero,zero,0x2
     cf38:	1d532400 	0x1d532400
-    cf3c:	90010000 	lbu	at,0(zero)
+    cf3c:	8e010000 	lw	at,0(s0)
     cf40:	0000bf01 	0xbf01
     cf44:	0c550100 	jal	1540400 <__tlb_stride_length+0x15403ff>
     cf48:	73250000 	madd	t9,a1
-    cf4c:	90010031 	lbu	at,49(zero)
+    cf4c:	8e010031 	lw	at,49(s0)
     cf50:	0001c201 	0x1c201
     cf54:	32732500 	andi	s3,s3,0x2500
-    cf58:	01900100 	0x1900100
+    cf58:	018e0100 	0x18e0100
     cf5c:	000001c2 	srl	zero,zero,0x7
     cf60:	1a2d1300 	0x1a2d1300
-    cf64:	82010000 	lb	at,0(s0)
+    cf64:	80010000 	lb	at,0(zero)
     cf68:	0000af01 	0xaf01
     cf6c:	01878800 	0x1878800
     cf70:	00000880 	sll	at,zero,0x2
     cf74:	ac9c0100 	sw	gp,256(a0)
     cf78:	2600000c 	addiu	zero,s0,12
     cf7c:	00666c65 	0x666c65
-    cf80:	ba018201 	swr	at,-32255(s0)
+    cf80:	ba018001 	swr	at,-32767(s0)
     cf84:	01000007 	srav	zero,zero,t0
     cf88:	1de52754 	0x1de52754
-    cf8c:	82010000 	lb	at,0(s0)
+    cf8c:	80010000 	lb	at,0(zero)
     cf90:	0000ba01 	0xba01
     cf94:	28550100 	slti	s5,v0,256
     cf98:	01006865 	0x1006865
-    cf9c:	07d50184 	0x7d50184
+    cf9c:	07d50182 	0x7d50182
     cfa0:	54010000 	bnel	zero,at,cfa4 <__tlb_stride_length+0xcfa3>
     cfa4:	00687028 	0x687028
-    cfa8:	db018501 	ldc2	$1,-31487(t8)
+    cfa8:	db018301 	ldc2	$1,-31999(t8)
     cfac:	07000007 	bltz	t8,cfcc <__tlb_stride_length+0xcfcb>
     cfb0:	1c740074 	0x1c740074
     cfb4:	009f2206 	0x9f2206
     cfb8:	001a8813 	0x1a8813
-    cfbc:	010d0100 	0x10d0100
+    cfbc:	010b0100 	0x10b0100
     cfc0:	000000bf 	0xbf
     cfc4:	80019104 	lb	at,-28412(zero)
     cfc8:	000002f0 	tge	zero,zero,0xb
     cfcc:	0f019c01 	jal	c067004 <__tlb_stride_length+0xc067003>
     cfd0:	65140000 	0x65140000
     cfd4:	0100666c 	0x100666c
-    cfd8:	07ba010d 	0x7ba010d
+    cfd8:	07ba010b 	0x7ba010b
     cfdc:	841b0000 	lh	k1,0(zero)
     cfe0:	e5150000 	swc1	$f21,0(t0)
     cfe4:	0100001d 	0x100001d
-    cfe8:	00ba010d 	break	0xba,0x4
+    cfe8:	00ba010b 	0xba010b
     cfec:	84c40000 	lh	a0,0(a2)
     cff0:	65170000 	0x65170000
-    cff4:	17010068 	bne	t8,at,d198 <__tlb_stride_length+0xd197>
+    cff4:	15010068 	bne	t0,at,d198 <__tlb_stride_length+0xd197>
     cff8:	0007d501 	0x7d501
     cffc:	00852a00 	0x852a00
     d000:	68701700 	0x68701700
-    d004:	01250100 	0x1250100
+    d004:	01230100 	0x1230100
     d008:	000007db 	0x7db
     d00c:	000085b7 	0x85b7
     d010:	01006917 	0x1006917
-    d014:	00af0128 	0xaf0128
+    d014:	00af0126 	0xaf0126
     d018:	85f60000 	lh	s6,0(t7)
     d01c:	82160000 	lb	s6,0(s0)
     d020:	0100001b 	divu	zero,t0,zero
-    d024:	01da014e 	0x1da014e
+    d024:	01da014c 	syscall	0x76805
     d028:	91020000 	lbu	v0,0(t0)
     d02c:	1c821840 	0x1c821840
-    d030:	55010000 	bnel	t0,at,d034 <__tlb_stride_length+0xd033>
+    d030:	53010000 	beql	t8,at,d034 <__tlb_stride_length+0xd033>
     d034:	0000bf01 	0xbf01
     d038:	00864300 	0x864300
     d03c:	05901900 	bltzal	t4,13440 <__tlb_stride_length+0x1343f>
     d040:	0db20000 	jal	6c80000 <__tlb_stride_length+0x6c7ffff>
     d044:	64170000 	0x64170000
     d048:	01006e79 	0x1006e79
-    d04c:	07e10158 	bgez	ra,d5b0 <__tlb_stride_length+0xd5af>
+    d04c:	07e10156 	bgez	ra,d5a8 <__tlb_stride_length+0xd5a7>
     d050:	86790000 	lh	t9,0(s3)
     d054:	a81a0000 	swl	k0,0(zero)
     d058:	17000005 	bnez	t8,d070 <__tlb_stride_length+0xd06f>
-    d05c:	5a01006a 	0x5a01006a
+    d05c:	5801006a 	0x5801006a
     d060:	0000bf01 	0xbf01
     d064:	0086b400 	0x86b400
     d068:	05c01a00 	bltz	t6,1386c <__tlb_stride_length+0x1386b>
     d06c:	68180000 	0x68180000
     d070:	0100001d 	0x100001d
-    d074:	01c2015d 	0x1c2015d
+    d074:	01c2015b 	0x1c2015b
     d078:	86d40000 	lh	s4,0(s6)
     d07c:	dd180000 	ldc3	$24,0(t0)
     d080:	0100001d 	0x100001d
-    d084:	00af0160 	0xaf0160
+    d084:	00af015e 	0xaf015e
     d088:	86f20000 	lh	s2,0(s7)
     d08c:	541b0000 	bnel	zero,k1,d090 <__tlb_stride_length+0xd08f>
     d090:	4f800193 	c3	0x1800193
@@ -43145,7 +43145,7 @@ Disassembly of section .debug_info:
     d0c0:	48000014 	0x48000014
     d0c4:	20800192 	addi	zero,a0,402
     d0c8:	01000000 	0x1000000
-    d0cc:	0df5013a 	jal	7d404e8 <__tlb_stride_length+0x7d404e7>
+    d0cc:	0df50138 	jal	7d404e0 <__tlb_stride_length+0x7d404df>
     d0d0:	3a230000 	xori	v1,s1,0x0
     d0d4:	10000014 	b	d128 <__tlb_stride_length+0xd127>
     d0d8:	23000087 	addi	zero,t8,135
@@ -43226,68 +43226,68 @@ Disassembly of section .debug_info:
     d204:	50030554 	beql	zero,v1,e758 <__tlb_stride_length+0xe757>
     d208:	008001fd 	0x8001fd
     d20c:	1d762d00 	0x1d762d00
-    d210:	82010000 	lb	at,0(s0)
+    d210:	80010000 	lb	at,0(zero)
     d214:	000000af 	0xaf
     d218:	80018d5c 	lb	at,-29348(zero)
     d21c:	000003a8 	0x3a8
     d220:	12a19c01 	beq	s5,at,ffff4228 <check_for_tlb_done+0x403f3ed4>
     d224:	682e0000 	0x682e0000
     d228:	0100001d 	0x100001d
-    d22c:	0001c282 	srl	t8,at,0xa
+    d22c:	0001c280 	sll	t8,at,0xa
     d230:	00876a00 	0x876a00
     d234:	69662f00 	0x69662f00
-    d238:	8301006c 	lb	at,108(t8)
+    d238:	8101006c 	lb	at,108(t0)
     d23c:	000004e8 	0x4e8
     d240:	7ba89103 	0x7ba89103
     d244:	00726630 	tge	v1,s2,0x198
-    d248:	05788401 	0x5788401
+    d248:	05788201 	0x5788201
     d24c:	87ac0000 	lh	t4,0(sp)
     d250:	622f0000 	0x622f0000
-    d254:	85010072 	lh	at,114(t0)
+    d254:	83010072 	lb	at,114(t8)
     d258:	000000af 	0xaf
     d25c:	124c9102 	beq	s2,t4,ffff1668 <check_for_tlb_done+0x403f1314>
     d260:	00001c92 	0x1c92
-    d264:	00af9f01 	0xaf9f01
+    d264:	00af9d01 	0xaf9d01
     d268:	62010000 	0x62010000
     d26c:	00686530 	tge	v1,t0,0x194
-    d270:	07d5a801 	0x7d5a801
+    d270:	07d5a601 	0x7d5a601
     d274:	87d50000 	lh	s5,0(s8)
     d278:	70300000 	madd	at,s0
-    d27c:	af010068 	sw	at,104(t8)
+    d27c:	ad010068 	sw	at,104(t0)
     d280:	000007db 	0x7db
     d284:	000087fd 	0x87fd
     d288:	001b1b31 	tgeu	zero,k1,0x6c
-    d28c:	afb60100 	sw	s6,256(sp)
+    d28c:	afb40100 	sw	s4,256(sp)
     d290:	26000000 	addiu	zero,s0,0
     d294:	31000088 	andi	zero,t0,0x88
     d298:	00001cc9 	0x1cc9
-    d29c:	00afbe01 	0xafbe01
+    d29c:	00afbc01 	0xafbc01
     d2a0:	887a0000 	lwl	k0,0(v1)
     d2a4:	dd310000 	ldc3	$17,0(t1)
     d2a8:	0100001d 	0x100001d
-    d2ac:	0000afc4 	0xafc4
+    d2ac:	0000afc2 	srl	s5,zero,0x1f
     d2b0:	0088b200 	0x88b200
     d2b4:	05281900 	tgei	t1,6400
     d2b8:	0fc00000 	jal	f000000 <__tlb_stride_length+0xeffffff>
     d2bc:	69300000 	0x69300000
-    d2c0:	afb70100 	sw	s7,256(sp)
+    d2c0:	afb50100 	sw	s5,256(sp)
     d2c4:	d0000000 	0xd0000000
     d2c8:	00000088 	0x88
     d2cc:	00054019 	0x54019
     d2d0:	00105b00 	sll	t3,s0,0xc
     d2d4:	00693000 	0x693000
-    d2d8:	00afc601 	0xafc601
+    d2d8:	00afc401 	0xafc401
     d2dc:	88f00000 	lwl	s0,0(a3)
     d2e0:	681a0000 	0x681a0000
     d2e4:	31000005 	andi	zero,t0,0x5
     d2e8:	00001bdf 	0x1bdf
-    d2ec:	00afc901 	0xafc901
+    d2ec:	00afc701 	0xafc701
     d2f0:	891b0000 	lwl	k1,0(t0)
     d2f4:	18320000 	0x18320000
     d2f8:	e8000014 	swc2	$0,20(zero)
     d2fc:	1c80018f 	bgtz	a0,d93c <__tlb_stride_length+0xd93b>
     d300:	01000000 	0x1000000
-    d304:	00102cd2 	0x102cd2
+    d304:	00102cd0 	0x102cd0
     d308:	143a2300 	bne	at,k0,15f0c <__tlb_stride_length+0x15f0b>
     d30c:	89510000 	lwl	s1,0(t2)
     d310:	31230000 	andi	v1,t1,0x0
@@ -43316,15 +43316,15 @@ Disassembly of section .debug_info:
     d36c:	0000003c 	0x3c
     d370:	000010af 	0x10af
     d374:	001bd231 	tgeu	zero,k1,0x348
-    d378:	afe60100 	sw	a2,256(ra)
+    d378:	afe40100 	sw	a0,256(ra)
     d37c:	bc000000 	cache	0x0,0(zero)
     d380:	31000089 	andi	zero,t0,0x89
     d384:	00001bb4 	teq	zero,zero,0x6e
-    d388:	00afe701 	0xafe701
+    d388:	00afe501 	0xafe501
     d38c:	89d30000 	lwl	s3,0(t6)
     d390:	69310000 	0x69310000
     d394:	0100001b 	divu	zero,t0,zero
-    d398:	0000afe8 	0xafe8
+    d398:	0000afe6 	0xafe6
     d39c:	0089f500 	0x89f500
     d3a0:	90b81e00 	lbu	t8,7680(a1)
     d3a4:	144f8001 	bne	v0,t7,fffed3ac <check_for_tlb_done+0x403ed058>
