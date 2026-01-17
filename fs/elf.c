@@ -124,8 +124,6 @@ int load_elf(const uint8_t *elf, const uint32_t elf_size) {
 
 /**
  * 内部函数：加载共享库文件
- * @param so_name 共享库文件名
- * @return 成功返回共享库的基地址，失败返回 0
  */
 static uint32_t load_so_file(const char *so_name) {
     FIL fil;
@@ -239,6 +237,12 @@ static uint32_t load_so_file(const char *so_name) {
 
         printf("dynlink: Adjusted SO addresses: symtab=%x, strtab=%x, base=%x\n",
                (uint32_t)so_dyninfo.symtab, (uint32_t)so_dyninfo.strtab, load_offset);
+    }
+
+    /* 填充共享库自己的 GOT 表（用于访问自己的全局变量） */
+    if (fill_got_table(&so_dyninfo, NULL) != 0) {
+        printf("dynlink: Failed to fill %s GOT table\n", so_name);
+        return 0;
     }
 
     printf("dynlink: %s loaded at base 0x%x\n", so_name, so_base);
@@ -588,9 +592,11 @@ int fill_got_table(DynLinkInfo *main_info, const DynLinkInfo *so_info)
 
         /* 如果符号在主程序中已定义，使用主程序的地址 */
         if (sym->st_shndx != 0 && sym->st_value != 0) {
-            main_info->got[got_index] = sym->st_value;
-            printf("dynlink: GOT[%d] = %x (local: %s)\n",
-                   got_index, sym->st_value, sym_name);
+            /* 对于 PIC 代码，st_value 是相对地址，需要加上 base_addr */
+            uint32_t addr = main_info->base_addr + sym->st_value;
+            main_info->got[got_index] = addr;
+            printf("dynlink: GOT[%d] = %x (local: %s, base=%x, value=%x)\n",
+                   got_index, addr, sym_name, main_info->base_addr, sym->st_value);
             continue;
         }
 

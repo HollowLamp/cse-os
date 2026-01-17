@@ -298,46 +298,29 @@ uint32_t get_entry(const uint8_t *elf, const uint32_t elf_size);
 
 /**
  * 检查 ELF 是否需要动态链接
- * @param elf ELF 文件数据指针
- * @param elf_size ELF 文件大小
- * @return 1 表示需要动态链接，0 表示不需要
  */
 int elf_needs_dynlink(const uint8_t *elf, const uint32_t elf_size);
 
 /**
  * 加载动态链接的 ELF 文件
  * 处理流程：加载主程序 -> 加载依赖的 .so -> 符号解析 -> 重定位 -> 返回入口
- * @param elf 主 ELF 文件数据指针
- * @param elf_size 主 ELF 文件大小
- * @param so_loader 加载 .so 文件的回调函数（参数：库名，返回：加载后的基地址，0 表示失败）
- * @return 成功返回 0，失败返回 -1
  */
 int load_elf_dynamic(const uint8_t *elf, const uint32_t elf_size,
                      uint32_t (*so_loader)(const char *so_name));
 
 /**
  * 解析动态节，提取符号表、字符串表、GOT 等信息
- * @param elf ELF 文件数据指针
- * @param elf_size ELF 文件大小
- * @param info 输出的动态链接信息结构
- * @return 成功返回 0，失败返回 -1
  */
 int parse_dynamic_section(const uint8_t *elf, const uint32_t elf_size,
                           DynLinkInfo *info);
 
 /**
  * 在符号表中查找符号
- * @param name 符号名称
- * @param info 动态链接信息
- * @return 符号地址，0 表示未找到
  */
 uint32_t lookup_symbol(const char *name, const DynLinkInfo *info);
 
 /**
  * 填充 GOT 表（MIPS 特定）
- * @param main_info 主程序的动态链接信息
- * @param so_info 共享库的动态链接信息
- * @return 成功返回 0，失败返回 -1
  */
 int fill_got_table(DynLinkInfo *main_info, const DynLinkInfo *so_info);
 
