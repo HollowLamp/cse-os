@@ -1,112 +1,89 @@
-# 开发环境搭建指南
+# CSE-OS 开发环境搭建指南
 
-## 1. MIPS交叉编译工具链安装
+## 问题诊断
 
-### 1.1 下载工具链
+根据您的反馈，C:\Program Files\Imagination Technologies\Toolchains目录为空，说明MIPS交叉编译工具链没有正确安装。
 
-根据搜索结果，推荐下载以下MIPS交叉编译工具链：
+## 解决方案
 
-- **下载链接**：https://sourcery.mentor.com/GNUToolchain/package11863/public/mips-sde-elf/mips-2013.05-65-mips-sde-elf.exe
-- **工具链类型**：mips-sde-elf (适用于MIPS裸机程序开发)
+### 1. 重新安装MIPS交叉编译工具链
 
-### 1.2 安装步骤
+**下载链接：**
+- MIPS SDE-ELF工具链: https://sourcery.mentor.com/GNUToolchain/package11863/public/mips-sde-elf/mips-2013.05-65-mips-sde-elf.exe
 
-1. 下载上述exe文件后，右键点击安装程序
-2. 如果出现兼容性问题，选择"属性" -> "兼容性"，勾选"以兼容模式运行这个程序"，选择"Windows 7"
-3. 双击运行安装程序
-4. 在安装过程中，**务必勾选"Add to PATH"选项**，这样系统就能自动找到编译工具
-5. 选择默认安装路径或自定义路径，建议使用默认路径
+**安装步骤：**
+1. 下载上述安装程序
+2. 右键点击安装程序，选择"属性" → "兼容性" → 勾选"以兼容模式运行这个程序"并选择"Windows 7"
+3. 运行安装程序，在安装过程中确保勾选"Add to PATH"选项
+4. 默认安装路径通常为：`C:\Program Files\Mentor Graphics\Sourcery Tools for MIPS`
 
-### 1.3 验证安装
+### 2. 验证工具链安装
 
-安装完成后，打开命令提示符(CMD)，执行以下命令验证安装：
+安装完成后，在PowerShell中运行以下命令验证：
 
-```bash
+```powershell
+# 检查工具链是否在PATH中
 mips-sde-elf-gcc --version
+
+# 或者手动检查安装目录
+Get-ChildItem "C:\Program Files\Mentor Graphics" -Recurse -Filter "mips-sde-elf-gcc.exe" -ErrorAction SilentlyContinue
 ```
 
-如果能显示编译器版本信息，则说明安装成功。
+### 3. 更新项目配置
 
-## 2. 修改项目配置
-
-由于我们安装的是`mips-sde-elf`工具链，而项目中使用的是`mips-mti-elf`，需要修改项目配置文件：
-
-### 2.1 修改 include.mk 文件
-
-打开 `e:\cse-os\include.mk`，将：
+修改 `include.mk` 文件中的交叉编译工具链配置：
 
 ```makefile
-CROSS_COMPILE := mips-mti-elf-
+CROSS_COMPILE = mips-sde-elf-
 ```
 
-修改为：
+### 4. 安装Make工具
 
-```makefile
-CROSS_COMPILE := mips-sde-elf-
+**方法一：使用Chocolatey（推荐）**
+```powershell
+# 安装Chocolatey（如果尚未安装）
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+# 安装make
+choco install make -y
 ```
 
-## 3. OpenOCD 安装
+**方法二：手动下载**
+- 下载地址：http://gnuwin32.sourceforge.net/packages/make.htm
+- 下载"Complete package, except sources"版本
 
-OpenOCD用于硬件调试，需要单独安装。
+### 5. 测试编译环境
 
-### 3.1 下载OpenOCD
-
-- **下载链接**：https://github.com/openocd-org/openocd/releases
-- **选择版本**：选择最新的Windows版本(通常是zip格式)
-
-### 3.2 安装步骤
-
-1. 下载zip文件后，解压到任意目录
-2. 将解压目录下的`bin`文件夹添加到系统环境变量`PATH`中
-
-### 3.3 验证安装
-
-打开命令提示符(CMD)，执行以下命令验证安装：
-
-```bash
-openocd --version
-```
-
-如果能显示OpenOCD版本信息，则说明安装成功。
-
-## 4. 测试项目编译
-
-安装完成后，进入项目目录，执行以下命令测试编译：
-
-```bash
+```powershell
+# 进入项目目录
 cd e:\cse-os
+
+# 测试编译（使用正确的PowerShell语法）
 make
 ```
 
-如果编译成功，将生成`vmlinux.elf`、`vmlinux.rec`等文件。
+## 常见问题解决
 
-## 5. 常见问题解决
+### 问题1：PowerShell中`&&`语法错误
+PowerShell 5不支持`&&`操作符，请使用分号`;`：
+```powershell
+cd e:\cse-os; make
+```
 
-### 5.1 环境变量问题
+### 问题2：找不到make命令
+确保make工具已正确安装并添加到PATH环境变量中。
 
-如果执行`make`时提示找不到编译器命令，请检查：
-- 工具链是否正确安装
-- 环境变量`PATH`是否包含了工具链的`bin`目录
-- 可以手动将工具链的`bin`目录添加到PATH中：
-  ```bash
-  set PATH=%PATH%;C:\Program Files (x86)\Mentor Graphics\Sourcery CodeBench Lite\mips-sde-elf\bin
-  ```
+### 问题3：找不到MIPS编译器
+检查工具链是否正确安装，并验证PATH环境变量包含工具链的bin目录路径。
 
-### 5.2 编译器版本问题
+## 快速配置脚本
 
-如果出现编译错误，可能是编译器版本兼容性问题：
-- 可以尝试调整`include.mk`中的编译选项
-- 参考项目文档中的编译器版本要求
+创建 `setup_env.bat` 文件：
 
-## 6. 其他开发工具
-
-为了更好地进行开发，建议安装：
-
-- **Visual Studio Code**：代码编辑器，支持C语言开发和调试
-- **MIPS插件**：VS Code的MIPS支持插件
-- **Git**：版本控制工具，用于项目管理
-
-## 7. 参考资料
-
-- MIPS交叉编译工具链安装：https://blog.csdn.net/weixin_40751723/article/details/120295374
-- OpenOCD官方文档：https://openocd.org/doc/html/
+```batch
+@echo off
+echo 设置MIPS交叉编译工具链环境变量
+set PATH=C:\Program Files\Mentor Graphics\Sourcery Tools for MIPS\bin;%PATH%
+echo 环境变量设置完成
+cmd /k
+```
